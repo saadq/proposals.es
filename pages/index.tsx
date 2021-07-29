@@ -1,7 +1,10 @@
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import { getProposals } from '../api/github'
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
+  await getProposals()
+
   return {
     props: {}
   }
