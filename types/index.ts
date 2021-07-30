@@ -13,12 +13,15 @@ export interface Proposal {
   link: string
   authors: string[]
   champions: string[]
-  meetingNotes?: string
+  meetingNotes?: {
+    date: string
+    link: string
+  }
   lastPresented?: {
     date: string
     link: string
   }
-  yearOfPublication?: string
+  expectedPublicationYear?: string
 }
 
 export type ProposalsByStage = Record<Stage, Proposal[]>

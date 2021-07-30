@@ -24,6 +24,8 @@ export default function Proposals(props: Props) {
     initialData: props.proposals
   })
 
+  console.log({ proposals })
+
   return (
     <>
       <Head>

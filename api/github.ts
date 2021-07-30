@@ -135,6 +135,23 @@ function getProposalFromTableRow(row: Token[][], stage: Stage) {
         link: lastPresentedDate.href
       }
     }
+  } else {
+    const meetingNotes = rest[0].find(
+      (token) => token.type === 'link'
+    ) as Tokens.Link
+
+    if (meetingNotes) {
+      proposal.meetingNotes = {
+        date: meetingNotes.text,
+        link: meetingNotes.href
+      }
+    }
+
+    const expectedPublicationYear = rest[1].find(
+      (token) => token.type === 'text'
+    ) as Tokens.Text
+
+    proposal.expectedPublicationYear = expectedPublicationYear.text
   }
 
   return proposal
