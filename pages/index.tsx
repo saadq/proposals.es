@@ -1,16 +1,29 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import useSWR from 'swr'
 import { getProposals } from '../api/github'
+import { ProposalsByStage } from '../types'
+
+interface Props {
+  proposals: ProposalsByStage
+}
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  await getProposals()
-
+  const proposals = await getProposals()
   return {
-    props: {}
+    props: {
+      proposals
+    }
   }
 }
 
-export default function Home() {
+export default function Proposals(props: Props) {
+  const { data: proposals } = useSWR('/api/proposals', fetcher, {
+    initialData: props.proposals
+  })
+
   return (
     <>
       <Head>

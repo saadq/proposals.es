@@ -1,14 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-interface Proposal {}
+import { getProposals } from '../../api/github'
+import { ProposalsByStage } from '../../types'
 
 interface Data {
-  proposals: Proposal[]
+  proposals: ProposalsByStage
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({ proposals: [] })
+  try {
+    const proposals = await getProposals()
+    res.status(200).json({ proposals })
+  } catch (err) {
+    res.status(500)
+  }
 }
