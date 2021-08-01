@@ -17,3 +17,11 @@ export interface Proposal {
 }
 
 export type ProposalsByStage = Record<Stage, Proposal[]>
+
+export interface Specification {
+  name: string
+  alias: string
+  specLink: string
+  featureSetLink: string
+  summary: string
+}
