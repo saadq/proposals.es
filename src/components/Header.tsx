@@ -19,6 +19,7 @@ const Container = styled.div`
 `
 
 const NavLink = styled.a<{ activeRoute: string }>`
+  color: ${({ theme }) => theme.colors.foreground};
   margin: 0 1rem;
   text-decoration: ${(props) =>
     props.activeRoute === props.href ? 'underline' : 'none'};
