@@ -1,6 +1,6 @@
 import { graphql } from '@octokit/graphql'
 import { Lexer, Tokens, Token } from 'marked'
-import { Proposal, ProposalsByStage, Stage } from '../types'
+import { Proposal, ProposalsByStage, Stage, stages } from '../types'
 
 interface ReadmeResponse {
   object: {
@@ -66,8 +66,6 @@ export async function getProposalsByStage(): Promise<ProposalsByStage> {
 function getProposalsFromReadmes(
   readmesByStage: GitHubResponse
 ): ProposalsByStage {
-  const stages: Stage[] = ['stage0', 'stage1', 'stage2', 'stage3', 'stage4']
-
   return stages.reduce((proposalsByStage, stage) => {
     const stageReadmeKey =
       stage === 'stage2' || stage === 'stage3' ? 'stage2And3' : stage

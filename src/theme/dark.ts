@@ -13,11 +13,11 @@ export const darkTheme: Theme = {
     footerHeight: '50px'
   },
   colors: {
-    background: gray,
+    background: '#131418',
     foreground: white,
     primary: yellow,
-    header: darkGray,
-    card: black,
+    header: 'black',
+    card: '#1B1C20',
     footer: darkGray
   }
 }

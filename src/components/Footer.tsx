@@ -1,13 +1,14 @@
 import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
-  background: ${({ theme }) => theme.colors.footer};
+  background: black;
   width: 100%;
   height: ${({ theme }) => theme.sizes.footerHeight};
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 0.8rem;
+  padding: 3rem 0;
 `
 
 const Container = styled.div`

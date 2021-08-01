@@ -1,4 +1,12 @@
-export type Stage = 'stage0' | 'stage1' | 'stage2' | 'stage3' | 'stage4'
+export const stages = [
+  'stage0',
+  'stage1',
+  'stage2',
+  'stage3',
+  'stage4'
+] as const
+
+export type Stage = typeof stages[number]
 
 export interface Proposal {
   name: string

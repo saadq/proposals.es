@@ -17,6 +17,12 @@ const Container = styled.div`
   height: 100%;
 `
 
+const Nav = styled.nav`
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
+`
+
 const NavLink = styled.a<{ activeRoute: string }>`
   color: ${({ theme }) => theme.colors.foreground};
   margin: 0 1rem;
@@ -35,14 +41,14 @@ export function Header() {
             <Logo width={200} />
           </a>
         </Link>
-        <nav>
+        <Nav>
           <Link href="/" passHref>
             <NavLink activeRoute={route}>Proposals</NavLink>
           </Link>
           <Link href="/specifications" passHref>
             <NavLink activeRoute={route}>Specifications</NavLink>
           </Link>
-        </nav>
+        </Nav>
       </Container>
     </StyledHeader>
   )
