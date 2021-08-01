@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import useSWR from 'swr'
-import { getProposals } from '../api/github'
+import { getProposalsByStage } from '../api/github'
 import { ProposalsByStage } from '../types'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const proposals = await getProposals()
+  const proposals = await getProposalsByStage()
   return {
     props: {
       proposals

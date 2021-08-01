@@ -15,7 +15,7 @@ interface GitHubResponse {
   stage4: ReadmeResponse
 }
 
-export async function getProposals(): Promise<ProposalsByStage> {
+export async function getProposalsByStage(): Promise<ProposalsByStage> {
   const getReadmesByStage = `
     query {
       stage0: repository(owner: "tc39", name: "proposals") {
@@ -58,16 +58,18 @@ export async function getProposals(): Promise<ProposalsByStage> {
     }
   })
 
-  const proposalsByStage = getProposalsByStage(readmesByStage)
+  const proposalsByStage = getProposalsFromReadmes(readmesByStage)
 
   return proposalsByStage
 }
 
-function getProposalsByStage(readmesByStage: GitHubResponse): ProposalsByStage {
+function getProposalsFromReadmes(
+  readmesByStage: GitHubResponse
+): ProposalsByStage {
   const stages: Stage[] = ['stage0', 'stage1', 'stage2', 'stage3', 'stage4']
 
   return stages.reduce((proposalsByStage, stage) => {
-    const stageReadmeKey: keyof GitHubResponse =
+    const stageReadmeKey =
       stage === 'stage2' || stage === 'stage3' ? 'stage2And3' : stage
 
     const readme = readmesByStage[stageReadmeKey].object.text
