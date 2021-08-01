@@ -97,6 +97,10 @@ function getProposalFromTableRow(row: Token[][], stage: Stage) {
     (col) => col.type === 'link'
   ) as Tokens.Link[]
 
+  if (linkTokens.length === 0) {
+    return null
+  }
+
   const authorTokens = authorsCol.filter(
     (col) => col.type === 'text'
   ) as Tokens.Text[]
@@ -104,14 +108,6 @@ function getProposalFromTableRow(row: Token[][], stage: Stage) {
   const championTokens = championsCol.filter(
     (col) => col.type === 'text'
   ) as Tokens.Text[]
-
-  if (
-    linkTokens.length === 0 ||
-    authorTokens.length === 0 ||
-    championTokens.length === 0
-  ) {
-    return null
-  }
 
   const { text: name, href: link } = linkTokens[0]
   const authors = authorTokens.map((token) => token.text)
