@@ -1,18 +1,49 @@
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import styled from 'styled-components'
+import { Logo } from './Logo'
 
 const StyledHeader = styled.header`
-  position: fixed;
-  background: black;
-  width: 100vw;
-  height: 3rem;
+  background: ${({ theme }) => theme.colors.header};
+  width: ${({ theme }) => theme.sizes.header.width};
+  height: ${({ theme }) => theme.sizes.header.height};
 `
 
-const Nav = styled.nav``
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  width: 90%;
+  height: 100%;
+`
+
+const NavLink = styled.a<{ activeRoute: string }>`
+  margin: 0 1rem;
+  text-decoration: ${(props) =>
+    props.activeRoute === props.href ? 'underline' : 'none'};
+`
 
 export function Header() {
+  const { route } = useRouter()
+
   return (
     <StyledHeader>
-      <Nav>nav</Nav>
+      <Container>
+        <Link href="/" passHref>
+          <a>
+            <Logo width={200} />
+          </a>
+        </Link>
+        <nav>
+          <Link href="/" passHref>
+            <NavLink activeRoute={route}>Proposals</NavLink>
+          </Link>
+          <Link href="/specifications" passHref>
+            <NavLink activeRoute={route}>Specifications</NavLink>
+          </Link>
+        </nav>
+      </Container>
     </StyledHeader>
   )
 }

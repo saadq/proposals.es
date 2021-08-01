@@ -1,9 +1,19 @@
 import type { AppProps } from 'next/app'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { GlobalStyle } from '../components/GlobalStyle'
 import { darkTheme } from '../theme'
+
+const Page = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`
+
+const Main = styled.main`
+  flex: 1;
+`
 
 function App({ Component, pageProps }: AppProps) {
   const theme = darkTheme // TODO – Don't hardcode this
@@ -11,11 +21,13 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Header />
-      <main>
-        <Component {...pageProps} />
-      </main>
-      <Footer />
+      <Page>
+        <Header />
+        <Main>
+          <Component {...pageProps} />
+        </Main>
+        <Footer />
+      </Page>
     </ThemeProvider>
   )
 }
