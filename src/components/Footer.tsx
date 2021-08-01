@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
   background: ${({ theme }) => theme.colors.footer};
-  height: 50px;
   width: 100%;
+  height: ${({ theme }) => theme.sizes.footerHeight};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,8 +14,8 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 auto;
-  width: 90%;
+  margin: 0 ${({ theme }) => theme.sizes.gutter};
+  width: 100%;
   height: 100%;
   opacity: 0.5;
 `

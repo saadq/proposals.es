@@ -8,14 +8,9 @@ const yellow = '#FCB500'
 
 export const darkTheme: Theme = {
   sizes: {
-    header: {
-      width: '100%',
-      height: '115px'
-    },
-    footer: {
-      width: '100%',
-      height: '50px'
-    }
+    gutter: '5%',
+    headerHeight: '115px',
+    footerHeight: '50px'
   },
   colors: {
     background: gray,

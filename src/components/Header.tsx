@@ -5,16 +5,15 @@ import { Logo } from './Logo'
 
 const StyledHeader = styled.header`
   background: ${({ theme }) => theme.colors.header};
-  width: ${({ theme }) => theme.sizes.header.width};
-  height: ${({ theme }) => theme.sizes.header.height};
+  width: 100%;
+  height: ${({ theme }) => theme.sizes.headerHeight};
 `
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 auto;
-  width: 90%;
+  margin: 0 ${({ theme }) => theme.sizes.gutter};
   height: 100%;
 `
 
