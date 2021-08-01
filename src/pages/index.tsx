@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import { getProposalsByStage } from '../api/github'
+import { getProposalsByStage } from '../api/proposals'
 import { ProposalsByStage } from '../types'
 
 interface Props {

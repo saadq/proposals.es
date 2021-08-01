@@ -1,5 +1,5 @@
 import { GetStaticProps } from 'next'
-import { getSpecifications } from '../api/ecma'
+import { getSpecifications } from '../api/specifications'
 import { Specification } from '../types'
 
 interface Props {
