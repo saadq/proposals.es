@@ -26,7 +26,7 @@ const Heading = styled.h1`
   font-size: 1.5rem;
 
   @media screen and (max-width: 500px) {
-    font-size: 1rem;
+    font-size: 1.25rem;
   }
 `
 
@@ -37,13 +37,13 @@ const Alias = styled.span`
 const Links = styled.ul`
   display: flex;
   padding: 0;
+  list-style-type: none;
 
   @media screen and (max-width: 500px) {
     font-size: 0.75rem;
   }
 
   li {
-    display: inline;
     margin-right: 1rem;
   }
 
