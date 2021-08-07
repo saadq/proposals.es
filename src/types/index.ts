@@ -3,16 +3,19 @@ export const stages = [
   'stage1',
   'stage2',
   'stage3',
-  'stage4'
+  'stage4',
+  'inactive'
 ] as const
 
 export type Stage = typeof stages[number]
 
 export interface Proposal {
+  type: 'ecma262' | 'ecma402' | 'inactive'
   name: string
   link: string
-  authors: string[]
   champions: string[]
+  authors?: string[]
+  rationale?: string
   meetingNotes?: {
     date: string
     link: string

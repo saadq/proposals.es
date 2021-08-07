@@ -13,6 +13,42 @@ interface GitHubResponse {
   stage1: ReadmeResponse
   stage2And3: ReadmeResponse
   stage4: ReadmeResponse
+  i18nStage0: ReadmeResponse
+  i18nStage1And2And3: ReadmeResponse
+  i18nStage4: ReadmeResponse
+  inactive: ReadmeResponse
+}
+
+type ResponseKey = keyof GitHubResponse
+
+interface GetProposalsFromReadme {
+  readme: string
+  stage: Stage
+  key: ResponseKey
+}
+
+interface GetProposalFromRow {
+  row: Token[][]
+  stage: Stage
+  key: ResponseKey
+}
+
+const stageKeyMap: Record<Stage, ResponseKey> = {
+  inactive: 'inactive',
+  stage0: 'stage0',
+  stage1: 'stage1',
+  stage2: 'stage2And3',
+  stage3: 'stage2And3',
+  stage4: 'stage4'
+}
+
+const i18nStageKeyMap: Record<Stage, ResponseKey> = {
+  inactive: 'inactive',
+  stage0: 'i18nStage0',
+  stage1: 'i18nStage1And2And3',
+  stage2: 'i18nStage1And2And3',
+  stage3: 'i18nStage1And2And3',
+  stage4: 'i18nStage4'
 }
 
 export async function getProposalsByStage(): Promise<ProposalsByStage> {
@@ -49,6 +85,38 @@ export async function getProposalsByStage(): Promise<ProposalsByStage> {
           }
         }
       }
+
+      i18nStage0: repository(owner: "tc39", name: "proposals") {
+        object(expression: "master:ecma402/stage-0-proposals.md") {
+          ... on Blob {
+            text
+          }
+        }
+      }
+      
+      i18nStage1And2And3: repository(owner: "tc39", name: "proposals") {
+        object(expression: "master:ecma402/README.md") {
+          ... on Blob {
+            text
+          }
+        }
+      }
+      
+      i18nStage4: repository(owner: "tc39", name: "proposals") {
+        object(expression: "master:ecma402/finished-proposals.md") {
+          ... on Blob {
+            text
+          }
+        }
+      }
+      
+      inactive: repository(owner: "tc39", name: "proposals") {
+        object(expression: "master:inactive-proposals.md") {
+          ... on Blob {
+            text
+          }
+        }
+      }
     }
   `
 
@@ -58,46 +126,99 @@ export async function getProposalsByStage(): Promise<ProposalsByStage> {
     }
   })
 
-  const proposalsByStage = getProposalsFromReadmes(readmesByStage)
-
+  const proposalsByStage = getProposalsFromReadmesByStage(readmesByStage)
   return proposalsByStage
 }
 
-function getProposalsFromReadmes(
-  readmesByStage: GitHubResponse
+function getProposalsFromReadmesByStage(
+  allReadmesByStage: GitHubResponse
 ): ProposalsByStage {
   return stages.reduce((proposalsByStage, stage) => {
-    const stageReadmeKey =
-      stage === 'stage2' || stage === 'stage3' ? 'stage2And3' : stage
+    // inactive proposals
+    if (stage === 'inactive') {
+      const inactiveKey = 'inactive'
+      const inactiveReadme = allReadmesByStage[inactiveKey].object.text
+      const inactiveProposals = getProposalsFromReadme({
+        readme: inactiveReadme,
+        key: inactiveKey,
+        stage
+      })
 
-    const readme = readmesByStage[stageReadmeKey].object.text
-    const lexer = new Lexer()
-    const tokens = lexer.lex(readme)
-    const tables = tokens.filter((token) => token.type === 'table')
-    const table = (stage === 'stage2' ? tables[1] : tables[0]) as Tokens.Table
-    const rows = table.tokens.cells
+      return {
+        ...proposalsByStage,
+        inactive: inactiveProposals
+      }
+    }
 
-    const proposals = rows
-      .map((row) => getProposalFromTableRow(row, stage))
-      .filter((row) => row != null)
+    // ecma262 proposals
+    const key = stageKeyMap[stage]
+    const proposalsReadme = allReadmesByStage[key].object.text
+    const ecma262Proposals = getProposalsFromReadme({
+      readme: proposalsReadme,
+      key,
+      stage
+    })
+
+    // ecma402 proposals
+    const i18nKey = i18nStageKeyMap[stage]
+    const i18nProposalsReadme = allReadmesByStage[i18nKey].object.text
+    const ecma402Proposals = getProposalsFromReadme({
+      readme: i18nProposalsReadme,
+      key: i18nKey,
+      stage
+    })
 
     return {
       ...proposalsByStage,
-      [stage]: proposals
+      [stage]: [...ecma262Proposals, ...ecma402Proposals]
     }
   }, {}) as ProposalsByStage
 }
 
-function getProposalFromTableRow(row: Token[][], stage: Stage) {
-  const [linksCol, authorsCol, championsCol, ...rest] = row
+function getProposalsFromReadme({
+  readme,
+  key,
+  stage
+}: GetProposalsFromReadme) {
+  const lexer = new Lexer()
+  const tokens = lexer.lex(readme)
+  const proposalTables = tokens.filter((token) => token.type === 'table')
+  let tableIndex = 0
 
-  const linkTokens = linksCol.filter(
-    (col) => col.type === 'link'
-  ) as Tokens.Link[]
-
-  if (linkTokens.length === 0) {
-    return null
+  // Some READMEs have multiple proposal tables, so
+  // we need to pick the right table for the stage.
+  if (key.startsWith('i18n') && stage === 'stage1') {
+    tableIndex = 2
+  } else if (stage === 'stage2') {
+    tableIndex = 1
   }
+
+  const table = proposalTables[tableIndex] as Tokens.Table
+  const rows = table.tokens.cells
+
+  const proposals = rows
+    .map((row) => getProposalFromRow({ row, stage, key }))
+    .filter((row) => row != null)
+
+  return proposals
+}
+
+function getProposalFromRow({ row, stage, key }: GetProposalFromRow) {
+  if (key === 'inactive') {
+    return getInactiveProposalFromRow(row)
+  }
+
+  const [proposalCol, authorsCol, championsCol, ...rest] = row
+
+  const proposalLinkTokens = proposalCol.find(
+    (col) => col.type === 'link'
+  ) as Tokens.Link
+
+  const proposalTextToken = proposalCol.find(
+    (col) => col.type === 'text'
+  ) as Tokens.Text
+
+  const proposalToken = proposalLinkTokens ?? proposalTextToken
 
   const authorTokens = authorsCol.filter(
     (col) => col.type === 'text'
@@ -107,21 +228,28 @@ function getProposalFromTableRow(row: Token[][], stage: Stage) {
     (col) => col.type === 'text'
   ) as Tokens.Text[]
 
-  const { text: name, href: link } = linkTokens[0]
+  const type = key.startsWith('i18n') ? 'ecma402' : 'ecma262'
   const authors = authorTokens.map((token) => token.text)
   const champions = championTokens.map((token) => token.text)
 
+  const name = proposalLinkTokens
+    ? proposalToken.text
+    : proposalCol.map((col) => (col as Tokens.Text).text).join('')
+
+  const link = proposalToken?.href ?? ''
+
   const proposal: Proposal = {
+    type,
     name,
     link,
     authors,
     champions
   }
 
-  if (stage !== 'stage4') {
+  if (!key.startsWith('i18n') && stage !== 'stage4') {
     const lastPresentedDateIndex = stage === 'stage3' ? 1 : 0
 
-    const lastPresentedDate = rest[lastPresentedDateIndex].find(
+    const lastPresentedDate = rest[lastPresentedDateIndex]?.find(
       (token) => token.type === 'link'
     ) as Tokens.Link
 
@@ -131,7 +259,9 @@ function getProposalFromTableRow(row: Token[][], stage: Stage) {
         link: lastPresentedDate.href
       }
     }
-  } else {
+  }
+
+  if (stage === 'stage4') {
     const meetingNotes = rest[0].find(
       (token) => token.type === 'link'
     ) as Tokens.Link
@@ -151,4 +281,49 @@ function getProposalFromTableRow(row: Token[][], stage: Stage) {
   }
 
   return proposal
+}
+
+function getInactiveProposalFromRow(row: Token[][]) {
+  const [proposalCol, championsCol, rationaleCol] = row
+
+  const proposalLinkTokens = proposalCol.find(
+    (col) => col.type === 'link'
+  ) as Tokens.Link
+
+  const proposalTextToken = proposalCol.find(
+    (col) => col.type === 'text'
+  ) as Tokens.Text
+
+  const proposalToken = proposalLinkTokens ?? proposalTextToken
+
+  const championTokens = championsCol.filter(
+    (col) => col.type === 'text'
+  ) as Tokens.Text[]
+
+  const rationaleToken = rationaleCol.find(
+    (col) => col.type === 'text'
+  ) as Tokens.Text
+
+  const type = 'inactive'
+  const champions = championTokens.map((token) => token.text)
+  const rationale = rationaleToken.text
+
+  const proposal: Proposal = {
+    type,
+    name: proposalToken.text,
+    link: proposalToken.href || '',
+    champions,
+    rationale
+  }
+
+  return proposal
+}
+
+// Finish i18n columns
+function getLastPresentedDateColumnIndex(stage: Stage, key: ResponseKey) {
+  const isEcma402 = key.startsWith('i18n')
+
+  if (isEcma402) {
+  } else {
+  }
 }
