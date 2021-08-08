@@ -12,8 +12,8 @@ export type Stage = typeof stages[number]
 export interface Proposal {
   type: 'ecma262' | 'ecma402' | 'inactive'
   name: string
-  link: string
   champions: string[]
+  link?: string
   authors?: string[]
   rationale?: string
   meetingNotes?: {

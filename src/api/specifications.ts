@@ -68,7 +68,7 @@ async function getAllSummaries(): Promise<string[]> {
   const $ = load(html)
   const $ctx = $('#sec-intro')
   const paragraphs = $('p', $ctx)
-    .map((_, el) => $(el, $ctx).text())
+    .map((_, el) => $(el, $ctx).html())
     .toArray()
 
   const indexOfFirstSummary = paragraphs.findIndex((p) =>

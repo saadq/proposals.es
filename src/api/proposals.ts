@@ -127,6 +127,7 @@ export async function getProposalsByStage(): Promise<ProposalsByStage> {
   })
 
   const proposalsByStage = getProposalsFromReadmesByStage(readmesByStage)
+
   return proposalsByStage
 }
 
@@ -134,13 +135,12 @@ function getProposalsFromReadmesByStage(
   allReadmesByStage: GitHubResponse
 ): ProposalsByStage {
   return stages.reduce((proposalsByStage, stage) => {
-    // inactive proposals
     if (stage === 'inactive') {
-      const inactiveKey = 'inactive'
-      const inactiveReadme = allReadmesByStage[inactiveKey].object.text
+      const inactiveProposalsKey = 'inactive'
+      const inactiveReadme = allReadmesByStage[inactiveProposalsKey].object.text
       const inactiveProposals = getProposalsFromReadme({
         readme: inactiveReadme,
-        key: inactiveKey,
+        key: inactiveProposalsKey,
         stage
       })
 
@@ -150,21 +150,19 @@ function getProposalsFromReadmesByStage(
       }
     }
 
-    // ecma262 proposals
-    const key = stageKeyMap[stage]
-    const proposalsReadme = allReadmesByStage[key].object.text
+    const proposalsKey = stageKeyMap[stage]
+    const proposalsReadme = allReadmesByStage[proposalsKey].object.text
     const ecma262Proposals = getProposalsFromReadme({
       readme: proposalsReadme,
-      key,
+      key: proposalsKey,
       stage
     })
 
-    // ecma402 proposals
-    const i18nKey = i18nStageKeyMap[stage]
-    const i18nProposalsReadme = allReadmesByStage[i18nKey].object.text
+    const i18nProposalsKey = i18nStageKeyMap[stage]
+    const i18nProposalsReadme = allReadmesByStage[i18nProposalsKey].object.text
     const ecma402Proposals = getProposalsFromReadme({
       readme: i18nProposalsReadme,
-      key: i18nKey,
+      key: i18nProposalsKey,
       stage
     })
 
@@ -197,17 +195,17 @@ function getProposalsFromReadme({
   const rows = table.tokens.cells
 
   const proposals = rows
-    .map((row) => getProposalFromRow({ row, stage, key }))
+    .map((row) =>
+      key === 'inactive'
+        ? getInactiveProposalFromRow(row)
+        : getProposalFromRow({ row, stage, key })
+    )
     .filter((row) => row != null)
 
   return proposals
 }
 
 function getProposalFromRow({ row, stage, key }: GetProposalFromRow) {
-  if (key === 'inactive') {
-    return getInactiveProposalFromRow(row)
-  }
-
   const [proposalCol, authorsCol, championsCol, ...rest] = row
 
   const proposalLinkTokens = proposalCol.find(
@@ -228,7 +226,8 @@ function getProposalFromRow({ row, stage, key }: GetProposalFromRow) {
     (col) => col.type === 'text'
   ) as Tokens.Text[]
 
-  const type = key.startsWith('i18n') ? 'ecma402' : 'ecma262'
+  const isEcma402 = key.startsWith('i18n')
+  const type = isEcma402 ? 'ecma402' : 'ecma262'
   const authors = authorTokens.map((token) => token.text)
   const champions = championTokens.map((token) => token.text)
 
@@ -236,17 +235,21 @@ function getProposalFromRow({ row, stage, key }: GetProposalFromRow) {
     ? proposalToken.text
     : proposalCol.map((col) => (col as Tokens.Text).text).join('')
 
-  const link = proposalToken?.href ?? ''
-
   const proposal: Proposal = {
     type,
     name,
-    link,
     authors,
     champions
   }
 
-  if (!key.startsWith('i18n') && stage !== 'stage4') {
+  if (proposalLinkTokens) {
+    proposal.link = proposalToken.href
+  }
+
+  if (
+    (!isEcma402 && stage !== 'stage4') ||
+    (isEcma402 && stage !== 'stage0' && stage !== 'stage4')
+  ) {
     const lastPresentedDateIndex = stage === 'stage3' ? 1 : 0
 
     const lastPresentedDate = rest[lastPresentedDateIndex]?.find(
@@ -308,22 +311,20 @@ function getInactiveProposalFromRow(row: Token[][]) {
   const champions = championTokens.map((token) => token.text)
   const rationale = rationaleToken.text
 
+  const name = proposalLinkTokens
+    ? proposalToken.text
+    : proposalCol.map((col) => (col as Tokens.Text).text).join('')
+
   const proposal: Proposal = {
     type,
-    name: proposalToken.text,
-    link: proposalToken.href || '',
+    name,
     champions,
     rationale
   }
 
-  return proposal
-}
-
-// Finish i18n columns
-function getLastPresentedDateColumnIndex(stage: Stage, key: ResponseKey) {
-  const isEcma402 = key.startsWith('i18n')
-
-  if (isEcma402) {
-  } else {
+  if (proposalLinkTokens) {
+    proposal.link = proposalToken.href
   }
+
+  return proposal
 }

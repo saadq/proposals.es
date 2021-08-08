@@ -52,7 +52,7 @@ const Links = styled.ul`
   }
 `
 
-const Summary = styled.p`
+const Summary = styled.div`
   padding: 0 2rem;
   line-height: 2;
   color: #c1c3cb;
@@ -94,7 +94,7 @@ export default function Specifications({ specifications }: Props) {
               </li>
             </Links>
           </Header>
-          <Summary>{spec.summary}</Summary>
+          <Summary dangerouslySetInnerHTML={{ __html: spec.summary }} />
         </Specification>
       ))}
     </>
