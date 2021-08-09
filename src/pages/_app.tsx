@@ -16,7 +16,7 @@ const Main = styled.main`
   margin: 0 ${({ theme }) => theme.sizes.gutter};
 `
 
-function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   const theme = darkTheme // TODO – Don't hardcode this
 
   return (
@@ -32,5 +32,3 @@ function App({ Component, pageProps }: AppProps) {
     </ThemeProvider>
   )
 }
-
-export default App
