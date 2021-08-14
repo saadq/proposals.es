@@ -128,19 +128,19 @@ export async function getProposalsByStage(): Promise<ProposalsByStage> {
     {}
   ) as ReadmesByStage
 
-  const proposals: ProposalsByStage = getProposalsFromReadmes(readmesByStage)
+  const proposals: ProposalsByStage = getAllProposalsFromReadmes(readmesByStage)
 
   return proposals
 }
 
-function getProposalsFromReadmes(
+function getAllProposalsFromReadmes(
   allReadmesByStage: ReadmesByStage
 ): ProposalsByStage {
   return stages.reduce((proposalsByStage, stage) => {
     if (stage === 'inactive') {
       return {
         ...proposalsByStage,
-        inactive: getInactiveProposals(allReadmesByStage.inactive)
+        inactive: getProposalsFromReadme(allReadmesByStage.inactive, stage)
       }
     }
 
@@ -148,8 +148,8 @@ function getProposalsFromReadmes(
     const ecma402Readme = allReadmesByStage[i18nStageKeyMap[stage]]
 
     const proposals = [
-      ...getEcma262ProposalsForStage(ecma262Readme, stage),
-      ...getEcma402ProposalsForStage(ecma402Readme, stage)
+      ...getProposalsFromReadme(ecma262Readme, stage),
+      ...getProposalsFromReadme(ecma402Readme, stage, true)
     ]
 
     return {
@@ -159,36 +159,15 @@ function getProposalsFromReadmes(
   }, {}) as ProposalsByStage
 }
 
-function getInactiveProposals(readme: string): Proposal[] {
+function getProposalsFromReadme(
+  readme: string,
+  stage: Stage,
+  isI18n?: boolean
+): Proposal[] {
   const html = marked(readme)
   const $ = load(html)
-  const rows = $('tbody tr')
-
-  return rows
-    .map((_, element) => {
-      const row = $(element, rows)
-      const cols = $('td', row)
-      const [proposalHtml, championsHtml, rationaleHtml] = cols.map(
-        (_, element) => $(element, cols).html()
-      )
-
-      const proposal: Proposal = {
-        type: 'inactive',
-        proposalHtml,
-        championsHtml,
-        rationaleHtml
-      }
-
-      return proposal
-    })
-    .toArray()
-}
-
-function getEcma262ProposalsForStage(readme: string, stage: Stage): Proposal[] {
-  const html = marked(readme)
-  const $ = load(html)
-  const tableIndex = stage === 'stage2' ? 2 : 1
-  const rows = $(`table:nth-of-type(${tableIndex}) tbody tr`)
+  const tableNumber = getTableNumberForStage(stage, isI18n)
+  const rows = $(`table:nth-of-type(${tableNumber}) tbody tr`)
 
   const proposals = rows
     .map((_, element) => {
@@ -196,54 +175,32 @@ function getEcma262ProposalsForStage(readme: string, stage: Stage): Proposal[] {
       const cols = $('td', row)
       const colVals = cols.map((_, element) => $(element, cols).html())
 
+      if (stage === 'inactive') {
+        const [proposalHtml, championsHtml, rationaleHtml] = colVals
+
+        const proposal: Proposal = {
+          type: 'inactive',
+          proposalHtml,
+          championsHtml,
+          rationaleHtml
+        }
+
+        return proposal
+      }
+
       const proposal: Proposal = {
-        type: 'ecma262',
+        type: isI18n ? 'ecma402' : 'ecma262',
         proposalHtml: colVals[0],
         authorsHtml: colVals[1],
         championsHtml: colVals[2]
-      }
-
-      if (stage !== 'stage4') {
-        const lastPresentedIndex = stage === 'stage3' ? 4 : 3
-        proposal.lastPresentedHtml = colVals[lastPresentedIndex]
-      } else {
-        proposal.meetingNotesHtml = colVals[3]
-        proposal.expectedPublicationYearHtml = colVals[4]
-      }
-
-      return proposal
-    })
-    .toArray()
-
-  return proposals
-}
-
-function getEcma402ProposalsForStage(readme: string, stage: Stage): Proposal[] {
-  const html = marked(readme)
-  const $ = load(html)
-  const tableIndex = stage === 'stage1' ? 3 : stage === 'stage2' ? 2 : 1
-  const rows = $(`table:nth-of-type(${tableIndex}) tbody tr`)
-
-  const proposals = rows
-    .map((_, element) => {
-      const row = $(element, rows)
-      const cols = $('td', row)
-      const colVals = cols.map((_, element) => $(element, cols).html())
-
-      const proposal: Proposal = {
-        type: 'ecma402',
-        proposalHtml: colVals[0],
-        authorsHtml: colVals[1],
-        championsHtml: colVals[2]
-      }
-
-      if (stage === 'stage1' || stage === 'stage2' || stage === 'stage3') {
-        proposal.lastPresentedHtml = colVals[3]
       }
 
       if (stage === 'stage4') {
         proposal.meetingNotesHtml = colVals[3]
         proposal.expectedPublicationYearHtml = colVals[4]
+      } else if (!isI18n || (isI18n && stage !== 'stage0')) {
+        const lastPresentedColIndex = !isI18n && stage === 'stage3' ? 4 : 3
+        proposal.lastPresentedHtml = colVals[lastPresentedColIndex]
       }
 
       return proposal
@@ -251,4 +208,12 @@ function getEcma402ProposalsForStage(readme: string, stage: Stage): Proposal[] {
     .toArray()
 
   return proposals
+}
+
+function getTableNumberForStage(stage: Stage, isI18n?: boolean) {
+  if (isI18n) {
+    return stage === 'stage1' ? 3 : stage === 'stage2' ? 2 : 1
+  }
+
+  return stage === 'stage2' ? 2 : 1
 }
