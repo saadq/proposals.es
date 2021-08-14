@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
-  background: black;
+  background: ${({ theme }) => theme.colors.footer};
   width: 100%;
   height: ${({ theme }) => theme.sizes.footerHeight};
   display: flex;
