@@ -1,8 +1,8 @@
 import type { AppProps } from 'next/app'
 import styled, { ThemeProvider } from 'styled-components'
-import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
-import { GlobalStyle } from '../components/GlobalStyle'
+import { Header } from '../components/common/Header'
+import { Footer } from '../components/common/Footer'
+import { GlobalStyle } from '../components/common/GlobalStyle'
 import { darkTheme } from '../theme'
 
 const Page = styled.div`
