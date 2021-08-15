@@ -175,14 +175,17 @@ function getProposalsFromReadme(
       const cols = $('td', row)
       const colVals = cols.map((_, element) => $(element, cols).html())
       const proposalLink = $(colVals[0], cols)
+      const hasLink = proposalLink.attr('href')
 
       if (stage === 'inactive') {
-        const [, championsHtml, rationaleHtml] = colVals
+        const [titleHtml, championsHtml, rationaleHtml] = colVals
 
         const proposal: Proposal = {
           type: 'inactive',
-          titleHtml: proposalLink.html() ?? '',
           link: proposalLink.attr('href') ?? '',
+          titleHtml: hasLink
+            ? (proposalLink.html() as string)
+            : titleHtml ?? '',
           championsHtml,
           rationaleHtml
         }
@@ -192,8 +195,8 @@ function getProposalsFromReadme(
 
       const proposal: Proposal = {
         type: isI18n ? 'ecma402' : 'ecma262',
-        titleHtml: proposalLink.html() ?? '',
         link: proposalLink.attr('href') ?? '',
+        titleHtml: hasLink ? (proposalLink.html() as string) : colVals[0] ?? '',
         authorsHtml: colVals[1],
         championsHtml: colVals[2]
       }
