@@ -10,6 +10,13 @@ const Card = styled.div<{ type: Proposal['type'] }>`
   margin: 0 auto;
   text-align: center;
   width: 100%;
+  cursor: pointer;
+  transition: all 0.4s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary};
+    color: black;
+  }
 
   &:last-child {
     margin-bottom: 1rem;
@@ -35,7 +42,7 @@ export function ProposalCard({ proposal }: Props) {
 
   return (
     <Card type={type}>
-      <SanitizedHtml html={proposal.proposalHtml} />
+      <SanitizedHtml html={proposal.titleHtml} />
     </Card>
   )
 }
