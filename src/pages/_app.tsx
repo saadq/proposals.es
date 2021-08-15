@@ -13,7 +13,7 @@ const Page = styled.div`
 
 const Main = styled.main`
   flex: 1;
-  margin: 0 ${({ theme }) => theme.sizes.gutter};
+  margin: 1rem ${({ theme }) => theme.sizes.gutter};
 `
 
 export default function App({ Component, pageProps }: AppProps) {

@@ -8,7 +8,7 @@ import { ProposalsByStage, stages } from '../types'
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 3rem;
   margin: 1rem auto;
   flex-wrap: wrap;
   width: 90%;
