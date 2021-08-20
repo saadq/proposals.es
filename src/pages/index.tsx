@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { getProposalsByStage } from '../api/proposals'
+import { getAllProposalsByStage } from '../api/proposals'
 import { StageCard } from '../components/proposals/StageCard'
 import { ProposalsByStage, stages } from '../types'
 
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const proposals = await getProposalsByStage()
+  const proposals = await getAllProposalsByStage()
   const oneHourInSeconds = 1 * 60 * 60
 
   return {
@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-export default function Proposals({ proposals }: Props) {
+export default function ProposalsPage({ proposals }: Props) {
   if (typeof window !== 'undefined') {
     console.log({ proposals })
   }

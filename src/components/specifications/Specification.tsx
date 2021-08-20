@@ -2,6 +2,7 @@ import { GetStaticProps } from 'next'
 import styled from 'styled-components'
 import { getSpecifications } from '../../api/specifications'
 import { Specification as SpecificationType } from '../../types'
+import { SanitizedHtml } from '../common/SanitizedHtml'
 
 const Container = styled.section`
   margin: 2rem 0;
@@ -72,7 +73,8 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   const specifications = await getSpecifications()
 
   return {
-    props: { specifications }
+    props: { specifications },
+    revalidate: 10
   }
 }
 
@@ -94,7 +96,9 @@ export function Specification({ specifications }: Props) {
               </li>
             </Links>
           </Header>
-          <Summary dangerouslySetInnerHTML={{ __html: spec.summary }} />
+          <Summary>
+            <SanitizedHtml html={spec.summary} />
+          </Summary>
         </Container>
       ))}
     </>

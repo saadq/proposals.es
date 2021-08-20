@@ -1,8 +1,7 @@
 import { sanitize } from 'isomorphic-dompurify'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
-  padding: 1rem;
+const Wrapper = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
 `

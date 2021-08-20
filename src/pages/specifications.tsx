@@ -76,7 +76,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   }
 }
 
-export default function Specifications({ specifications }: Props) {
+export default function SpecificationsPage({ specifications }: Props) {
   return (
     <>
       {specifications.map((spec) => (

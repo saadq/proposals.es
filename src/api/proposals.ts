@@ -45,7 +45,7 @@ const i18nStageKeyMap: Record<ActiveStage, ResponseKey> = {
   stage4: 'i18nStage4'
 }
 
-export async function getProposalsByStage(): Promise<ProposalsByStage> {
+export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
   const getReadmesByStage = `
     query {
       inactive: repository(owner: "tc39", name: "proposals") {

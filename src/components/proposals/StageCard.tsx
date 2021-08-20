@@ -1,6 +1,6 @@
-import { ProposalCard } from './Proposal'
-import { Proposal, Stage } from '../../types'
 import styled from 'styled-components'
+import { ProposalCard } from './ProposalCard'
+import { Proposal, Stage } from '../../types'
 
 const Card = styled.div`
   display: flex;
@@ -28,7 +28,6 @@ const ProposalsContainer = styled.div`
   flex-direction: column;
   flex: 1;
   overflow-y: scroll;
-  gap: 1rem;
   padding: 0 1rem;
 `
 
@@ -55,7 +54,12 @@ export function StageCard({ stage, proposals }: Props) {
       <Heading>{formatStageName(stage)}</Heading>
       <ProposalsContainer>
         {proposals.map((proposal, i) => (
-          <ProposalCard proposal={proposal} key={`proposal-${i}`} />
+          <ProposalCard
+            stage={stage}
+            proposal={proposal}
+            index={i}
+            key={`${stage}-proposal-${i}`}
+          />
         ))}
       </ProposalsContainer>
     </Card>
