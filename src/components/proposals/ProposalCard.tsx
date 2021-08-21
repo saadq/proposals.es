@@ -47,10 +47,16 @@ interface Props {
 export function ProposalCard({ stage, proposal, index }: Props) {
   const { type } = proposal
 
+  // TODO: Remove this when the multi-proposal edge case is handled.
+  // Some proposals in the readmes can have multiple proposals in a single column (e.g. "Class Fields")
+  if (proposal.titleHtml.includes('Class Fields')) {
+    return null
+  }
+
   return (
     <Link
-      href="/[stageName]/[proposalNumber]"
-      as={`/${stage}/${index}`}
+      passHref
+      href={`/${stage}/${index}`}
       key={`${stage}-proposal-${index}`}
     >
       <StyledLink>

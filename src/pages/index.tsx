@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { getAllProposalsByStage } from '../api/proposals'
+import { getAllProposalsByStage } from '../api/getAllProposalsByStage'
 import { StageCard } from '../components/proposals/StageCard'
 import { ProposalsByStage, stages } from '../types'
 
@@ -29,10 +29,6 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 export default function ProposalsPage({ proposals }: Props) {
-  if (typeof window !== 'undefined') {
-    console.log({ proposals })
-  }
-
   return (
     <>
       <Head>

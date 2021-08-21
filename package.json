@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@octokit/graphql": "^4.6.4",
+    "@octokit/rest": "^18.9.1",
     "cheerio": "^1.0.0-rc.10",
     "isomorphic-dompurify": "^0.15.0",
     "marked": "^2.1.3",

@@ -1,23 +1,14 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import styled from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
 import { Proposal, Stage, stages } from '../../types'
-import { getAllProposalsByStage } from '../../api/proposals'
-import { SanitizedHtml } from '../../components/common/SanitizedHtml'
-
-const Container = styled.section`
-  font-size: 1rem;
-`
-
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-`
+import { getAllProposalsByStage } from '../../api/getAllProposalsByStage'
+import { ProposalDetails } from '../../components/proposals/ProposalDetails'
+import { getReadmeForProposal } from '../../api/getReadmeForProposal'
 
 interface Props {
   stageName: Stage
   proposal: Proposal
+  readme: string
 }
 
 interface Params extends ParsedUrlQuery {
@@ -36,11 +27,13 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
   const allProposalsByStage = await getAllProposalsByStage()
   const proposals = allProposalsByStage[stageName as Stage]
   const proposal = proposals[Number(proposalNumber)]
+  const readme = await getReadmeForProposal(proposal)
 
   return {
     props: {
+      stageName: stageName as Stage,
       proposal,
-      stageName: stageName as Stage
+      readme
     },
     revalidate: 10
   }
@@ -67,31 +60,12 @@ export const getStaticPaths: GetStaticPaths<Params> = async (context) => {
   }
 }
 
-export default function ProposalDetailsPage({ proposal, stageName }: Props) {
-  console.log({ proposal })
+export default function ProposalDetailsPage({
+  proposal,
+  stageName,
+  readme
+}: Props) {
   return (
-    <Container>
-      <h1>
-        <SanitizedHtml html={proposal.titleHtml} />
-      </h1>
-      <h2>Stage: {stageName}</h2>
-      <p>
-        <a href={proposal.link}>View proposal</a>
-      </p>
-      <>
-        <h3>Authors:</h3>
-        <SanitizedHtml html={proposal.authorsHtml} />
-      </>
-      <>
-        <h3>Champions:</h3>
-        <SanitizedHtml html={proposal.championsHtml} />
-      </>
-      {proposal.lastPresentedHtml && (
-        <Row>
-          <p>Last presented:</p>
-          <SanitizedHtml html={proposal.lastPresentedHtml} />
-        </Row>
-      )}
-    </Container>
+    <ProposalDetails proposal={proposal} stage={stageName} readme={readme} />
   )
 }

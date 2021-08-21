@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { markdownStyles } from '../../theme/markdown'
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -27,4 +28,10 @@ export const GlobalStyle = createGlobalStyle`
     vertical-align: top;
     font-size: 1rem;
   }
+
+  svg.octicon {
+    display: none;
+  }
+
+  ${markdownStyles}
 `

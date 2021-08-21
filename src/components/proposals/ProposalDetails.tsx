@@ -1,34 +1,49 @@
+import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
-import { Proposal } from '../../types'
+import { Proposal, Stage } from '../../types'
+
+const Container = styled.section`
+  font-size: 1rem;
+`
+
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+`
 
 interface Props {
   proposal: Proposal
+  stage: Stage
+  readme: string
 }
 
-export default function ProposalDetailsPage({ proposal }: Props) {
+export function ProposalDetails({ proposal, stage, readme }: Props) {
   return (
-    <div>
+    <Container>
       <h1>
         <SanitizedHtml html={proposal.titleHtml} />
       </h1>
-      <h2>{proposal.type}</h2>
+      <h2>Stage: {stage}</h2>
       <p>
-        <SanitizedHtml html={proposal.link} />
+        <a href={proposal.link}>View proposal</a>
       </p>
-      <p>
+      <>
+        <h3>Authors:</h3>
         <SanitizedHtml html={proposal.authorsHtml} />
-      </p>
-      <p>
+      </>
+      <>
+        <h3>Champions:</h3>
         <SanitizedHtml html={proposal.championsHtml} />
-      </p>
-      <p
-        style={{
-          display: 'flex',
-          alignItems: 'center'
-        }}
-      >
-        Last presented: <SanitizedHtml html={proposal.lastPresentedHtml} />
-      </p>
-    </div>
+      </>
+      {proposal.lastPresentedHtml && (
+        <Row>
+          <p>Last presented:</p>
+          <SanitizedHtml html={proposal.lastPresentedHtml} />
+        </Row>
+      )}
+      <hr />
+      {readme && <SanitizedHtml html={readme} />}
+    </Container>
   )
 }

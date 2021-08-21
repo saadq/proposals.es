@@ -1,9 +1,9 @@
 import { sanitize } from 'isomorphic-dompurify'
 import styled from 'styled-components'
 
-const Wrapper = styled.span`
+const Wrapper = styled.div`
   overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
 `
 
 interface Props {
