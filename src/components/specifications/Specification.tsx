@@ -71,10 +71,11 @@ interface Props {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const specifications = await getSpecifications()
+  const oneHourInSeconds = 1 * 60 * 60
 
   return {
     props: { specifications },
-    revalidate: 10
+    revalidate: oneHourInSeconds
   }
 }
 

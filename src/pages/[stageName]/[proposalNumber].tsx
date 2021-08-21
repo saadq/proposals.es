@@ -28,6 +28,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
   const proposals = allProposalsByStage[stageName as Stage]
   const proposal = proposals[Number(proposalNumber)]
   const readme = await getReadmeForProposal(proposal)
+  const oneHourInSeconds = 1 * 60 * 60
 
   return {
     props: {
@@ -35,7 +36,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
       proposal,
       readme
     },
-    revalidate: 10
+    revalidate: oneHourInSeconds
   }
 }
 
