@@ -29,6 +29,10 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 export default function ProposalsPage({ proposals }: Props) {
+  if (typeof window !== 'undefined') {
+    console.log(proposals)
+  }
+
   return (
     <>
       <Head>
