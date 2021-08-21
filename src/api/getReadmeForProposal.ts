@@ -14,14 +14,14 @@ const octokit = new Octokit({
   userAgent: 'proposals.es'
 })
 
-export async function getReadmeForProposal(
-  proposal: Proposal
-): Promise<string> {
-  if (!proposal.link?.includes('github.com')) {
+export async function getReadmeForProposal({
+  link
+}: Proposal): Promise<string> {
+  if (!link?.includes('github.com')) {
     return ''
   }
 
-  const url = new URL(proposal.link as string)
+  const url = new URL(link as string)
   const [, owner, repo, , ref, ...paths] = url.pathname.split('/')
   const path = paths.join('/')
 
@@ -35,7 +35,7 @@ export async function getReadmeForProposal(
     }
   }
 
-  const response = proposal.link.endsWith('.md')
+  const response = link.endsWith('.md')
     ? await octokit.repos.getContent(params as GetContentParams)
     : await octokit.repos.getReadme(params as GetReadmeParams)
 

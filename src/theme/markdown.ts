@@ -992,7 +992,8 @@ export const markdownStyles = css`
 
   .markdown-body {
     color: #c9d1d9;
-    background-color: #0d1117;
+    background-color: ${({ theme }) => theme.colors.background};
+    margin: 2rem 0;
   }
 
   .markdown-body a {

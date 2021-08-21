@@ -4,6 +4,9 @@ import { Proposal, Stage } from '../../types'
 
 const Container = styled.section`
   font-size: 1rem;
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
 `
 
 const Row = styled.div`
