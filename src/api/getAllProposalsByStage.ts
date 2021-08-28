@@ -53,7 +53,10 @@ const i18nStageKeyMap: Record<ActiveStage, ResponseKey> = {
   stage4: 'i18nStage4'
 }
 
+const sleep = () => new Promise((res) => setTimeout(res, 100))
+
 export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
+  await sleep()
   const getReadmesByStage = `
     query {
       inactive: repository(owner: "tc39", name: "proposals") {
@@ -234,6 +237,7 @@ function getTableNumberForStage(stage: Stage, isI18n?: boolean) {
 }
 
 async function getProposalsWithStars(proposalsByStage: ProposalsByStage) {
+  await sleep()
   const allProposals = Object.values(proposalsByStage).flat()
 
   const query = `
