@@ -14,6 +14,7 @@ export interface Proposal {
   type: 'ecma262' | 'ecma402' | 'inactive'
   titleHtml: string
   championsHtml: string
+  stars?: number
   link?: string
   source?: string
   authorsHtml?: string

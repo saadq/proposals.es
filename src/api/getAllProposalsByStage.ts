@@ -29,6 +29,14 @@ interface GitHubResponse {
 type ResponseKey = keyof GitHubResponse
 type ReadmesByStage = Record<ResponseKey, string>
 
+interface GitHubStargazerResponse {
+  [key: string]: {
+    stargazerCount: number
+  }
+}
+
+type StarsByProposal = Record<string, number>
+
 const stageKeyMap: Record<ActiveStage, ResponseKey> = {
   stage0: 'stage0',
   stage1: 'stage1',
@@ -129,8 +137,9 @@ export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
   ) as ReadmesByStage
 
   const proposals: ProposalsByStage = getAllProposalsFromReadmes(readmesByStage)
+  const proposalsWithStars = await getProposalsWithStars(proposals)
 
-  return proposals
+  return proposalsWithStars
 }
 
 function getAllProposalsFromReadmes(
@@ -222,4 +231,68 @@ function getTableNumberForStage(stage: Stage, isI18n?: boolean) {
   }
 
   return stage === 'stage2' ? 2 : 1
+}
+
+async function getProposalsWithStars(proposalsByStage: ProposalsByStage) {
+  const allProposals = Object.values(proposalsByStage).flat()
+
+  const query = `
+    query {
+      ${allProposals.filter(isGithubProposal).map((proposal) => {
+        const { owner, repoName } = getGitHubDetails(proposal)
+        const proposalKey = getProposalKey(proposal)
+        return `
+          ${proposalKey}: repository(owner: "${owner}", name: "${repoName}") {
+            stargazerCount
+          }
+        `
+      })}
+    }
+  `
+
+  const stargazerResponse: GitHubStargazerResponse = await graphql(query, {
+    headers: {
+      Authorization: `token ${process.env.GITHUB_TOKEN}`
+    }
+  })
+
+  const starsByProposal = Object.entries(stargazerResponse).reduce(
+    (starsByProposal, [name, response]) => ({
+      ...starsByProposal,
+      [name]: response.stargazerCount
+    }),
+    {} as StarsByProposal
+  )
+
+  const proposalsWithStars = Object.entries(proposalsByStage).reduce(
+    (proposalsWithStars, [stage, proposals]) => ({
+      ...proposalsWithStars,
+      [stage]: proposals.map((proposal) =>
+        isGithubProposal(proposal)
+          ? { ...proposal, stars: starsByProposal[getProposalKey(proposal)] }
+          : proposal
+      )
+    }),
+    {} as ProposalsByStage
+  )
+
+  return proposalsWithStars
+}
+
+function getGitHubDetails(proposal: Proposal) {
+  const url = new URL(proposal.link as string)
+  const [, owner, repoName] = url.pathname.split('/')
+
+  return { owner, repoName }
+}
+
+function getProposalKey(proposal: Proposal) {
+  const { owner, repoName } = getGitHubDetails(proposal)
+  const repoNameWithoutInvalidChars = repoName.replace(/-|\./g, '_')
+
+  return `${owner}__${repoNameWithoutInvalidChars}`
+}
+
+function isGithubProposal(proposal: Proposal) {
+  return proposal.link?.includes('github.com')
 }
