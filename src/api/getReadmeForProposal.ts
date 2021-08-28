@@ -1,5 +1,6 @@
 import { Octokit, RestEndpointMethodTypes } from '@octokit/rest'
 import { Proposal } from '../types'
+import { avoidRateLimit } from '../utils/avoidRateLimit'
 
 type GetReadmeParams =
   RestEndpointMethodTypes['repos']['getReadme']['parameters']
@@ -34,6 +35,8 @@ export async function getReadmeForProposal({
     return ''
   }
 
+  await avoidRateLimit()
+
   const url = new URL(link as string)
   const [, owner, repo, , ref, ...paths] = url.pathname.split('/')
   const path = paths.join('/')
@@ -59,6 +62,7 @@ export async function getReadmeForProposal({
 }
 
 async function getMarkdownFileFromRepo(params: Params): Promise<string> {
+  await avoidRateLimit()
   const getContentResponse = await octokit.repos.getContent(
     params as GetContentParams
   )

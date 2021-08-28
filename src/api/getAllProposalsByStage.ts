@@ -1,6 +1,7 @@
 import { graphql } from '@octokit/graphql'
 import marked from 'marked'
 import { load } from 'cheerio'
+import { avoidRateLimit } from '../utils/avoidRateLimit'
 import {
   ActiveStage,
   Proposal,
@@ -53,10 +54,8 @@ const i18nStageKeyMap: Record<ActiveStage, ResponseKey> = {
   stage4: 'i18nStage4'
 }
 
-const sleep = () => new Promise((res) => setTimeout(res, 100))
-
 export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
-  await sleep()
+  await avoidRateLimit()
   const getReadmesByStage = `
     query {
       inactive: repository(owner: "tc39", name: "proposals") {
@@ -237,7 +236,7 @@ function getTableNumberForStage(stage: Stage, isI18n?: boolean) {
 }
 
 async function getProposalsWithStars(proposalsByStage: ProposalsByStage) {
-  await sleep()
+  await avoidRateLimit()
   const allProposals = Object.values(proposalsByStage).flat()
 
   const query = `
