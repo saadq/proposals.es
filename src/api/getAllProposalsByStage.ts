@@ -1,6 +1,6 @@
 import { graphql } from '@octokit/graphql'
 import marked from 'marked'
-import { load } from 'cheerio'
+import { CheerioAPI, load } from 'cheerio'
 import { avoidRateLimit } from '../utils/avoidRateLimit'
 import {
   ActiveStage,
@@ -190,6 +190,7 @@ function getProposalsFromReadme(
 
       if (stage === 'inactive') {
         const [titleHtml, championsHtml, rationaleHtml] = colVals
+        const champions = getTextListFromCell($, championsHtml)
 
         const proposal: Proposal = {
           type: 'inactive',
@@ -197,19 +198,22 @@ function getProposalsFromReadme(
           titleHtml: hasLink
             ? (proposalLink.html() as string)
             : titleHtml ?? '',
-          championsHtml,
+          champions,
           rationaleHtml
         }
 
         return proposal
       }
 
+      const authors = getTextListFromCell($, colVals[1])
+      const champions = getTextListFromCell($, colVals[2])
+
       const proposal: Proposal = {
         type: isI18n ? 'ecma402' : 'ecma262',
         link: proposalLink.attr('href') ?? '',
         titleHtml: hasLink ? (proposalLink.html() as string) : colVals[0] ?? '',
-        authorsHtml: colVals[1],
-        championsHtml: colVals[2]
+        authors,
+        champions
       }
 
       if (stage === 'stage4') {
@@ -233,6 +237,10 @@ function getTableNumberForStage(stage: Stage, isI18n?: boolean) {
   }
 
   return stage === 'stage2' ? 2 : 1
+}
+
+function getTextListFromCell($: CheerioAPI, cell: string) {
+  return cell.split('<br>').map((item) => $(item).text() || item)
 }
 
 async function getProposalsWithStars(proposalsByStage: ProposalsByStage) {

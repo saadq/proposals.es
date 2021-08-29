@@ -13,11 +13,11 @@ export type ActiveStage = Exclude<Stage, 'inactive'>
 export interface Proposal {
   type: 'ecma262' | 'ecma402' | 'inactive'
   titleHtml: string
-  championsHtml: string
+  champions: string[]
+  authors?: string[]
   stars?: number
   link?: string
   source?: string
-  authorsHtml?: string
   rationaleHtml?: string
   meetingNotesHtml?: string
   lastPresentedHtml?: string

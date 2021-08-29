@@ -43,6 +43,14 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
   return (
     <Container>
       <BackButton onClick={goBack}>Go Back</BackButton>
+      <>
+        <h3>Authors:</h3>
+        {proposal.authors?.join(', ')}
+      </>
+      <>
+        <h3>Champions:</h3>
+        {proposal.champions?.join(', ')}
+      </>
       {readme ? (
         <>
           <p>
@@ -56,14 +64,6 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
             <SanitizedHtml html={proposal.titleHtml} />
           </h1>
           <h2>Stage: {stage}</h2>
-          <>
-            <h3>Authors:</h3>
-            <SanitizedHtml html={proposal.authorsHtml} />
-          </>
-          <>
-            <h3>Champions:</h3>
-            <SanitizedHtml html={proposal.championsHtml} />
-          </>
           {proposal.lastPresentedHtml && (
             <Row>
               <p>Last presented:</p>
