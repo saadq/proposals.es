@@ -2,8 +2,7 @@ import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal, Stage } from '../../types'
 import { useRouter } from 'next/router'
-import { useCallback, useState } from 'react'
-import { Spinner } from '../common/Spinner'
+import { useCallback } from 'react'
 
 const Container = styled.section`
   font-size: 1rem;
@@ -35,16 +34,11 @@ interface Props {
 }
 
 export function ProposalDetails({ proposal, stage, readme }: Props) {
-  const [isFrameLoading, setIsFrameLoading] = useState(true)
   const router = useRouter()
 
   const goBack = useCallback(() => {
     router.back()
   }, [router])
-
-  const handleFrameLoad = useCallback(() => {
-    setIsFrameLoading(false)
-  }, [setIsFrameLoading])
 
   return (
     <Container>
@@ -62,9 +56,6 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
             <SanitizedHtml html={proposal.titleHtml} />
           </h1>
           <h2>Stage: {stage}</h2>
-          <p>
-            <a href={proposal.link}>View proposal</a>
-          </p>
           <>
             <h3>Authors:</h3>
             <SanitizedHtml html={proposal.authorsHtml} />
@@ -85,23 +76,9 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
               <SanitizedHtml html={proposal.rationaleHtml} />
             </Row>
           )}
-          {proposal.link?.includes('github.com') ? null : (
-            <>
-              {isFrameLoading && <Spinner />}
-              <iframe
-                src={proposal.link}
-                onLoad={handleFrameLoad}
-                loading="eager"
-                style={{
-                  display: isFrameLoading ? 'none' : 'block',
-                  border: 'none',
-                  marginTop: '2rem',
-                  width: '100%',
-                  height: '100vh'
-                }}
-              />
-            </>
-          )}
+          <p>
+            <a href={proposal.link}>View proposal</a>
+          </p>
         </>
       )}
     </Container>
