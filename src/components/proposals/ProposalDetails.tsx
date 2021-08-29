@@ -79,6 +79,17 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
               <SanitizedHtml html={proposal.rationaleHtml} />
             </Row>
           )}
+          {proposal.link?.includes('github.com') ? null : (
+            <iframe
+              src={proposal.link}
+              loading="eager"
+              style={{
+                border: 'none',
+                width: '100%',
+                height: '100vh'
+              }}
+            />
+          )}
         </>
       )}
     </Container>
