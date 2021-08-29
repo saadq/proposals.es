@@ -6,7 +6,7 @@ import { buildGetStarsQuery } from './queries'
 
 type StarsByProposal = Record<GithubProposalKey, number>
 
-export async function getProposalsWithStars(
+export async function getStarsByProposal(
   proposalsByStage: ProposalsByStage
 ): Promise<StarsByProposal> {
   await avoidRateLimit()

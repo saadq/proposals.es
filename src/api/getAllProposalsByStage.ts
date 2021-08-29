@@ -1,4 +1,4 @@
-import { getProposalsWithStars } from './getStarsByProposal'
+import { getStarsByProposal } from './getStarsByProposal'
 import { ProposalsByStage } from '../types'
 import { getReadmesByStageQuery } from './queries'
 import { avoidRateLimit } from '../utils/avoidRateLimit'
@@ -28,7 +28,7 @@ export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
   ) as ReadmesByStage
 
   const proposals = parseProposalsFromReadmes(readmesByStage)
-  const starsByProposal = await getProposalsWithStars(proposals)
+  const starsByProposal = await getStarsByProposal(proposals)
 
   const proposalsWithStars = Object.entries(proposals).reduce(
     (proposalsWithStars, [stage, proposals]) => ({
