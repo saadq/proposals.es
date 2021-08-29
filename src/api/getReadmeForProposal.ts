@@ -1,6 +1,7 @@
 import { Octokit, RestEndpointMethodTypes } from '@octokit/rest'
 import { Proposal } from '../types'
 import { avoidRateLimit } from '../utils/avoidRateLimit'
+import { getGitHubDetails, isGithubProposal } from '../utils/github'
 
 type GetReadmeParams =
   RestEndpointMethodTypes['repos']['getReadme']['parameters']
@@ -12,15 +13,8 @@ type Params = GetReadmeParams | GetContentParams
 
 interface GitHubFile {
   name: string
-  path: string
-  sha: string
-  size: number
   url: string
-  html_url: string
-  git_url: string
-  download_url: string | null
-  type: string
-  _links: unknown[]
+  [key: string]: unknown
 }
 
 const octokit = new Octokit({
@@ -28,31 +22,32 @@ const octokit = new Octokit({
   userAgent: 'proposals.es'
 })
 
-export async function getReadmeForProposal({
-  link
-}: Proposal): Promise<string> {
-  if (!link?.includes('github.com')) {
+const mediaType = {
+  format: 'html'
+}
+
+export async function getReadmeForProposal(
+  proposal: Proposal
+): Promise<string> {
+  await avoidRateLimit()
+
+  if (!isGithubProposal(proposal)) {
     return ''
   }
 
-  await avoidRateLimit()
-
-  const url = new URL(link as string)
-  const [, owner, repo, , ref, ...paths] = url.pathname.split('/')
+  const { owner, repo, ref, paths } = getGitHubDetails(proposal)
   const path = paths.join('/')
 
   const params: Params = {
     owner,
     repo,
-    path,
     ref,
-    mediaType: {
-      format: 'html'
-    }
+    path,
+    mediaType
   }
 
   try {
-    const response = link.endsWith('.md')
+    const response = proposal.link?.endsWith('.md')
       ? await octokit.repos.getContent(params as GetContentParams)
       : await octokit.repos.getReadme(params as GetReadmeParams)
     return response.data as unknown as string
@@ -63,10 +58,11 @@ export async function getReadmeForProposal({
 
 async function getMarkdownFileFromRepo(params: Params): Promise<string> {
   await avoidRateLimit()
+
   const getContentResponse = await octokit.repos.getContent(
     params as GetContentParams
   )
-  const files = getContentResponse.data as unknown as GitHubFile[]
+  const files = getContentResponse.data as GitHubFile[]
   const markdownFile = files.find((file) => file.name.endsWith('.md'))
 
   if (!markdownFile) {
@@ -75,9 +71,7 @@ async function getMarkdownFileFromRepo(params: Params): Promise<string> {
 
   const getMarkdownFileResponse = await octokit.request({
     url: markdownFile.url,
-    mediaType: {
-      format: 'html'
-    }
+    mediaType
   })
 
   const readme = getMarkdownFileResponse.data as unknown as string

@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next'
 import styled from 'styled-components'
-import { getSpecifications } from '../api/specifications'
+import { getSpecifications } from '../api/getSpecifications'
 import { Specification as SpecificationType } from '../types'
 
 const Specification = styled.section`

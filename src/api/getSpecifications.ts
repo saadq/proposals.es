@@ -3,7 +3,7 @@ import { Specification } from '../types'
 
 type SpecificationWithoutSummary = Omit<Specification, 'summary'>
 
-const initialSpecifications: SpecificationWithoutSummary[] = [
+const specificationsWithoutSummaries: SpecificationWithoutSummary[] = [
   {
     name: 'ES2021',
     alias: 'ES12',
@@ -51,7 +51,7 @@ const initialSpecifications: SpecificationWithoutSummary[] = [
 export async function getSpecifications(): Promise<Specification[]> {
   const allSummaries = await getAllSummaries()
 
-  const specifications: Specification[] = initialSpecifications.map(
+  const specifications: Specification[] = specificationsWithoutSummaries.map(
     (spec, i) => ({
       ...spec,
       summary: allSummaries[i]
