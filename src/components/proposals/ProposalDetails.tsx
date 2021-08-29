@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal, Stage } from '../../types'
 import { useRouter } from 'next/router'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
+import { Spinner } from '../common/Spinner'
 
 const Container = styled.section`
   font-size: 1rem;
@@ -34,11 +35,16 @@ interface Props {
 }
 
 export function ProposalDetails({ proposal, stage, readme }: Props) {
+  const [isFrameLoading, setIsFrameLoading] = useState(true)
   const router = useRouter()
 
   const goBack = useCallback(() => {
     router.back()
   }, [router])
+
+  const handleFrameLoad = useCallback(() => {
+    setIsFrameLoading(false)
+  }, [setIsFrameLoading])
 
   return (
     <Container>
@@ -80,15 +86,21 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
             </Row>
           )}
           {proposal.link?.includes('github.com') ? null : (
-            <iframe
-              src={proposal.link}
-              loading="eager"
-              style={{
-                border: 'none',
-                width: '100%',
-                height: '100vh'
-              }}
-            />
+            <>
+              {isFrameLoading && <Spinner />}
+              <iframe
+                src={proposal.link}
+                onLoad={handleFrameLoad}
+                loading="eager"
+                style={{
+                  display: isFrameLoading ? 'none' : 'block',
+                  border: 'none',
+                  marginTop: '2rem',
+                  width: '100%',
+                  height: '100vh'
+                }}
+              />
+            </>
           )}
         </>
       )}
