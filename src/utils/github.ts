@@ -1,7 +1,8 @@
 import { Proposal } from '../types'
 import { graphql } from '@octokit/graphql'
 
-export type GithubProposalKey = `${string}__${string}`
+// This type should be `${string}__${string}` but Next.js's TS check seems to have issues.
+export type GithubProposalKey = string
 
 export async function request(query: string): Promise<unknown> {
   return graphql(query, {
