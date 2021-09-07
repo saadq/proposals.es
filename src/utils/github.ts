@@ -21,9 +21,12 @@ export function getGitHubDetails(proposal: Proposal) {
 
 export function getGithubProposalKey(proposal: Proposal): GithubProposalKey {
   const { owner, repo } = getGitHubDetails(proposal)
-  const validRepoName = repo.replace(/-|\./g, '_') // GraphQL aliases cannot contain `-` or `.`
 
-  return `${owner}__${validRepoName}`
+  // GraphQL aliases cannot contain `-` or `.`
+  const validOwnerName = owner.replace(/-|\./g, '_')
+  const validRepoName = repo.replace(/-|\./g, '_')
+
+  return `${validOwnerName}__${validRepoName}`
 }
 
 export function isGithubProposal(proposal: Proposal): boolean {
