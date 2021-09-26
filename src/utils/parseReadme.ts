@@ -71,6 +71,7 @@ function parseReadme(
 
       if (stage === 'inactive') {
         const [titleHtml, championsHtml, rationaleHtml] = colVals
+        const title = getTextListFromCell($, titleHtml)[0]
         const champions = getTextListFromCell($, championsHtml)
 
         const proposal: Proposal = {
@@ -79,6 +80,7 @@ function parseReadme(
           titleHtml: hasLink
             ? (proposalLink.html() as string)
             : titleHtml ?? '',
+          title,
           champions,
           rationaleHtml
         }
@@ -86,6 +88,7 @@ function parseReadme(
         return proposal
       }
 
+      const title = getTextListFromCell($, colVals[0])[0]
       const authors = getTextListFromCell($, colVals[1])
       const champions = getTextListFromCell($, colVals[2])
 
@@ -93,6 +96,7 @@ function parseReadme(
         type: isI18n ? 'ecma402' : 'ecma262',
         link: proposalLink.attr('href') ?? '',
         titleHtml: hasLink ? (proposalLink.html() as string) : colVals[0] ?? '',
+        title,
         authors,
         champions
       }
