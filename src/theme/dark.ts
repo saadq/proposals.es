@@ -15,6 +15,7 @@ export const darkTheme: Theme = {
     gray: '#1B1D23',
     black: '#0F1013',
     pink: '',
+    yellow,
     background: '#131418',
     foreground: white,
     primary: yellow,
