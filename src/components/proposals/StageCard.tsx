@@ -6,7 +6,9 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   background: ${({ theme }) => theme.colors.white};
+  border-radius: 4px;
   height: 25rem;
+  box-shadow: 0px 2px 8px #e7f0f3;
 `
 
 const Heading = styled.h2`
