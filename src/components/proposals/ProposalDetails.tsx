@@ -1,8 +1,7 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal, Stage } from '../../types'
-import { useRouter } from 'next/router'
-import { useCallback } from 'react'
 
 const Container = styled.section`
   font-size: 1rem;
@@ -11,14 +10,17 @@ const Container = styled.section`
   margin: 0 auto;
 `
 
-const BackButton = styled.button`
+const BackLink = styled.a`
   background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.card};
+  color: ${({ theme }) => theme.colors.black};
   border: 0;
   border-radius: 3px;
   padding: 1rem 1.5rem;
   cursor: pointer;
   font-weight: bold;
+  text-decoration: none;
+  font-size: 0.85rem;
+  display: inline-block;
 `
 
 const Row = styled.div`
@@ -34,15 +36,11 @@ interface Props {
 }
 
 export function ProposalDetails({ proposal, stage, readme }: Props) {
-  const router = useRouter()
-
-  const goBack = useCallback(() => {
-    router.back()
-  }, [router])
-
   return (
     <Container>
-      <BackButton onClick={goBack}>Go Back</BackButton>
+      <Link href="/" passHref>
+        <BackLink>Go Back</BackLink>
+      </Link>
       <>
         <h3>Authors:</h3>
         {proposal.authors?.join(', ')}
