@@ -1,5 +1,6 @@
 import { css } from 'styled-components'
 
+// Mostly copied from https://github.com/sindresorhus/github-markdown-css
 export const markdownStyles = css`
   .markdown-body .octicon {
     display: inline-block;

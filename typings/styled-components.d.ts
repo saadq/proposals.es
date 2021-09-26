@@ -8,6 +8,10 @@ declare module 'styled-components' {
       footerHeight: string
     }
     colors: {
+      white: string
+      gray: string
+      black: string
+      pink: string
       background: string
       foreground: string
       primary: string

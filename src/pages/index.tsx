@@ -7,11 +7,8 @@ import { ProposalsByStage, stages } from '../types'
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   gap: 3rem;
-  margin: 1rem auto;
-  flex-wrap: wrap;
-  width: 90%;
 `
 
 interface Props {
@@ -42,7 +39,7 @@ export default function ProposalsPage({ proposals }: Props) {
       </Head>
       <Container>
         {stages.map((stage) => (
-          <StageCard stage={stage} proposals={proposals[stage]} key={stage} />
+          <StageCard key={stage} stage={stage} proposals={proposals[stage]} />
         ))}
       </Container>
     </>

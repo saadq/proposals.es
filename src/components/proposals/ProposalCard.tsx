@@ -2,40 +2,48 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal, Stage } from '../../types'
+import { StarIcon } from '../common/StarIcon'
 
-const StyledLink = styled.a`
+const CardLink = styled.a`
   color: ${({ theme }) => theme.colors.foreground};
   text-decoration: none;
-`
-
-const Card = styled.div<{ type: Proposal['type'] }>`
-  display: flex;
+  border: 1px solid #f4f6fb;
+  box-shadow: 0px 8px 16px #e7f0f3;
+  border-radius: 4px;
+  padding: 2rem 3rem;
   justify-content: center;
   align-items: center;
-  border: 1px solid #393c48;
-  margin: 0 auto;
-  padding: 1rem;
-  text-align: center;
-  width: 100%;
-  cursor: pointer;
-  transition: background color 0.4s ease;
-  transition-property: color, background-color;
-  transition-duration: 0.4s;
-  transition-timing-function: ease;
+  display: flex;
+  flex: 1;
+  transition: background 0.4s ease;
+  flex-wrap: wrap;
+  position: relative;
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary};
     color: black;
   }
+`
 
-  &:last-child {
-    margin-bottom: 1rem;
-  }
+const CardContent = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: visible;
+  cursor: pointer;
+  min-width: 8rem;
+`
 
-  code {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+const Stars = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 `
 
 interface Props {
@@ -45,8 +53,6 @@ interface Props {
 }
 
 export function ProposalCard({ stage, proposal, index }: Props) {
-  const { type } = proposal
-
   // TODO: Remove this when the multi-proposal edge case is handled.
   // Some proposals in the readmes can have multiple proposals in a single column (e.g. "Class Fields")
   if (proposal.titleHtml.includes('Class Fields')) {
@@ -59,11 +65,19 @@ export function ProposalCard({ stage, proposal, index }: Props) {
       href={`/${stage}/${index}`}
       key={`${stage}-proposal-${index}`}
     >
-      <StyledLink>
-        <Card type={type}>
-          <SanitizedHtml html={proposal.titleHtml} />
-        </Card>
-      </StyledLink>
+      <CardLink>
+        <CardContent>
+          <strong>
+            <SanitizedHtml html={proposal.titleHtml} />
+          </strong>
+          {proposal.stars && (
+            <Stars>
+              <StarIcon />
+              <span>{proposal.stars}</span>
+            </Stars>
+          )}
+        </CardContent>
+      </CardLink>
     </Link>
   )
 }

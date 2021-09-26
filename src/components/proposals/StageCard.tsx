@@ -5,30 +5,25 @@ import { Proposal, Stage } from '../../types'
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  background: black;
-  width: 20rem;
-  height: 400px;
-  border-radius: 1rem;
+  background: ${({ theme }) => theme.colors.white};
+  height: 25rem;
 `
 
 const Heading = styled.h2`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.black};
   font-size: 1.25rem;
-  text-align: center;
+  font-weight: 800;
   background: ${({ theme }) => theme.colors.card};
   margin: 0;
-  padding: 1rem;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
-  margin-bottom: 1rem;
+  padding: 1.5rem 2.5rem;
 `
 
 const ProposalsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  padding: 1.5rem 2.5rem;
+  gap: 2rem;
   flex: 1;
-  overflow-y: scroll;
-  padding: 0 1rem;
+  display: flex;
+  overflow: scroll;
 `
 
 function formatStageName(stageName: Stage) {

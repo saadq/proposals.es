@@ -7,6 +7,7 @@ const StyledHeader = styled.header`
   background: ${({ theme }) => theme.colors.header};
   width: 100%;
   height: ${({ theme }) => theme.sizes.headerHeight};
+  box-shadow: 0px 4px 24px rgba(55, 81, 104, 0.1);
 `
 
 const Container = styled.div`
@@ -24,10 +25,12 @@ const Nav = styled.nav`
 `
 
 const NavLink = styled.a<{ activeRoute: string }>`
-  color: ${({ theme }) => theme.colors.foreground};
+  color: ${({ theme }) => theme.colors.primary};
   margin: 0 1rem;
   text-decoration: ${(props) =>
     props.activeRoute === props.href ? 'underline' : 'none'};
+  font-weight: ${(props) =>
+    props.activeRoute === props.href ? 'bold' : 'normal'};
 `
 
 export function Header() {
@@ -38,7 +41,7 @@ export function Header() {
       <Container>
         <Link href="/" passHref>
           <a>
-            <Logo width={200} />
+            <Logo width={175} />
           </a>
         </Link>
         <Nav>
