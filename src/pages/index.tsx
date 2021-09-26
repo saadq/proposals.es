@@ -3,7 +3,9 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import { getAllProposalsByStage } from '../api/getAllProposalsByStage'
 import { StageCard } from '../components/proposals/StageCard'
+import { SearchBar } from '../components/proposals/SearchBar'
 import { ProposalsByStage, stages } from '../types'
+import { useState } from 'react'
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +32,8 @@ export default function ProposalsPage({ proposals }: Props) {
     console.log(proposals)
   }
 
+  const [searchQuery, setSearchQuery] = useState('')
+
   return (
     <>
       <Head>
@@ -38,8 +42,14 @@ export default function ProposalsPage({ proposals }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         {stages.map((stage) => (
-          <StageCard key={stage} stage={stage} proposals={proposals[stage]} />
+          <StageCard
+            key={stage}
+            stage={stage}
+            proposals={proposals[stage]}
+            searchQuery={searchQuery}
+          />
         ))}
       </Container>
     </>

@@ -43,15 +43,29 @@ function formatStageName(stageName: Stage) {
 interface Props {
   stage: Stage
   proposals: Proposal[]
+  searchQuery: string
 }
 
-export function StageCard({ stage, proposals }: Props) {
-  return (
+export function StageCard({ stage, proposals, searchQuery }: Props) {
+  const proposalsToShow = proposals
+    .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
+    .filter((proposal) =>
+      searchQuery.length < 2
+        ? true
+        : proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+
+  return proposalsToShow.length === 0 ? null : (
     <Card>
       <Heading>{formatStageName(stage)}</Heading>
       <ProposalsContainer>
         {proposals
           .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
+          .filter((proposal) =>
+            searchQuery.length < 2
+              ? true
+              : proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
+          )
           .map((proposal, i) => (
             <ProposalCard
               stage={stage}
