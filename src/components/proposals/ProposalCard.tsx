@@ -62,7 +62,7 @@ export function ProposalCard({ stage, proposal, index }: Props) {
   return (
     <Link
       passHref
-      href={`/${stage}/${index}`}
+      href={`/${stage}/${encodeURIComponent(proposal.title)}`}
       key={`${stage}-proposal-${index}`}
     >
       <CardLink>

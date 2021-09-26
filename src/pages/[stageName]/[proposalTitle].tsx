@@ -13,7 +13,7 @@ interface Props {
 
 interface Params extends ParsedUrlQuery {
   stageName: Stage
-  proposalNumber: string
+  proposalTitle: string
 }
 
 interface Path {
@@ -23,10 +23,14 @@ interface Path {
 export const getStaticProps: GetStaticProps<Props, Params> = async ({
   params
 }) => {
-  const { stageName, proposalNumber } = params ?? {}
+  const { stageName, proposalTitle } = params ?? {}
   const allProposalsByStage = await getAllProposalsByStage()
   const proposals = allProposalsByStage[stageName as Stage]
-  const proposal = proposals[Number(proposalNumber)]
+
+  const proposal = proposals.find(
+    (proposal) => proposal.title === proposalTitle
+  ) as Proposal
+
   const readme = await getReadmeForProposal(proposal)
   const oneHourInSeconds = 1 * 60 * 60
 
@@ -43,12 +47,12 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
 export const getStaticPaths: GetStaticPaths<Params> = async (context) => {
   const allProposalsByStage = await getAllProposalsByStage()
 
-  const paths = stages.reduce((paths, stage) => {
-    const proposals = allProposalsByStage[stage]
-    const proposalPaths = proposals.map((_, i) => ({
+  const paths = stages.reduce((paths, stageName) => {
+    const proposals = allProposalsByStage[stageName]
+    const proposalPaths = proposals.map((proposal) => ({
       params: {
-        stageName: stage,
-        proposalNumber: i.toString()
+        stageName: stageName,
+        proposalTitle: proposal.title
       }
     }))
 
