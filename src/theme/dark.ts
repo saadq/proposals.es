@@ -1,8 +1,6 @@
 import { Theme } from 'styled-components'
 
 const white = '#d0d0d0'
-const gray = '#1B1D23'
-const darkGray = '#15161B'
 const black = '#0F1013'
 const yellow = '#FCB500'
 
@@ -13,6 +11,10 @@ export const darkTheme: Theme = {
     footerHeight: '50px'
   },
   colors: {
+    white: '#d0d0d0',
+    gray: '#1B1D23',
+    black: '#0F1013',
+    pink: '',
     background: '#131418',
     foreground: white,
     primary: yellow,

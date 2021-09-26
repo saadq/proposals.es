@@ -48,14 +48,16 @@ export function StageCard({ stage, proposals }: Props) {
     <Card>
       <Heading>{formatStageName(stage)}</Heading>
       <ProposalsContainer>
-        {proposals.map((proposal, i) => (
-          <ProposalCard
-            stage={stage}
-            proposal={proposal}
-            index={i}
-            key={`${stage}-proposal-${i}`}
-          />
-        ))}
+        {proposals
+          .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
+          .map((proposal, i) => (
+            <ProposalCard
+              stage={stage}
+              proposal={proposal}
+              index={i}
+              key={`${stage}-proposal-${i}`}
+            />
+          ))}
       </ProposalsContainer>
     </Card>
   )
