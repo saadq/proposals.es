@@ -65,7 +65,6 @@ export const markdownStyles = css`
     -webkit-text-size-adjust: 100%;
     line-height: 1.5;
     color: #24292e;
-    background-color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
       sans-serif, Apple Color Emoji, Segoe UI Emoji;
     font-size: 16px;
@@ -499,7 +498,7 @@ export const markdownStyles = css`
   }
 
   .markdown-body .pl-mi2 {
-    color: #f6f8fa;
+    color: #e8edf3;
     background-color: #005cc5;
   }
 
@@ -776,7 +775,7 @@ export const markdownStyles = css`
   }
 
   .markdown-body table tr:nth-child(2n) {
-    background-color: #f6f8fa;
+    background-color: #e8edf3;
   }
 
   .markdown-body img {
@@ -830,7 +829,7 @@ export const markdownStyles = css`
     overflow: auto;
     font-size: 85%;
     line-height: 1.45;
-    background-color: #f6f8fa;
+    background-color: #e8edf3;
     border-radius: 3px;
   }
 
@@ -989,223 +988,5 @@ export const markdownStyles = css`
   .markdown-body .task-list-item input {
     margin: 0 0.2em 0.25em -1.6em;
     vertical-align: middle;
-  }
-
-  .markdown-body {
-    color: #c9d1d9;
-    background-color: ${({ theme }) => theme.colors.background};
-    margin: 2rem 0;
-  }
-
-  .markdown-body a {
-    color: #58a6ff;
-  }
-
-  .markdown-body hr {
-    border-bottom: 1px solid #21262d;
-    border-bottom-color: #21262d;
-    background-color: #30363d;
-  }
-
-  .markdown-body kbd {
-    color: #b1bac4;
-    background-color: #0d1117;
-    border: 1px solid #6e7681;
-    box-shadow: inset 0 -1px 0 #6e7681;
-  }
-
-  .markdown-body :checked + .radio-label {
-    border-color: rgba(56, 139, 253, 0.4);
-  }
-
-  .markdown-body .border {
-    border: 1px solid #30363d !important;
-  }
-
-  .markdown-body .border-bottom {
-    border-bottom: 1px solid #30363d !important;
-  }
-
-  .markdown-body .bg-white {
-    background-color: #0d1117 !important;
-  }
-
-  .markdown-body .bg-gray-light {
-    background-color: #0d1117 !important;
-  }
-
-  .markdown-body .text-gray-light {
-    color: #8b949e !important;
-  }
-
-  .markdown-body .pl-c {
-    color: #8b949e;
-  }
-
-  .markdown-body .pl-c1,
-  .markdown-body .pl-s .pl-v {
-    color: #79c0ff;
-  }
-
-  .markdown-body .pl-e,
-  .markdown-body .pl-en {
-    color: #d2a8ff;
-  }
-
-  .markdown-body .pl-s .pl-s1,
-  .markdown-body .pl-smi {
-    color: #c9d1d9;
-  }
-
-  .markdown-body .pl-ent {
-    color: #7ee787;
-  }
-
-  .markdown-body .pl-k {
-    color: #ff7b72;
-  }
-
-  .markdown-body .pl-pds,
-  .markdown-body .pl-s,
-  .markdown-body .pl-s .pl-pse .pl-s1,
-  .markdown-body .pl-sr,
-  .markdown-body .pl-sr .pl-cce,
-  .markdown-body .pl-sr .pl-sra,
-  .markdown-body .pl-sr .pl-sre {
-    color: #a5d6ff;
-  }
-
-  .markdown-body .pl-smw,
-  .markdown-body .pl-v {
-    color: #ffa657;
-  }
-
-  .markdown-body .pl-bu {
-    color: #f85149;
-  }
-
-  .markdown-body .pl-ii {
-    color: #f0f6fc;
-    background-color: #8e1519;
-  }
-
-  .markdown-body .pl-c2 {
-    color: #f0f6fc;
-    background-color: #b62324;
-  }
-
-  .markdown-body .pl-sr .pl-cce {
-    color: #7ee787;
-  }
-
-  .markdown-body .pl-ml {
-    color: #f2cc60;
-  }
-
-  .markdown-body .pl-mh,
-  .markdown-body .pl-mh .pl-en,
-  .markdown-body .pl-ms {
-    color: #1f6feb;
-  }
-
-  .markdown-body .pl-mi {
-    color: #c9d1d9;
-  }
-
-  .markdown-body .pl-mb {
-    color: #c9d1d9;
-  }
-
-  .markdown-body .pl-md {
-    color: #ffdcd7;
-    background-color: #67060c;
-  }
-
-  .markdown-body .pl-mi1 {
-    color: #aff5b4;
-    background-color: #033a16;
-  }
-
-  .markdown-body .pl-mc {
-    color: #ffdfb6;
-    background-color: #5a1e02;
-  }
-
-  .markdown-body .pl-mi2 {
-    color: #c9d1d9;
-    background-color: #1158c7;
-  }
-
-  .markdown-body .pl-mdr {
-    color: #d2a8ff;
-  }
-
-  .markdown-body .pl-ba {
-    color: #8b949e;
-  }
-
-  .markdown-body .pl-sg {
-    color: #484f58;
-  }
-
-  .markdown-body .pl-corl {
-    color: #a5d6ff;
-  }
-
-  .markdown-body blockquote {
-    color: #8b949e;
-    border-left: 0.25em solid #3b434b;
-  }
-
-  .markdown-body h1,
-  .markdown-body h2 {
-    border-bottom: 1px solid #21262d;
-  }
-
-  .markdown-body h6 {
-    color: #8b949e;
-  }
-
-  .markdown-body table td,
-  .markdown-body table th {
-    border: 1px solid #3b434b;
-  }
-
-  .markdown-body table tr {
-    background-color: #0d1117;
-    border-top: 1px solid #272c32;
-  }
-
-  .markdown-body table tr:nth-child(2n) {
-    background-color: #161b22;
-  }
-
-  .markdown-body img {
-    background-color: #0d1117;
-  }
-
-  .markdown-body code {
-    background-color: rgba(240, 246, 252, 0.15);
-  }
-
-  .markdown-body .highlight pre,
-  .markdown-body pre {
-    background-color: #161b22;
-  }
-
-  .markdown-body .commit-tease-sha {
-    color: #b1bac4;
-  }
-
-  .markdown-body .blob-num {
-    color: rgba(240, 246, 252, 0.3);
-  }
-
-  .markdown-body .blob-num:hover {
-    color: rgba(240, 246, 252, 0.6);
-  }
-
-  .markdown-body .blob-code-inner {
-    color: #c9d1d9;
   }
 `
