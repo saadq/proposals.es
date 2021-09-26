@@ -8,7 +8,8 @@
     "debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@octokit/graphql": "^4.6.4",
@@ -34,6 +35,6 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.3.2",
-    "typescript": "4.3.5"
+    "typescript": "^4.4.3"
   }
 }
