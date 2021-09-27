@@ -70,7 +70,7 @@ export function ProposalCard({ stage, proposal, index }: Props) {
           <strong>
             <SanitizedHtml html={proposal.titleHtml} />
           </strong>
-          {proposal.stars && (
+          {proposal.stars != null && (
             <Stars>
               <StarIcon />
               <span>{proposal.stars}</span>

@@ -21,6 +21,7 @@ const Heading = styled.h2`
 `
 
 const ProposalsContainer = styled.div`
+  margin-bottom: 1.5rem;
   padding: 1.5rem 2.5rem;
   gap: 2rem;
   flex: 1;
@@ -59,21 +60,14 @@ export function StageCard({ stage, proposals, searchQuery }: Props) {
     <Card>
       <Heading>{formatStageName(stage)}</Heading>
       <ProposalsContainer>
-        {proposals
-          .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
-          .filter((proposal) =>
-            searchQuery.length < 2
-              ? true
-              : proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-          .map((proposal, i) => (
-            <ProposalCard
-              stage={stage}
-              proposal={proposal}
-              index={i}
-              key={`${stage}-proposal-${i}`}
-            />
-          ))}
+        {proposalsToShow.map((proposal, i) => (
+          <ProposalCard
+            stage={stage}
+            proposal={proposal}
+            index={i}
+            key={`${stage}-proposal-${i}`}
+          />
+        ))}
       </ProposalsContainer>
     </Card>
   )

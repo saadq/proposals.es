@@ -20,11 +20,13 @@ const SearchInput = styled.input`
   font-weight: bold;
 
   &::placeholder {
+    opacity: 0.75;
     font-weight: bold;
   }
 
   &:focus {
     outline: none;
+    box-shadow: 0px 0px 5px ${({ theme }) => theme.colors.primary};
   }
 `
 
@@ -71,9 +73,8 @@ export function SearchBar({ searchQuery, setSearchQuery }: Props) {
         />
       )}
       <SearchInput
-        name="search"
-        value={searchQuery}
         placeholder="Search for proposals..."
+        value={searchQuery}
         onChange={handleChange}
       />
     </Container>

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal, Stage } from '../../types'
+import { BackArrowIcon } from '../common/BackArrowIcon'
 
 const Container = styled.section`
   font-size: 1rem;
@@ -15,12 +16,20 @@ const BackLink = styled.a`
   color: ${({ theme }) => theme.colors.black};
   border: 0;
   border-radius: 3px;
-  padding: 1rem 1.5rem;
+  padding: 1rem;
   cursor: pointer;
   font-weight: bold;
   text-decoration: none;
   font-size: 0.85rem;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: filter 0.4s ease;
+
+  &:hover {
+    filter: brightness(110%);
+  }
 `
 
 const Row = styled.div`
@@ -39,7 +48,10 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
   return (
     <Container>
       <Link href="/" passHref>
-        <BackLink>Go Back</BackLink>
+        <BackLink>
+          <BackArrowIcon />
+          Go back
+        </BackLink>
       </Link>
       <>
         <h3>Authors:</h3>
