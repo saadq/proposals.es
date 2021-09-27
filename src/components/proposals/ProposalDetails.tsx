@@ -1,8 +1,8 @@
-import Link from 'next/link'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
+import { Breadcrumbs } from '../common/Breadcrumbs'
 import { Proposal, Stage } from '../../types'
-import { BackArrowIcon } from '../common/BackArrowIcon'
+import { isGithubProposal } from '../../utils/github'
 
 const Container = styled.section`
   font-size: 1rem;
@@ -11,31 +11,41 @@ const Container = styled.section`
   margin: 0 auto;
 `
 
-const BackLink = styled.a`
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.black};
-  border: 0;
-  border-radius: 3px;
-  padding: 1rem;
-  cursor: pointer;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 0.85rem;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  transition: filter 0.4s ease;
-
-  &:hover {
-    filter: brightness(110%);
-  }
+const Details = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
 `
 
-const Row = styled.div`
+const FallbackTitle = styled.h1`
+  margin: 0;
+`
+
+const TagHeading = styled.h3`
+  font-size: 0.8rem;
+  margin: 0;
+`
+
+const TagList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  gap: 0.5rem;
+`
+
+const Tag = styled.div`
+  border-radius: 4px;
+  background: ${({ theme }) => theme.colors.white};
+  padding: 0.5rem;
+  font-size: 0.65rem;
+`
+
+const DetailRow = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  margin-top: 0.5rem;
 `
 
 interface Props {
@@ -46,51 +56,91 @@ interface Props {
 
 export function ProposalDetails({ proposal, stage, readme }: Props) {
   return (
-    <Container>
-      <Link href="/" passHref>
-        <BackLink>
-          <BackArrowIcon />
-          Go back
-        </BackLink>
-      </Link>
-      <>
-        <h3>Authors:</h3>
-        {proposal.authors?.join(', ')}
-      </>
-      <>
-        <h3>Champions:</h3>
-        {proposal.champions?.join(', ')}
-      </>
-      {readme ? (
-        <>
-          <p>
-            <a href={proposal.link}>View proposal</a>
-          </p>
-          <SanitizedHtml html={readme} />
-        </>
-      ) : (
-        <>
-          <h1>
-            <SanitizedHtml html={proposal.titleHtml} />
-          </h1>
-          <h2>Stage: {stage}</h2>
+    <>
+      <Container>
+        <Breadcrumbs stageName={stage} proposal={proposal} />
+        <Details>
+          {!isGithubProposal(proposal) && (
+            <>
+              <FallbackTitle>
+                <SanitizedHtml html={proposal.titleHtml} />
+              </FallbackTitle>
+              {proposal.link ? (
+                <p>
+                  This proposal is not on GitHub. You can view the proposal
+                  directly <a href={proposal.link}>here</a> if the iframe fails
+                  to load.
+                </p>
+              ) : (
+                <p>
+                  This proposal currently is not available on GitHub or anywhere
+                  else.
+                </p>
+              )}
+              <DetailRow>
+                <TagHeading>Champions:</TagHeading>
+                <TagList>
+                  {proposal.champions?.map((champion) => (
+                    <Tag key={champion}>{champion}</Tag>
+                  ))}
+                </TagList>
+              </DetailRow>
+              {proposal.authors?.length ? (
+                <DetailRow>
+                  <TagHeading>Authors:</TagHeading>
+                  <TagList>
+                    {proposal.authors.map((author) => (
+                      <Tag key={author}>{author}</Tag>
+                    ))}
+                  </TagList>
+                </DetailRow>
+              ) : null}
+              <iframe
+                src={proposal.link}
+                style={{
+                  border: 'none',
+                  marginTop: '2rem',
+                  width: '100%',
+                  height: '100vh'
+                }}
+              />
+            </>
+          )}
+          {isGithubProposal(proposal) && (
+            <>
+              <DetailRow>
+                <TagHeading>Authors:</TagHeading>
+                <TagList>
+                  {proposal.authors?.map((author) => (
+                    <Tag key={author}>{author}</Tag>
+                  ))}
+                </TagList>
+              </DetailRow>
+              <DetailRow>
+                <TagHeading>Champions:</TagHeading>
+                <TagList>
+                  {proposal.champions?.map((champion) => (
+                    <Tag key={champion}>{champion}</Tag>
+                  ))}
+                </TagList>
+              </DetailRow>
+            </>
+          )}
           {proposal.lastPresentedHtml && (
-            <Row>
-              <p>Last presented:</p>
+            <DetailRow>
+              <TagHeading>Last presented:</TagHeading>
               <SanitizedHtml html={proposal.lastPresentedHtml} />
-            </Row>
+            </DetailRow>
           )}
           {proposal.rationaleHtml && (
-            <Row>
-              <p>Rationale:</p>
+            <DetailRow>
+              <TagHeading>Rationale:</TagHeading>
               <SanitizedHtml html={proposal.rationaleHtml} />
-            </Row>
+            </DetailRow>
           )}
-          <p>
-            <a href={proposal.link}>View proposal</a>
-          </p>
-        </>
-      )}
-    </Container>
+        </Details>
+        {readme ? <SanitizedHtml html={readme} /> : null}
+      </Container>
+    </>
   )
 }

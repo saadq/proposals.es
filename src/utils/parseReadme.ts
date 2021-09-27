@@ -89,8 +89,8 @@ function parseReadme(
       }
 
       const title = getTextListFromCell($, colVals[0])[0]
-      const authors = getTextListFromCell($, colVals[1])
-      const champions = getTextListFromCell($, colVals[2])
+      const authors = getTextListFromCell($, colVals[1]).filter(Boolean)
+      const champions = getTextListFromCell($, colVals[2]).filter(Boolean)
 
       const proposal: Proposal = {
         type: isI18n ? 'ecma402' : 'ecma262',

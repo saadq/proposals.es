@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { ProposalCard } from './ProposalCard'
 import { Proposal, Stage } from '../../types'
+import { formatStageName } from '../../utils/format'
 
 const Card = styled.div`
   display: flex;
@@ -28,18 +29,6 @@ const ProposalsContainer = styled.div`
   display: flex;
   overflow: scroll;
 `
-
-function formatStageName(stageName: Stage) {
-  if (stageName === 'inactive') {
-    return 'Inactive'
-  }
-
-  if (stageName === 'stage4') {
-    return 'Stage 4 (Finished)'
-  }
-
-  return `Stage ${stageName.split('stage')[1]}`
-}
 
 interface Props {
   stage: Stage
