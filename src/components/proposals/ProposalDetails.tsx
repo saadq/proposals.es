@@ -4,6 +4,7 @@ import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Breadcrumbs } from '../common/Breadcrumbs'
 import { Proposal, Stage } from '../../types'
 import { isGithubProposal } from '../../utils/github'
+import { useEffect } from 'react'
 
 const Container = styled.section`
   font-size: 1rem;
@@ -58,6 +59,14 @@ interface Props {
 export function ProposalDetails({ proposal, stage, readme }: Props) {
   const url = new URL(proposal.link ?? '')
   const baseUrl = `${url.origin}${url.pathname}/blob/${proposal.defaultBranch}/`
+
+  useEffect(() => {
+    if (readme) {
+      import('highlight.js').then((hljs) => {
+        hljs.default.highlightAll()
+      })
+    }
+  }, [readme])
 
   return (
     <>
@@ -146,14 +155,7 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
         {readme ? (
           <SanitizedHtml
             className="markdown-body"
-            html={marked(readme, {
-              baseUrl,
-              highlight() {
-                import('highlight.js').then((hljs) => {
-                  hljs.default.highlightAll()
-                })
-              }
-            })}
+            html={marked(readme, { baseUrl })}
           />
         ) : null}
       </Container>
