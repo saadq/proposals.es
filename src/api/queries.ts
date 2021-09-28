@@ -82,6 +82,9 @@ export function buildGetStarsQuery(allProposals: Proposal[]): string {
         return `
           ${proposalAlias}: repository(owner: "${owner}", name: "${repo}") {
             stargazerCount
+            defaultBranchRef {
+              name
+            }
           }
         `
       })}

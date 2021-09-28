@@ -18,8 +18,11 @@ export interface GitHubResponse {
 export type ResponseKey = keyof GitHubResponse
 export type ReadmesByStage = Record<ResponseKey, string>
 
-export interface GetStarsResponse {
+export interface GetRepoInfoResponse {
   [proposalKey: string]: {
     stargazerCount: number
+    defaultBranchRef: {
+      name: string
+    }
   }
 }

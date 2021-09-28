@@ -1,4 +1,4 @@
-import { getStarsByProposal } from './getStarsByProposal'
+import { getRepoInfoByProposal } from './getRepoInfoByProposal'
 import { ProposalsByStage } from '../types'
 import { getReadmesByStageQuery } from './queries'
 import { avoidRateLimit } from '../utils/avoidRateLimit'
@@ -28,16 +28,18 @@ export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
   ) as ReadmesByStage
 
   const proposals = parseProposalsFromReadmes(readmesByStage)
-  const starsByProposal = await getStarsByProposal(proposals)
+  const repoInfoByProposal = await getRepoInfoByProposal(proposals)
 
-  const proposalsWithStars = Object.entries(proposals).reduce(
-    (proposalsWithStars, [stage, proposals]) => ({
-      ...proposalsWithStars,
+  const proposalsWithRepoDetails = Object.entries(proposals).reduce(
+    (proposalsWithRepoInfo, [stage, proposals]) => ({
+      ...proposalsWithRepoInfo,
       [stage]: proposals.map((proposal) =>
         isGithubProposal(proposal)
           ? {
               ...proposal,
-              stars: starsByProposal[getGithubProposalKey(proposal)]
+              stars: repoInfoByProposal[getGithubProposalKey(proposal)].stars,
+              defaultBranch:
+                repoInfoByProposal[getGithubProposalKey(proposal)].defaultBranch
             }
           : proposal
       )
@@ -45,5 +47,5 @@ export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
     {} as ProposalsByStage
   )
 
-  return proposalsWithStars
+  return proposalsWithRepoDetails
 }

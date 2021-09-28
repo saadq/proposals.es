@@ -23,7 +23,7 @@ const octokit = new Octokit({
 })
 
 const mediaType = {
-  format: 'html'
+  format: 'raw'
 }
 
 export async function getReadmeForProposal(

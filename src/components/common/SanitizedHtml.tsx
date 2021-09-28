@@ -8,15 +8,17 @@ const Wrapper = styled.div`
 
 interface Props {
   html?: string
+  className?: string
 }
 
-export function SanitizedHtml({ html }: Props) {
+export function SanitizedHtml({ html, className }: Props) {
   if (!html) {
     return null
   }
 
   return (
     <Wrapper
+      className={className}
       dangerouslySetInnerHTML={{
         __html: sanitize(html)
       }}

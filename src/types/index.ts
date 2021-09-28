@@ -17,6 +17,7 @@ export interface Proposal {
   champions: string[]
   authors?: string[]
   stars?: number
+  defaultBranch?: string
   link?: string
   source?: string
   rationaleHtml?: string

@@ -1,3 +1,4 @@
+import marked from 'marked'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Breadcrumbs } from '../common/Breadcrumbs'
@@ -36,8 +37,8 @@ const TagList = styled.ul`
 
 const Tag = styled.div`
   border-radius: 4px;
-  background: ${({ theme }) => theme.colors.white};
-  padding: 0.5rem;
+  background: #d6cbff;
+  padding: 0.25rem 0.5rem;
   font-size: 0.65rem;
 `
 
@@ -55,6 +56,9 @@ interface Props {
 }
 
 export function ProposalDetails({ proposal, stage, readme }: Props) {
+  const url = new URL(proposal.link ?? '')
+  const baseUrl = `${url.origin}${url.pathname}/blob/${proposal.defaultBranch}/`
+
   return (
     <>
       <Container>
@@ -139,7 +143,19 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
             </DetailRow>
           )}
         </Details>
-        {readme ? <SanitizedHtml html={readme} /> : null}
+        {readme ? (
+          <SanitizedHtml
+            className="markdown-body"
+            html={marked(readme, {
+              baseUrl,
+              highlight() {
+                import('highlight.js').then((hljs) => {
+                  hljs.default.highlightAll()
+                })
+              }
+            })}
+          />
+        ) : null}
       </Container>
     </>
   )
