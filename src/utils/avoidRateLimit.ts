@@ -10,6 +10,6 @@ export async function avoidRateLimit() {
   }
 }
 
-function sleep(ms = 2000) {
+function sleep(ms = 20000) {
   return new Promise((res) => setTimeout(res, ms))
 }

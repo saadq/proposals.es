@@ -56,10 +56,15 @@ interface Props {
   readme: string
 }
 
-export function ProposalDetails({ proposal, stage, readme }: Props) {
-  const url = new URL(proposal.link ?? '')
-  const baseUrl = `${url.origin}${url.pathname}/blob/${proposal.defaultBranch}/`
+function getBaseUrl(proposal: Proposal) {
+  const { link, defaultBranch } = proposal
+  const url = new URL(link as string)
+  const baseUrl = `${url.origin}${url.pathname}/blob/${defaultBranch}/`
 
+  return baseUrl
+}
+
+export function ProposalDetails({ proposal, stage, readme }: Props) {
   useEffect(() => {
     if (readme) {
       import('highlight.js').then((hljs) => {
@@ -155,7 +160,9 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
         {readme ? (
           <SanitizedHtml
             className="markdown-body"
-            html={marked(readme, { baseUrl })}
+            html={marked(readme, {
+              baseUrl: getBaseUrl(proposal)
+            })}
           />
         ) : null}
       </Container>
