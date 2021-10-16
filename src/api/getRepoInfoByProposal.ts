@@ -2,7 +2,7 @@ import { ProposalsByStage } from '../types'
 import { GetRepoInfoResponse } from '../types/response'
 import { avoidRateLimit } from '../utils/avoidRateLimit'
 import { GithubProposalKey, request } from '../utils/github'
-import { buildGetStarsQuery } from './queries'
+import { buildGetRepoDetailsQuery } from './queries'
 
 interface RepoInfo {
   stars: number
@@ -17,7 +17,7 @@ export async function getRepoInfoByProposal(
   await avoidRateLimit()
 
   const allProposals = Object.values(proposalsByStage).flat()
-  const getStarsQuery = buildGetStarsQuery(allProposals)
+  const getStarsQuery = buildGetRepoDetailsQuery(allProposals)
   const repoInfoResponse = (await request(getStarsQuery)) as GetRepoInfoResponse
 
   const starsByProposal = Object.entries(repoInfoResponse).reduce(

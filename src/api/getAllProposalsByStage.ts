@@ -1,6 +1,6 @@
 import { getRepoInfoByProposal } from './getRepoInfoByProposal'
 import { ProposalsByStage } from '../types'
-import { getReadmesByStageQuery } from './queries'
+import { getReadmesForAllStagesQuery } from './queries'
 import { avoidRateLimit } from '../utils/avoidRateLimit'
 import { parseProposalsFromReadmes } from '../utils/parseReadme'
 import {
@@ -17,7 +17,9 @@ import {
 export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
   await avoidRateLimit()
 
-  const response = (await request(getReadmesByStageQuery)) as GitHubResponse
+  const response = (await request(
+    getReadmesForAllStagesQuery
+  )) as GitHubResponse
 
   const readmesByStage = Object.entries(response).reduce(
     (readmesByStage, [responseKey, readmeResponse]) => ({
