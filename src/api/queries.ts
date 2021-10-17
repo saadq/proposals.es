@@ -1,10 +1,6 @@
 import { Proposal, Stage, stages } from '../types'
 import { ResponseKey } from '../types/response'
-import {
-  getGitHubDetails,
-  getGithubProposalKey,
-  isGithubProposal
-} from '../utils/github'
+import { getGitHubDetails, getGithubProposalKey, isGithubProposal } from '../utils/github'
 
 interface GithubRepoQueryParams {
   alias: string

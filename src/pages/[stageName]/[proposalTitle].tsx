@@ -20,9 +20,7 @@ interface Path {
   params: Params
 }
 
-export const getStaticProps: GetStaticProps<Props, Params> = async ({
-  params
-}) => {
+export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
   const { stageName, proposalTitle } = params ?? {}
   const allProposalsByStage = await getAllProposalsByStage()
   const proposals = allProposalsByStage[stageName as Stage]
@@ -63,12 +61,6 @@ export const getStaticPaths: GetStaticPaths<Params> = async (context) => {
   }
 }
 
-export default function ProposalDetailsPage({
-  proposal,
-  stageName,
-  readme
-}: Props) {
-  return (
-    <ProposalDetails proposal={proposal} stage={stageName} readme={readme} />
-  )
+export default function ProposalDetailsPage({ proposal, stageName, readme }: Props) {
+  return <ProposalDetails proposal={proposal} stage={stageName} readme={readme} />
 }

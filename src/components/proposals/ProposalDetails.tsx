@@ -85,14 +85,12 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
               </FallbackTitle>
               {proposal.link ? (
                 <p>
-                  This proposal is not on GitHub. You can view the proposal
-                  directly <a href={proposal.link}>here</a> if the iframe fails
-                  to load.
+                  This proposal is not on GitHub. You can view the proposal directly{' '}
+                  <a href={proposal.link}>here</a> if the iframe fails to load.
                 </p>
               ) : (
                 <p>
-                  This proposal currently is not available on GitHub or anywhere
-                  else.
+                  This proposal currently is not available on GitHub or anywhere else.
                 </p>
               )}
               <DetailRow>

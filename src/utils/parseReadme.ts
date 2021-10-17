@@ -1,12 +1,6 @@
 import marked from 'marked'
 import { CheerioAPI, load } from 'cheerio'
-import {
-  ActiveStage,
-  Proposal,
-  ProposalsByStage,
-  Stage,
-  stages
-} from '../types'
+import { ActiveStage, Proposal, ProposalsByStage, Stage, stages } from '../types'
 import { ReadmesByStage, ResponseKey } from '../types/response'
 
 const stageKeyMap: Record<ActiveStage, ResponseKey> = {
@@ -51,11 +45,7 @@ export function parseProposalsFromReadmes(
   }, {}) as ProposalsByStage
 }
 
-function parseReadme(
-  readme: string,
-  stage: Stage,
-  isI18n?: boolean
-): Proposal[] {
+function parseReadme(readme: string, stage: Stage, isI18n?: boolean): Proposal[] {
   const html = marked(readme)
   const $ = load(html)
   const tableNumber = getTableNumberForStage(stage, isI18n)
@@ -77,9 +67,7 @@ function parseReadme(
         const proposal: Proposal = {
           type: 'inactive',
           link: proposalLink.attr('href') ?? '',
-          titleHtml: hasLink
-            ? (proposalLink.html() as string)
-            : titleHtml ?? '',
+          titleHtml: hasLink ? (proposalLink.html() as string) : titleHtml ?? '',
           title,
           champions,
           rationaleHtml

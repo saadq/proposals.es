@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier \"src/**/*.{ts,tsx}\" --write",
     "typecheck": "tsc"
   },
   "dependencies": {
