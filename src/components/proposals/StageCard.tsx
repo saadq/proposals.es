@@ -33,14 +33,14 @@ const ProposalsContainer = styled.div`
 interface Props {
   stage: Stage
   proposals: Proposal[]
-  searchQuery: string
+  searchQuery?: string
 }
 
 export function StageCard({ stage, proposals, searchQuery }: Props) {
   const proposalsToShow = proposals
     .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
     .filter((proposal) =>
-      searchQuery.length < 2
+      !searchQuery || searchQuery.length < 2
         ? true
         : proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
