@@ -18,12 +18,14 @@ interface Props {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const proposals = await getProposalsForStages(allStages)
-  const oneHourInSeconds = 1 * 60 * 60
+  const proposals = await getProposalsForStages({
+    stages: allStages,
+    includeRepoDetails: true
+  })
 
   return {
     props: { proposals },
-    revalidate: oneHourInSeconds
+    revalidate: 1 * 60 * 60 // Revalidate every once per hour
   }
 }
 

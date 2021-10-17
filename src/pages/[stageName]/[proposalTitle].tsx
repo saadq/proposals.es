@@ -4,6 +4,8 @@ import { Proposal, Stage, allStages } from '../../types'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { ProposalDetails } from '../../components/proposals/ProposalDetails'
 import { getReadmeForProposal } from '../../api/getReadmeForProposal'
+import { getRepoDetailsForProposal } from '../../api/getRepoDetailsForProposal'
+import { isGithubProposal } from '../../utils/github'
 
 interface Props {
   stageName: Stage
@@ -21,30 +23,34 @@ interface Path {
 }
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
-  const { stageName, proposalTitle } = params ?? {}
-  const proposalsByStage = await getProposalsForStages([stageName as Stage])
-  const proposals = proposalsByStage[stageName as Stage]
-
-  const proposal = proposals.find(
-    (proposal) => proposal.title === proposalTitle
-  ) as Proposal
-
+  const stageName = params?.stageName as Stage
+  const proposalTitle = params?.proposalTitle as string
+  const proposalsByStage = await getProposalsForStages({ stages: [stageName] })
+  const proposals = proposalsByStage[stageName] as Proposal[]
+  const proposal = proposals.find((p) => p.title === proposalTitle) as Proposal
   const readme = await getReadmeForProposal(proposal)
+
+  const proposalWithRepoDetails = isGithubProposal(proposal)
+    ? { ...proposal, ...(await getRepoDetailsForProposal(proposal)) }
+    : proposal
 
   return {
     props: {
       stageName: stageName as Stage,
-      proposal,
+      proposal: proposalWithRepoDetails,
       readme
     }
   }
 }
 
-export const getStaticPaths: GetStaticPaths<Params> = async (context) => {
-  const allProposalsByStage = await getProposalsForStages(allStages)
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
+  const allProposalsByStage = await getProposalsForStages({
+    stages: allStages,
+    includeRepoDetails: true
+  })
 
   const paths = allStages.reduce((paths, stageName) => {
-    const proposals = allProposalsByStage[stageName]
+    const proposals = allProposalsByStage[stageName] as Proposal[]
     const proposalPaths = proposals.map((proposal) => ({
       params: {
         stageName: stageName,

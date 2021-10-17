@@ -1,6 +1,5 @@
 import { Octokit, RestEndpointMethodTypes } from '@octokit/rest'
 import { Proposal } from '../types'
-import { avoidRateLimit } from '../utils/avoidRateLimit'
 import { getGitHubDetails, isGithubProposal } from '../utils/github'
 
 type GetReadmeParams = RestEndpointMethodTypes['repos']['getReadme']['parameters']
@@ -25,8 +24,6 @@ const mediaType = {
 }
 
 export async function getReadmeForProposal(proposal: Proposal): Promise<string> {
-  await avoidRateLimit()
-
   if (!isGithubProposal(proposal)) {
     return ''
   }
@@ -53,8 +50,6 @@ export async function getReadmeForProposal(proposal: Proposal): Promise<string> 
 }
 
 async function getMarkdownFileFromRepo(params: Params): Promise<string> {
-  await avoidRateLimit()
-
   const getContentResponse = await octokit.repos.getContent(params as GetContentParams)
   const files = getContentResponse.data as GitHubFile[]
   const markdownFile = files.find((file) => file.name.endsWith('.md'))
