@@ -1,4 +1,4 @@
-export const stages = [
+export const allStages = [
   'stage0',
   'stage1',
   'stage2',
@@ -7,7 +7,7 @@ export const stages = [
   'inactive'
 ] as const
 
-export type Stage = typeof stages[number]
+export type Stage = typeof allStages[number]
 export type ActiveStage = Exclude<Stage, 'inactive'>
 
 export interface Proposal {

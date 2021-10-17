@@ -1,6 +1,6 @@
 import marked from 'marked'
 import { CheerioAPI, load } from 'cheerio'
-import { ActiveStage, Proposal, ProposalsByStage, Stage, stages } from '../types'
+import { ActiveStage, Proposal, ProposalsByStage, Stage } from '../types'
 import { ReadmesByStage, ResponseKey } from '../types/response'
 
 const stageKeyMap: Record<ActiveStage, ResponseKey> = {
@@ -20,13 +20,14 @@ const i18nStageKeyMap: Record<ActiveStage, ResponseKey> = {
 }
 
 export function parseProposalsFromReadmes(
-  allReadmesByStage: ReadmesByStage
-): ProposalsByStage {
+  stages: readonly Stage[],
+  allReadmesByStage: Partial<ReadmesByStage>
+): Partial<ProposalsByStage> {
   return stages.reduce((proposalsByStage, stage) => {
     if (stage === 'inactive') {
       return {
         ...proposalsByStage,
-        inactive: parseReadme(allReadmesByStage.inactive, stage)
+        inactive: parseReadme(allReadmesByStage.inactive as string, stage)
       }
     }
 
@@ -34,15 +35,15 @@ export function parseProposalsFromReadmes(
     const ecma402Readme = allReadmesByStage[i18nStageKeyMap[stage]]
 
     const proposals = [
-      ...parseReadme(ecma262Readme, stage),
-      ...parseReadme(ecma402Readme, stage, true)
+      ...parseReadme(ecma262Readme as string, stage),
+      ...parseReadme(ecma402Readme as string, stage, true)
     ]
 
     return {
       ...proposalsByStage,
       [stage]: proposals
     }
-  }, {}) as ProposalsByStage
+  }, {}) as Partial<ProposalsByStage>
 }
 
 function parseReadme(readme: string, stage: Stage, isI18n?: boolean): Proposal[] {

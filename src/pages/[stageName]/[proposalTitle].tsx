@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
-import { Proposal, Stage, stages } from '../../types'
-import { getAllProposalsByStage } from '../../api/getAllProposalsByStage'
+import { Proposal, Stage, allStages } from '../../types'
+import { getProposalsForStages } from '../../api/getAllProposalsByStage'
 import { ProposalDetails } from '../../components/proposals/ProposalDetails'
 import { getReadmeForProposal } from '../../api/getReadmeForProposal'
 
@@ -22,8 +22,8 @@ interface Path {
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
   const { stageName, proposalTitle } = params ?? {}
-  const allProposalsByStage = await getAllProposalsByStage()
-  const proposals = allProposalsByStage[stageName as Stage]
+  const proposalsByStage = await getProposalsForStages([stageName as Stage])
+  const proposals = proposalsByStage[stageName as Stage]
 
   const proposal = proposals.find(
     (proposal) => proposal.title === proposalTitle
@@ -41,9 +41,9 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async (context) => {
-  const allProposalsByStage = await getAllProposalsByStage()
+  const allProposalsByStage = await getProposalsForStages(allStages)
 
-  const paths = stages.reduce((paths, stageName) => {
+  const paths = allStages.reduce((paths, stageName) => {
     const proposals = allProposalsByStage[stageName]
     const proposalPaths = proposals.map((proposal) => ({
       params: {

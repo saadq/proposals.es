@@ -1,15 +1,22 @@
-import { getRepoInfoByProposal } from './getRepoInfoByProposal'
-import { ProposalsByStage } from '../types'
-import { getReadmesForAllStagesQuery } from './queries'
+import { getRepoDetailsByProposal } from './getRepoDetailsByProposal'
+import { ProposalsByStage, Stage } from '../types'
+import { buildGetReadmesForStagesQuery } from './queries'
 import { avoidRateLimit } from '../utils/avoidRateLimit'
 import { parseProposalsFromReadmes } from '../utils/parseReadme'
 import { getGithubProposalKey, isGithubProposal, request } from '../utils/github'
 import { GitHubResponse, ReadmeResponse, ReadmesByStage } from '../types/response'
 
-export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
+/**
+ * Retrieves all of the proposals from each of the ecma262 and ecma402
+ * readmes for the given stages.
+ */
+export async function getProposalsForStages(
+  stages: readonly Stage[]
+): Promise<ProposalsByStage> {
   await avoidRateLimit()
 
-  const response = (await request(getReadmesForAllStagesQuery)) as GitHubResponse
+  const getReadmesForStagesQuery = buildGetReadmesForStagesQuery(stages)
+  const response = (await request(getReadmesForStagesQuery)) as GitHubResponse
 
   const readmesByStage = Object.entries(response).reduce(
     (readmesByStage, [responseKey, readmeResponse]) => ({
@@ -17,21 +24,21 @@ export async function getAllProposalsByStage(): Promise<ProposalsByStage> {
       [responseKey]: (readmeResponse as ReadmeResponse).object.text
     }),
     {}
-  ) as ReadmesByStage
+  ) as Partial<ReadmesByStage>
 
-  const proposals = parseProposalsFromReadmes(readmesByStage)
-  const repoInfoByProposal = await getRepoInfoByProposal(proposals)
+  const proposals = parseProposalsFromReadmes(stages, readmesByStage)
+  const repoDetailsByProposal = await getRepoDetailsByProposal(proposals)
 
   const proposalsWithRepoDetails = Object.entries(proposals).reduce(
-    (proposalsWithRepoInfo, [stage, proposals]) => ({
-      ...proposalsWithRepoInfo,
+    (proposalsWithRepoDetails, [stage, proposals]) => ({
+      ...proposalsWithRepoDetails,
       [stage]: proposals.map((proposal) =>
         isGithubProposal(proposal)
           ? {
               ...proposal,
-              stars: repoInfoByProposal[getGithubProposalKey(proposal)].stars,
+              stars: repoDetailsByProposal[getGithubProposalKey(proposal)].stars,
               defaultBranch:
-                repoInfoByProposal[getGithubProposalKey(proposal)].defaultBranch
+                repoDetailsByProposal[getGithubProposalKey(proposal)].defaultBranch
             }
           : proposal
       )

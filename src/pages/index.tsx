@@ -1,10 +1,10 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { getAllProposalsByStage } from '../api/getAllProposalsByStage'
+import { getProposalsForStages } from '../api/getAllProposalsByStage'
 import { StageCard } from '../components/proposals/StageCard'
 import { SearchBar } from '../components/proposals/SearchBar'
-import { ProposalsByStage, stages } from '../types'
+import { ProposalsByStage, allStages } from '../types'
 import { useState } from 'react'
 
 const Container = styled.div`
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const proposals = await getAllProposalsByStage()
+  const proposals = await getProposalsForStages(allStages)
   const oneHourInSeconds = 1 * 60 * 60
 
   return {
@@ -43,7 +43,7 @@ export default function ProposalsPage({ proposals }: Props) {
       </Head>
       <Container>
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-        {stages.map((stage) => (
+        {allStages.map((stage) => (
           <StageCard
             key={stage}
             stage={stage}

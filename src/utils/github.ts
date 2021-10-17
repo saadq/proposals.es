@@ -33,3 +33,11 @@ export function getGithubProposalKey(proposal: Proposal): GithubProposalKey {
 export function isGithubProposal(proposal: Proposal): boolean {
   return proposal.link?.includes('github.com') ?? false
 }
+
+export function getReadmeBaseUrl(proposal: Proposal) {
+  const { link, defaultBranch } = proposal
+  const url = new URL(link as string)
+  const baseUrl = `${url.origin}${url.pathname}/blob/${defaultBranch}/`
+
+  return baseUrl
+}

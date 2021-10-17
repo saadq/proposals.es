@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Breadcrumbs } from '../common/Breadcrumbs'
 import { Proposal, Stage } from '../../types'
-import { isGithubProposal } from '../../utils/github'
+import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 import { useEffect } from 'react'
 
 const Container = styled.section`
@@ -54,14 +54,6 @@ interface Props {
   proposal: Proposal
   stage: Stage
   readme: string
-}
-
-function getBaseUrl(proposal: Proposal) {
-  const { link, defaultBranch } = proposal
-  const url = new URL(link as string)
-  const baseUrl = `${url.origin}${url.pathname}/blob/${defaultBranch}/`
-
-  return baseUrl
 }
 
 export function ProposalDetails({ proposal, stage, readme }: Props) {
@@ -159,7 +151,7 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
           <SanitizedHtml
             className="markdown-body"
             html={marked(readme, {
-              baseUrl: getBaseUrl(proposal)
+              baseUrl: getReadmeBaseUrl(proposal)
             })}
           />
         ) : null}

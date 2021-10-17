@@ -18,7 +18,7 @@ export interface GitHubResponse {
 export type ResponseKey = keyof GitHubResponse
 export type ReadmesByStage = Record<ResponseKey, string>
 
-export interface GetRepoInfoResponse {
+export interface GetRepoDetailsResponse {
   [proposalKey: string]: {
     stargazerCount: number
     defaultBranchRef: {

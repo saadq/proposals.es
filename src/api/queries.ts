@@ -1,4 +1,4 @@
-import { Proposal, Stage, stages } from '../types'
+import { Proposal, Stage } from '../types'
 import { ResponseKey } from '../types/response'
 import { getGitHubDetails, getGithubProposalKey, isGithubProposal } from '../utils/github'
 
@@ -104,10 +104,8 @@ function buildProposalsQuery(stages: readonly Stage[]) {
   `
 }
 
-export const getReadmesForAllStagesQuery = buildProposalsQuery(stages)
-
-export function buildGetReadmesForStageQuery(stage: Stage) {
-  return buildProposalsQuery([stage])
+export function buildGetReadmesForStagesQuery(stages: readonly Stage[]) {
+  return buildProposalsQuery(stages)
 }
 
 export function buildGetRepoDetailsQuery(allProposals: Proposal[]): string {
