@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { getProposalsForStages } from '../api/getAllProposalsByStage'
+import { getProposalsForStages } from '../api/getProposalsForStages'
 import { StageCard } from '../components/proposals/StageCard'
 import { SearchBar } from '../components/proposals/SearchBar'
 import { ProposalsByStage, allStages } from '../types'
