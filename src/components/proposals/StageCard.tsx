@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 import { ProposalCard } from './ProposalCard'
 import { Proposal, Stage } from '../../types'
@@ -13,12 +14,20 @@ const Card = styled.div`
 `
 
 const Heading = styled.h2`
+  align-self: flex-start;
   color: ${({ theme }) => theme.colors.black};
+  cursor: pointer;
+  text-decoration: underline;
   font-size: 1.25rem;
   font-weight: 800;
   background: ${({ theme }) => theme.colors.card};
   margin: 0;
   padding: 1.5rem 2.5rem;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
 `
 
 const ProposalsContainer = styled.div`
@@ -47,7 +56,9 @@ export function StageCard({ stage, proposals, searchQuery }: Props) {
 
   return proposalsToShow.length === 0 ? null : (
     <Card>
-      <Heading>{formatStageName(stage)}</Heading>
+      <Link href={`/${stage}`}>
+        <Heading>{formatStageName(stage)}</Heading>
+      </Link>
       <ProposalsContainer>
         {proposalsToShow.map((proposal, i) => (
           <ProposalCard
