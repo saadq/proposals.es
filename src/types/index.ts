@@ -1,9 +1,9 @@
 export const allStages = [
-  'stage0',
-  'stage1',
-  'stage2',
-  'stage3',
   'stage4',
+  'stage3',
+  'stage2',
+  'stage1',
+  'stage0',
   'inactive'
 ] as const
 
