@@ -2,7 +2,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { ProposalCard } from './ProposalCard'
 import { Proposal, Stage } from '../../types'
-import { formatStageName } from '../../utils/format'
+import { formatStageName } from '../../utils/formatStageName'
 
 const Card = styled.div`
   display: flex;
