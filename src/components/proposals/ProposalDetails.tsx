@@ -48,6 +48,10 @@ const DetailRow = styled.div`
   align-items: center;
   gap: 0.25rem;
   margin-top: 0.5rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
 `
 
 interface Props {
