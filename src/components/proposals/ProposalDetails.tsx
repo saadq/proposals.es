@@ -65,6 +65,8 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
     }
   }, [readme])
 
+  console.log({ proposal })
+
   return (
     <>
       <Container>
@@ -116,14 +118,16 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
           )}
           {isGithubProposal(proposal) && (
             <>
-              <DetailRow>
-                <TagHeading>Authors:</TagHeading>
-                <TagList>
-                  {proposal.authors?.map((author) => (
-                    <Tag key={author}>{author}</Tag>
-                  ))}
-                </TagList>
-              </DetailRow>
+              {proposal.authors?.length && (
+                <DetailRow>
+                  <TagHeading>Authors:</TagHeading>
+                  <TagList>
+                    {proposal.authors.map((author) => (
+                      <Tag key={author}>{author}</Tag>
+                    ))}
+                  </TagList>
+                </DetailRow>
+              )}
               <DetailRow>
                 <TagHeading>Champions:</TagHeading>
                 <TagList>
