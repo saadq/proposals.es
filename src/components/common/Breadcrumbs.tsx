@@ -47,12 +47,15 @@ export function Breadcrumbs({ stageName, proposal }: Props) {
         </Link>
       </li>
       <li>
-        <Link href={`/${stageName}`} passHref>
+        <Link href={`/stages/${stageName}`} passHref>
           <a>{formatStageName(stageName)}</a>
         </Link>
       </li>
       <li>
-        <Link href={`/${stageName}/${encodeURIComponent(proposal.title)}`} passHref>
+        <Link
+          href={`/stages/${stageName}/${encodeURIComponent(proposal.title)}`}
+          passHref
+        >
           <a>{proposal.title}</a>
         </Link>
       </li>

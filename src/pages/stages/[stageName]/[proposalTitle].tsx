@@ -1,11 +1,11 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
-import { Proposal, Stage, allStages } from '../../types'
-import { getProposalsForStages } from '../../api/getProposalsForStages'
-import { ProposalDetails } from '../../components/proposals/ProposalDetails'
-import { getReadmeForProposal } from '../../api/getReadmeForProposal'
-import { getRepoDetailsForProposal } from '../../api/getRepoDetailsForProposal'
-import { isGithubProposal } from '../../utils/github'
+import { Proposal, Stage, allStages } from '../../../types'
+import { getProposalsForStages } from '../../../api/getProposalsForStages'
+import { ProposalDetails } from '../../../components/proposals/ProposalDetails'
+import { getReadmeForProposal } from '../../../api/getReadmeForProposal'
+import { getRepoDetailsForProposal } from '../../../api/getRepoDetailsForProposal'
+import { isGithubProposal } from '../../../utils/github'
 
 interface Props {
   stageName: Stage

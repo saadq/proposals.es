@@ -56,8 +56,10 @@ export function StageCard({ stage, proposals, searchQuery }: Props) {
 
   return proposalsToShow.length === 0 ? null : (
     <Card>
-      <Link href={`/${stage}`}>
-        <Heading>{formatStageName(stage)}</Heading>
+      <Link href={`/stages/${stage}`} passHref>
+        <a>
+          <Heading>{formatStageName(stage)}</Heading>
+        </a>
       </Link>
       <ProposalsContainer>
         {proposalsToShow.map((proposal, i) => (

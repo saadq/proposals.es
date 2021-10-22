@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
-import { StageCard } from '../../components/proposals/StageCard'
-import { Proposal, Stage, allStages } from '../../types'
-import { getProposalsForStages } from '../../api/getProposalsForStages'
+import { StageCard } from '../../../components/proposals/StageCard'
+import { Proposal, Stage, allStages } from '../../../types'
+import { getProposalsForStages } from '../../../api/getProposalsForStages'
 
 interface Props {
   stageName: Stage

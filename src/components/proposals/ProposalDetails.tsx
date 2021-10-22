@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import marked from 'marked'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
@@ -69,8 +70,6 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
     }
   }, [readme])
 
-  console.log({ proposal })
-
   return (
     <>
       <Container>
@@ -95,7 +94,11 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
                 <TagHeading>Champions:</TagHeading>
                 <TagList>
                   {proposal.champions?.map((champion) => (
-                    <Tag key={champion}>{champion}</Tag>
+                    <Tag key={champion}>
+                      <Link href={`/champions/${champion}`} passHref>
+                        <a>{champion}</a>
+                      </Link>
+                    </Tag>
                   ))}
                 </TagList>
               </DetailRow>
@@ -104,7 +107,11 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
                   <TagHeading>Authors:</TagHeading>
                   <TagList>
                     {proposal.authors.map((author) => (
-                      <Tag key={author}>{author}</Tag>
+                      <Tag key={author}>
+                        <Link href={`/champions/${author}`} passHref>
+                          <a>{author}</a>
+                        </Link>
+                      </Tag>
                     ))}
                   </TagList>
                 </DetailRow>
@@ -127,7 +134,11 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
                   <TagHeading>Authors:</TagHeading>
                   <TagList>
                     {proposal.authors.map((author) => (
-                      <Tag key={author}>{author}</Tag>
+                      <Tag key={author}>
+                        <Link href={`/champions/${author}`} passHref>
+                          <a>{author}</a>
+                        </Link>
+                      </Tag>
                     ))}
                   </TagList>
                 </DetailRow>
@@ -136,7 +147,11 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
                 <TagHeading>Champions:</TagHeading>
                 <TagList>
                   {proposal.champions?.map((champion) => (
-                    <Tag key={champion}>{champion}</Tag>
+                    <Tag key={champion}>
+                      <Link href={`/champions/${champion}`} passHref>
+                        <a>{champion}</a>
+                      </Link>
+                    </Tag>
                   ))}
                 </TagList>
               </DetailRow>

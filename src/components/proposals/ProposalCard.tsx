@@ -63,8 +63,8 @@ export const ProposalCard: FC<Props> = memo(({ stage, proposal, index }) => {
   return (
     <Link
       passHref
-      href={`/${stage}/${encodeURIComponent(proposal.title)}`}
-      key={`${stage}-proposal-${index}`}
+      href={`/stages/${stage}/${encodeURIComponent(proposal.title)}`}
+      key={`${proposal.title}-link`}
     >
       <CardLink>
         <CardContent>
