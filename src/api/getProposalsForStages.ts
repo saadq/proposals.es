@@ -4,6 +4,7 @@ import { buildGetReadmesForStagesQuery } from './queries'
 import { parseProposalsFromReadmes } from '../utils/parseReadme'
 import { getGithubProposalKey, isGithubProposal, request } from '../utils/github'
 import { GitHubResponse, ReadmeResponse, ReadmesByStage } from '../types/response'
+import { sleep } from '../utils/sleep'
 
 interface GetProposalsForStageParams {
   stages: readonly Stage[]
@@ -18,6 +19,10 @@ export async function getProposalsForStages({
   stages,
   includeRepoDetails = false
 }: GetProposalsForStageParams): Promise<Partial<ProposalsByStage>> {
+  if (process.env.IS_BUILD) {
+    await sleep(1500) // Add a delay to API calls to avoid rate limit during the static building process
+  }
+
   const getReadmesForStagesQuery = buildGetReadmesForStagesQuery(stages)
   const response = (await request(getReadmesForStagesQuery)) as GitHubResponse
 

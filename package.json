@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "debug": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build",
+    "build": "IS_BUILD=true next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier \"src/**/*.{ts,tsx}\" --write",
