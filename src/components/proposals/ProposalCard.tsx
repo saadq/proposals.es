@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal, Stage } from '../../types'
 import { StarIcon } from '../common/StarIcon'
+import { FC, memo } from 'react'
 
 const CardLink = styled.a`
   color: ${({ theme }) => theme.colors.foreground};
@@ -52,7 +53,7 @@ interface Props {
   index: number
 }
 
-export function ProposalCard({ stage, proposal, index }: Props) {
+export const ProposalCard: FC<Props> = memo(({ stage, proposal, index }) => {
   // TODO: Remove this when the multi-proposal edge case is handled.
   // Some proposals in the readmes can have multiple proposals in a single column (e.g. "Class Fields")
   if (proposal.titleHtml.includes('Class Fields')) {
@@ -80,4 +81,4 @@ export function ProposalCard({ stage, proposal, index }: Props) {
       </CardLink>
     </Link>
   )
-}
+})

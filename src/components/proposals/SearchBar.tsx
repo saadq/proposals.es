@@ -2,6 +2,7 @@ import { ChangeEvent, useCallback } from 'react'
 import styled from 'styled-components'
 import { SearchIcon } from '../common/SearchIcon'
 import { ClearSearchIcon } from '../common/ClearSearchIcon'
+import { debounce } from '../../utils/debounce'
 
 const Container = styled.div`
   position: relative;
@@ -12,7 +13,7 @@ const Container = styled.div`
 
 const SearchInput = styled.input`
   border: none;
-  padding: 2rem 4rem;
+  padding: 1rem 4rem;
   border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 4px;
   width: 100%;
@@ -36,11 +37,12 @@ interface Props {
 }
 
 export function SearchBar({ searchQuery, setSearchQuery }: Props) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
+    debounce((event: ChangeEvent<HTMLInputElement>) => {
       const query = event.target.value
       setSearchQuery(query)
-    },
+    }),
     [setSearchQuery]
   )
 
@@ -72,11 +74,7 @@ export function SearchBar({ searchQuery, setSearchQuery }: Props) {
           }}
         />
       )}
-      <SearchInput
-        placeholder="Search for proposals..."
-        value={searchQuery}
-        onChange={handleChange}
-      />
+      <SearchInput placeholder="Search for proposals..." onChange={handleChange} />
     </Container>
   )
 }

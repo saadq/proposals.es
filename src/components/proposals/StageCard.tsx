@@ -65,7 +65,7 @@ export function StageCard({ stage, proposals, searchQuery }: Props) {
             stage={stage}
             proposal={proposal}
             index={i}
-            key={`${stage}-proposal-${i}`}
+            key={proposal.title}
           />
         ))}
       </ProposalsContainer>
