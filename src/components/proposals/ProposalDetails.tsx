@@ -2,10 +2,10 @@ import Link from 'next/link'
 import marked from 'marked'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
-import { Breadcrumbs } from '../common/Breadcrumbs'
-import { Proposal, Stage } from '../../types'
+import { Proposal } from '../../types'
 import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 import { useEffect } from 'react'
+import { Breadcrumbs } from '../common/Breadcrumbs'
 
 const Container = styled.section`
   font-size: 1rem;
@@ -57,11 +57,10 @@ const DetailRow = styled.div`
 
 interface Props {
   proposal: Proposal
-  stage: Stage
   readme: string
 }
 
-export function ProposalDetails({ proposal, stage, readme }: Props) {
+export function ProposalDetails({ proposal, readme }: Props) {
   useEffect(() => {
     if (readme) {
       import('highlight.js').then((hljs) => {
@@ -70,10 +69,21 @@ export function ProposalDetails({ proposal, stage, readme }: Props) {
     }
   }, [readme])
 
+  const breadcrumbs = [
+    {
+      link: '/proposals',
+      label: 'Proposals'
+    },
+    {
+      link: `/proposals/${encodeURIComponent(proposal.title)}`,
+      label: proposal.title
+    }
+  ]
+
   return (
     <>
       <Container>
-        <Breadcrumbs stageName={stage} proposal={proposal} />
+        <Breadcrumbs crumbs={breadcrumbs} />
         <Details>
           {!isGithubProposal(proposal) && (
             <>

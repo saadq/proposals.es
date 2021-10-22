@@ -1,20 +1,18 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
-import { Proposal, Stage, allStages } from '../../../types'
-import { getProposalsForStages } from '../../../api/getProposalsForStages'
-import { ProposalDetails } from '../../../components/proposals/ProposalDetails'
-import { getReadmeForProposal } from '../../../api/getReadmeForProposal'
-import { getRepoDetailsForProposal } from '../../../api/getRepoDetailsForProposal'
-import { isGithubProposal } from '../../../utils/github'
+import { Proposal, allStages } from '../../types'
+import { getProposalsForStages } from '../../api/getProposalsForStages'
+import { ProposalDetails } from '../../components/proposals/ProposalDetails'
+import { getReadmeForProposal } from '../../api/getReadmeForProposal'
+import { getRepoDetailsForProposal } from '../../api/getRepoDetailsForProposal'
+import { isGithubProposal } from '../../utils/github'
 
 interface Props {
-  stageName: Stage
   proposal: Proposal
   readme: string
 }
 
 interface Params extends ParsedUrlQuery {
-  stageName: Stage
   proposalTitle: string
 }
 
@@ -22,12 +20,21 @@ interface Path {
   params: Params
 }
 
-export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
-  const stageName = params?.stageName as Stage
+export const getStaticProps: GetStaticProps<Partial<Props>, Params> = async ({
+  params
+}) => {
   const proposalTitle = params?.proposalTitle as string
-  const proposalsByStage = await getProposalsForStages({ stages: [stageName] })
-  const proposals = proposalsByStage[stageName] as Proposal[]
+  const proposalsByStage = await getProposalsForStages({ stages: allStages })
+  const proposals = Object.values(proposalsByStage).flat()
   const proposal = proposals.find((p) => p.title === proposalTitle) as Proposal
+
+  if (!proposal) {
+    return {
+      redirect: { destination: '/404' },
+      props: {}
+    }
+  }
+
   const readme = await getReadmeForProposal(proposal)
 
   const proposalWithRepoDetails = isGithubProposal(proposal)
@@ -36,7 +43,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 
   return {
     props: {
-      stageName: stageName as Stage,
       proposal: proposalWithRepoDetails,
       readme
     }
@@ -44,10 +50,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
-  const allProposalsByStage = await getProposalsForStages({
-    stages: allStages,
-    includeRepoDetails: true
-  })
+  const allProposalsByStage = await getProposalsForStages({ stages: allStages })
 
   const paths = allStages.reduce((paths, stageName) => {
     const proposals = allProposalsByStage[stageName] as Proposal[]
@@ -67,6 +70,6 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
 }
 
-export default function ProposalDetailsPage({ proposal, stageName, readme }: Props) {
-  return <ProposalDetails proposal={proposal} stage={stageName} readme={readme} />
+export default function ProposalDetailsPage({ proposal, readme }: Props) {
+  return <ProposalDetails proposal={proposal} readme={readme} />
 }

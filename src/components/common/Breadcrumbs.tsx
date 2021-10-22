@@ -1,7 +1,5 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import { Proposal, Stage } from '../../types'
-import { formatStageName } from '../../utils/formatStageName'
 
 const BreadcrumbList = styled.ul`
   display: flex;
@@ -34,31 +32,22 @@ const BreadcrumbList = styled.ul`
 `
 
 interface Props {
-  stageName: Stage
-  proposal: Proposal
+  crumbs: Array<{
+    label: string
+    link: string
+  }>
 }
 
-export function Breadcrumbs({ stageName, proposal }: Props) {
+export function Breadcrumbs({ crumbs }: Props) {
   return (
     <BreadcrumbList>
-      <li>
-        <Link href="/" passHref>
-          <a>Home</a>
-        </Link>
-      </li>
-      <li>
-        <Link href={`/stages/${stageName}`} passHref>
-          <a>{formatStageName(stageName)}</a>
-        </Link>
-      </li>
-      <li>
-        <Link
-          href={`/stages/${stageName}/${encodeURIComponent(proposal.title)}`}
-          passHref
-        >
-          <a>{proposal.title}</a>
-        </Link>
-      </li>
+      {crumbs.map((crumb) => (
+        <li key={crumb.link}>
+          <Link href={crumb.link} passHref>
+            <a>{crumb.label}</a>
+          </Link>
+        </li>
+      ))}
     </BreadcrumbList>
   )
 }
