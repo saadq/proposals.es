@@ -71,7 +71,7 @@ export function ProposalDetails({ proposal, readme }: Props) {
 
   const breadcrumbs = [
     {
-      link: '/proposals',
+      link: '/',
       label: 'Proposals'
     },
     {

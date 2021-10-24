@@ -1,5 +1,6 @@
 import { Octokit, RestEndpointMethodTypes } from '@octokit/rest'
 import { Proposal } from '../types'
+import { avoidRateLimit } from '../utils/avoidRateLimit'
 import { getGitHubDetails, isGithubProposal } from '../utils/github'
 
 type GetReadmeParams = RestEndpointMethodTypes['repos']['getReadme']['parameters']
@@ -24,6 +25,8 @@ const mediaType = {
 }
 
 export async function getReadmeForProposal(proposal: Proposal): Promise<string> {
+  await avoidRateLimit()
+
   if (!isGithubProposal(proposal)) {
     return ''
   }

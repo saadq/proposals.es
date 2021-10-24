@@ -1,5 +1,6 @@
 import { load } from 'cheerio'
 import { Specification } from '../types'
+import { avoidRateLimit } from '../utils/avoidRateLimit'
 
 type SpecificationWithoutSummary = Omit<Specification, 'summary'>
 
@@ -49,8 +50,9 @@ const specificationsWithoutSummaries: SpecificationWithoutSummary[] = [
 ]
 
 export async function getSpecifications(): Promise<Specification[]> {
-  const allSummaries = await getAllSummaries()
+  await avoidRateLimit()
 
+  const allSummaries = await getAllSummaries()
   const specifications: Specification[] = specificationsWithoutSummaries.map(
     (spec, i) => ({
       ...spec,

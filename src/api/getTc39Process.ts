@@ -1,5 +1,6 @@
 import { load } from 'cheerio'
 import { ActiveStage, Stage } from '../types'
+import { avoidRateLimit } from '../utils/avoidRateLimit'
 
 export interface StageProcess {
   stage: Stage
@@ -20,6 +21,8 @@ export interface Tc39Process {
 }
 
 export async function getTc39Process(): Promise<Tc39Process> {
+  await avoidRateLimit()
+
   const endpoint = 'https://tc39.es/process-document/'
   const response = await fetch(endpoint)
   const html = await response.text()

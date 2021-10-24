@@ -26,7 +26,6 @@ const SummaryParagraph = styled(SanitizedHtml)`
 `
 
 export default function StagesPage({ tc39Process }: Props) {
-  console.log(tc39Process)
   return (
     <>
       <h1>The TC39 Process</h1>

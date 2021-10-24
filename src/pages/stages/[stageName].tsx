@@ -1,11 +1,13 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import styled from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
-import { StageCard } from '../../../components/proposals/StageCard'
-import { Proposal, Stage, allStages } from '../../../types'
-import { getProposalsForStages } from '../../../api/getProposalsForStages'
-import { getTc39Process, Tc39Process } from '../../../api/getTc39Process'
-import { SanitizedHtml } from '../../../components/common/SanitizedHtml'
+import { StageCard } from '../../components/proposals/StageCard'
+import { Proposal, Stage, allStages } from '../../types'
+import { getProposalsForStages } from '../../api/getProposalsForStages'
+import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
+import { SanitizedHtml } from '../../components/common/SanitizedHtml'
+import { Breadcrumbs } from '../../components/common/Breadcrumbs'
+import { formatStageName } from '../../utils/formatStageName'
 
 interface Props {
   stageName: Stage
@@ -61,9 +63,20 @@ const SummaryParagraph = styled(SanitizedHtml)`
 `
 
 export default function StagesPage({ stageName, proposals, tc39Process }: Props) {
-  console.log(process)
+  const breadcrumbs = [
+    {
+      label: 'Stages',
+      link: '/stages'
+    },
+    {
+      label: formatStageName(stageName),
+      link: `/stages/${stageName}`
+    }
+  ]
+
   return (
     <>
+      <Breadcrumbs crumbs={breadcrumbs} />
       {tc39Process.summaryParagraphs.map((paragraph, i) => (
         <SummaryParagraph key={`process-summary-paragraph-${i}`} html={paragraph} />
       ))}

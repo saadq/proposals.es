@@ -1,5 +1,6 @@
 import { ProposalsByStage } from '../types'
 import { GetRepoDetailsResponse as GetRepoDetailsResponse } from '../types/response'
+import { avoidRateLimit } from '../utils/avoidRateLimit'
 import { GithubProposalKey, request } from '../utils/github'
 import { buildGetRepoDetailsQuery } from './queries'
 
@@ -13,6 +14,8 @@ type RepoDetailsByProposal = Record<GithubProposalKey, RepoDetails>
 export async function getRepoDetailsForAllProposals(
   proposalsByStage: Partial<ProposalsByStage>
 ): Promise<RepoDetailsByProposal> {
+  await avoidRateLimit()
+
   const flattenedProposals = Object.values(proposalsByStage).flat()
   const getRepoDetailsQuery = buildGetRepoDetailsQuery(flattenedProposals)
   const repoDetailsResponse = (await request(
