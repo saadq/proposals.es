@@ -1,12 +1,16 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import styled from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
 import { StageCard } from '../../../components/proposals/StageCard'
 import { Proposal, Stage, allStages } from '../../../types'
 import { getProposalsForStages } from '../../../api/getProposalsForStages'
+import { getTc39Process, Tc39Process } from '../../../api/getTc39Process'
+import { SanitizedHtml } from '../../../components/common/SanitizedHtml'
 
 interface Props {
   stageName: Stage
   proposals: Proposal[]
+  tc39Process: Tc39Process
 }
 
 interface Params extends ParsedUrlQuery {
@@ -24,10 +28,13 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     includeRepoDetails: true
   })
 
+  const tc39Process = await getTc39Process()
+
   return {
     props: {
       stageName: stageName as Stage,
-      proposals: proposalsByStage[stageName] as Proposal[]
+      proposals: proposalsByStage[stageName] as Proposal[],
+      tc39Process: tc39Process
     }
   }
 }
@@ -45,6 +52,22 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
 }
 
-export default function ProposalDetailsPage({ stageName, proposals }: Props) {
-  return <StageCard stage={stageName} proposals={proposals} />
+const SummaryParagraph = styled(SanitizedHtml)`
+  margin: 1rem 0;
+
+  &:first-child {
+    margin: 0;
+  }
+`
+
+export default function StagesPage({ stageName, proposals, tc39Process }: Props) {
+  console.log(process)
+  return (
+    <>
+      {tc39Process.summaryParagraphs.map((paragraph, i) => (
+        <SummaryParagraph key={`process-summary-paragraph-${i}`} html={paragraph} />
+      ))}
+      <StageCard stage={stageName} proposals={proposals} />
+    </>
+  )
 }
