@@ -8,6 +8,7 @@ import { FC, memo } from 'react'
 const CardLink = styled.a`
   color: ${({ theme }) => theme.colors.foreground};
   text-decoration: none;
+  background: white;
   border: 1px solid #f4f6fb;
   box-shadow: 0px 8px 16px #e7f0f3;
   border-radius: 4px;

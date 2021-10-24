@@ -6,10 +6,14 @@ import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { ProposalCard } from '../../components/proposals/ProposalCard'
 import { allStages, Proposal } from '../../types'
 
+interface ChampionedProposal extends Proposal {
+  isAuthor: boolean
+  isChampion: boolean
+}
+
 interface Props {
   championName: string
-  authoredProposals: Proposal[]
-  championedProposals: Proposal[]
+  championedProposals: ChampionedProposal[]
 }
 
 interface Params extends ParsedUrlQuery {
@@ -25,32 +29,33 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   const proposalsByStage = await getProposalsForStages({ stages: allStages })
   const flattenedProposals = Object.values(proposalsByStage).flat()
 
-  const { authoredProposals, championedProposals } = flattenedProposals.reduce(
-    ({ authoredProposals, championedProposals }, proposal) => {
-      if (proposal.authors?.includes(championName)) {
-        authoredProposals.push(proposal)
-      }
-
-      if (proposal.champions?.includes(championName)) {
-        championedProposals.push(proposal)
-      }
-
-      return {
-        authoredProposals,
-        championedProposals
-      }
+  const championedProposals = flattenedProposals.reduce(
+    (championedProposals, proposal) => {
+      const isChampion = proposal.champions.includes(championName)
+      const isAuthor = proposal.authors?.includes(championName) ?? false
+      return isChampion || isAuthor
+        ? [...championedProposals, { ...proposal, isAuthor, isChampion }]
+        : championedProposals
     },
-    {
-      authoredProposals: [] as Proposal[],
-      championedProposals: [] as Proposal[]
-    }
+    [] as ChampionedProposal[]
   )
+
+  const sortedProposals = championedProposals.sort((a, b) => {
+    if (a.isChampion && a.isAuthor) {
+      return -1
+    }
+
+    if (a.isAuthor && !b.isAuthor) {
+      return -1
+    }
+
+    return 0
+  })
 
   return {
     props: {
       championName,
-      championedProposals,
-      authoredProposals
+      championedProposals: sortedProposals
     }
   }
 }
@@ -76,13 +81,10 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 
 const ProposalRow = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `
 
-export default function ChampionPage({
-  championName,
-  authoredProposals,
-  championedProposals
-}: Props) {
+export default function ChampionPage({ championName, championedProposals }: Props) {
   return (
     <>
       <Head>
@@ -96,23 +98,17 @@ export default function ChampionPage({
       <>
         <h1>{championName}</h1>
         <ProposalRow>
-          {authoredProposals.map((proposal, index) => (
-            <ProposalCard
-              key={proposal.title}
-              proposal={proposal}
-              index={index}
-              stage="inactive"
-            />
-          ))}
-        </ProposalRow>
-        <ProposalRow>
           {championedProposals.map((proposal, index) => (
-            <ProposalCard
-              key={proposal.title}
-              proposal={proposal}
-              index={index}
-              stage="inactive"
-            />
+            <>
+              {proposal.isAuthor ? <p>author</p> : null}
+              {proposal.isChampion ? <p>champion</p> : null}
+              <ProposalCard
+                key={proposal.title}
+                proposal={proposal}
+                index={index}
+                stage="inactive"
+              />
+            </>
           ))}
         </ProposalRow>
       </>
