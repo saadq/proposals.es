@@ -114,5 +114,8 @@ function getTableNumberForStage(stage: Stage, isI18n?: boolean) {
 }
 
 function getTextListFromCell($: CheerioAPI, cell: string) {
-  return cell.split('<br>').map((item) => $(item).text() || item)
+  return cell
+    .split('<br>')
+    .map((item) => $(item).text().trim() || item.trim())
+    .flat()
 }
