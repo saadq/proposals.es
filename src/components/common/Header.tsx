@@ -47,6 +47,9 @@ export function Header() {
           <Link href="/" passHref>
             <NavLink activeRoute={route}>Proposals</NavLink>
           </Link>
+          <Link href="/champions" passHref>
+            <NavLink activeRoute={route}>Champions</NavLink>
+          </Link>
           <Link href="/specifications" passHref>
             <NavLink activeRoute={route}>Specifications</NavLink>
           </Link>

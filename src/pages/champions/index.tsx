@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { allStages } from '../../types'
+import { SearchBar } from '../../components/proposals/SearchBar'
+import { useState } from 'react'
 
 interface Props {
   championNames: string[]
@@ -24,6 +26,15 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 }
 
 export default function ChampionsPage({ championNames }: Props) {
+  const [searchQuery, setSearchQuery] = useState('')
+  const championsToShow = championNames
+    .sort()
+    .filter((champion) =>
+      !searchQuery || searchQuery.length < 2
+        ? true
+        : champion.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+
   return (
     <>
       <Head>
@@ -34,15 +45,18 @@ export default function ChampionsPage({ championNames }: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ul>
-        {championNames.map((name) => (
-          <li key={name}>
-            <Link href={`/champions/${encodeURIComponent(name)}`} passHref>
-              <a>{name}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <>
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <ul>
+          {championsToShow.map((name) => (
+            <li key={name}>
+              <Link href={`/champions/${encodeURIComponent(name)}`} passHref>
+                <a>{name}</a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </>
     </>
   )
 }
