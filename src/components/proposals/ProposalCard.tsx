@@ -22,7 +22,7 @@ const CardLink = styled.a`
   position: relative;
   border: 1px solid #e7f0f3;
 
-  .prefix__feather-star {
+  .feather-star {
     transition: fill 0.4s ease;
   }
 
@@ -32,7 +32,7 @@ const CardLink = styled.a`
     box-shadow: 0px 10px 8px #e7f0f3;
     color: black;
 
-    .prefix__feather-star {
+    .feather-star {
       fill: ${({ theme }) => theme.colors.black};
     }
   }
@@ -49,6 +49,10 @@ const CardContent = styled.div`
   cursor: pointer;
   min-width: 8rem;
   font-weight: bold;
+
+  code {
+    font-size: 0.95rem;
+  }
 `
 
 const Stars = styled.div`

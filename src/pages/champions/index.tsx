@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { allStages } from '../../types'
-import { SearchBar } from '../../components/proposals/SearchBar'
+import { SearchBar } from '../../components/common/SearchBar'
 import { useState } from 'react'
 
 interface Props {

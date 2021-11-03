@@ -4,7 +4,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { getProposalsForStages } from '../api/getProposalsForStages'
 import { StageCard } from '../components/proposals/StageCard'
-import { SearchBar } from '../components/proposals/SearchBar'
+import { SearchBar } from '../components/common/SearchBar'
 import { ProposalsByStage, allStages } from '../types'
 
 const Container = styled.div`
@@ -44,6 +44,7 @@ export default function ProposalsPage({ proposals }: Props) {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           placeholder="Search for proposals..."
+          width="50rem"
         />
         {allStages.map((stage) => (
           <StageCard

@@ -11,6 +11,7 @@ export function ClearSearchIcon(props: SVGProps<SVGSVGElement>) {
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
+      className="feather-clear"
       {...props}
     >
       <path d="M18 6L6 18M6 6l12 12" />

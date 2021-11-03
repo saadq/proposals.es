@@ -1,13 +1,15 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import styled from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
-import { StageCard } from '../../components/proposals/StageCard'
 import { Proposal, Stage, allStages } from '../../types'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
 import { SanitizedHtml } from '../../components/common/SanitizedHtml'
 import { Breadcrumbs } from '../../components/common/Breadcrumbs'
+import { SearchBar } from '../../components/common/SearchBar'
+import { ProposalList } from '../../components/proposals/ProposalList'
 import { formatStageName } from '../../utils/formatStageName'
+import { useState } from 'react'
 
 interface Props {
   stageName: Stage
@@ -54,15 +56,19 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
 }
 
-const SummaryParagraph = styled(SanitizedHtml)`
-  margin: 1rem 0;
-
-  &:first-child {
-    margin: 0;
-  }
+const Container = styled.div`
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
 `
 
-export default function StagesPage({ stageName, proposals, tc39Process }: Props) {
+const Heading = styled.h1`
+  margin-bottom: 2rem;
+`
+
+export default function StagesPage({ stageName, proposals }: Props) {
+  const [searchQuery, setSearchQuery] = useState('')
+
   const breadcrumbs = [
     {
       label: 'Stages',
@@ -75,12 +81,27 @@ export default function StagesPage({ stageName, proposals, tc39Process }: Props)
   ]
 
   return (
-    <>
+    <Container>
       <Breadcrumbs crumbs={breadcrumbs} />
-      {tc39Process.summaryParagraphs.map((paragraph, i) => (
-        <SummaryParagraph key={`process-summary-paragraph-${i}`} html={paragraph} />
-      ))}
-      <StageCard stage={stageName} proposals={proposals} />
-    </>
+      <Heading>{formatStageName(stageName)} Proposals</Heading>
+      {stageName === 'inactive' && (
+        <p>
+          Inactive proposals are proposals that at one point were presented to the
+          committee but were subsequently abandoned, withdrawn, or rejected.
+        </p>
+      )}
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        placeholder={`Search for ${formatStageName(stageName)} proposals... (${
+          proposals.length
+        } total)`}
+      />
+      <ProposalList
+        proposals={proposals}
+        badges={['stars', 'repo']}
+        searchQuery={searchQuery}
+      />
+    </Container>
   )
 }

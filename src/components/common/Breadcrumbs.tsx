@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import styled from 'styled-components'
+import { SanitizedHtml } from './SanitizedHtml'
 
 const BreadcrumbList = styled.ul`
   display: flex;
@@ -28,6 +29,10 @@ const BreadcrumbList = styled.ul`
     &:hover {
       text-decoration: underline;
     }
+
+    code {
+      font-size: 0.95rem;
+    }
   }
 `
 
@@ -35,6 +40,7 @@ interface Props {
   crumbs: Array<{
     label: string
     link: string
+    isHtml?: boolean
   }>
 }
 
@@ -44,7 +50,7 @@ export function Breadcrumbs({ crumbs }: Props) {
       {crumbs.map((crumb) => (
         <li key={crumb.link}>
           <Link href={crumb.link} passHref>
-            <a>{crumb.label}</a>
+            <a>{crumb.isHtml ? <SanitizedHtml html={crumb.label} /> : crumb.label}</a>
           </Link>
         </li>
       ))}

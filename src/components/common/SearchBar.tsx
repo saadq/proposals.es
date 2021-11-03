@@ -1,14 +1,13 @@
 import { ChangeEvent, useCallback } from 'react'
 import styled from 'styled-components'
-import { SearchIcon } from '../common/SearchIcon'
-import { ClearSearchIcon } from '../common/ClearSearchIcon'
+import { SearchIcon } from './SearchIcon'
+import { ClearSearchIcon } from './ClearSearchIcon'
 import { debounce } from '../../utils/debounce'
 
-const Container = styled.div`
+const Container = styled.div<{ width: string }>`
   position: relative;
-  width: 50rem;
-  max-width: 100%;
   margin: 0 auto;
+  width: ${({ width }) => width};
 `
 
 const SearchInput = styled.input`
@@ -36,13 +35,15 @@ interface Props {
   setSearchQuery: (searchQuery: string) => void
   placeholder: string
   debounceRate?: number
+  width?: string
 }
 
 export function SearchBar({
   searchQuery,
   setSearchQuery,
   placeholder,
-  debounceRate = 100
+  debounceRate = 100,
+  width = '100%'
 }: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleChange = useCallback(
@@ -58,7 +59,7 @@ export function SearchBar({
   }, [setSearchQuery])
 
   return (
-    <Container>
+    <Container width={width}>
       <SearchIcon
         style={{
           position: 'absolute',

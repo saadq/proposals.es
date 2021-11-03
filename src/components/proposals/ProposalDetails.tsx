@@ -77,7 +77,8 @@ export function ProposalDetails({ proposal, readme }: Props) {
     },
     {
       link: `/proposals/${encodeURIComponent(proposal.title)}`,
-      label: proposal.title
+      label: proposal.titleHtml,
+      isHtml: true
     }
   ]
 
