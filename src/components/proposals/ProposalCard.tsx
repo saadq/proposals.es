@@ -10,20 +10,31 @@ const CardLink = styled.a`
   text-decoration: none;
   background: white;
   border: 1px solid #f4f6fb;
-  box-shadow: 0px 8px 16px #e7f0f3;
+  box-shadow: 0px 8px 10px #e7f0f3;
   border-radius: 4px;
   padding: 2rem 3rem;
   justify-content: center;
   align-items: center;
   display: flex;
   flex: 1;
-  transition: background 0.4s ease;
+  transition: all 0.4s ease;
   flex-wrap: wrap;
   position: relative;
+  border: 1px solid #e7f0f3;
+
+  .prefix__feather-star {
+    transition: fill 0.4s ease;
+  }
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary};
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+    box-shadow: 0px 10px 8px #e7f0f3;
     color: black;
+
+    .prefix__feather-star {
+      fill: ${({ theme }) => theme.colors.black};
+    }
   }
 `
 
@@ -37,6 +48,11 @@ const CardContent = styled.div`
   overflow: visible;
   cursor: pointer;
   min-width: 8rem;
+  font-weight: bold;
+
+  code {
+    font-weight: bold;
+  }
 `
 
 const Stars = styled.div`
@@ -75,7 +91,7 @@ export const ProposalCard: FC<Props> = memo(({ stage, proposal, index }) => {
           {proposal.stars != null && (
             <Stars>
               <StarIcon />
-              <span>{proposal.stars}</span>
+              <span style={{ fontSize: '0.8rem' }}>{proposal.stars}</span>
             </Stars>
           )}
         </CardContent>

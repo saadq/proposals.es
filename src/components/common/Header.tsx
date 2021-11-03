@@ -30,6 +30,10 @@ const NavLink = styled.a<{ activeRoute: string }>`
   text-decoration: ${(props) =>
     props.activeRoute === props.href ? 'underline' : 'none'};
   font-weight: ${(props) => (props.activeRoute === props.href ? 'bold' : 'normal')};
+
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
 export function Header() {

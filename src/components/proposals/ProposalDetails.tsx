@@ -1,11 +1,12 @@
+import { useEffect } from 'react'
 import Link from 'next/link'
 import marked from 'marked'
 import styled from 'styled-components'
-import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal } from '../../types'
-import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
-import { useEffect } from 'react'
+import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Breadcrumbs } from '../common/Breadcrumbs'
+import { Button } from '../common/Button'
+import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 
 const Container = styled.section`
   font-size: 1rem;

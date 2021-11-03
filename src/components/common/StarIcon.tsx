@@ -1,12 +1,15 @@
+import { useTheme } from 'styled-components'
+
 export function StarIcon({ width = 20 }) {
+  const theme = useTheme()
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       width={width}
-      fill="none"
+      fill={theme.colors.primary}
       stroke="currentColor"
-      strokeWidth={2}
+      strokeWidth={0}
       strokeLinecap="round"
       strokeLinejoin="round"
       className="prefix__feather prefix__feather-star"

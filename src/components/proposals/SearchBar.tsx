@@ -17,7 +17,7 @@ const SearchInput = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 4px;
   width: 100%;
-  font-family: 'Open Sans';
+  font-family: 'Nunito';
   font-weight: bold;
 
   &::placeholder {

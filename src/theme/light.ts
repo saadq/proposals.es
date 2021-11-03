@@ -5,7 +5,7 @@ const white = '#FFFFFF'
 const gray = '#F4F6FB'
 const black = '#000000'
 const pink = '#DB83DD'
-const yellow = '#fab005'
+const yellow = '#fd7e14'
 const blue = '#5800ff'
 
 // TODO – Add colors for light theme
@@ -19,7 +19,7 @@ export const lightTheme: Theme = {
     yellow,
     background: gray,
     foreground: black,
-    primary: blue,
+    primary: yellow,
     header: white,
     card: '',
     footer: ''

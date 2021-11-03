@@ -65,8 +65,8 @@ export const markdownStyles = css`
     -webkit-text-size-adjust: 100%;
     line-height: 1.5;
     color: #24292e;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif,
-      Apple Color Emoji, Segoe UI Emoji;
+    font-family: Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+      sans-serif, Apple Color Emoji, Segoe UI Emoji;
     font-size: 16px;
     line-height: 1.5;
     word-wrap: break-word;

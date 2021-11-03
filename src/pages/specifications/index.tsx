@@ -3,23 +3,28 @@ import styled from 'styled-components'
 import { getSpecifications } from '../../api/getSpecifications'
 import { Specification as SpecificationType } from '../../types'
 
-const Specification = styled.section`
-  margin: 2rem 0;
-  padding-bottom: 1rem;
-  background: #1b1c20;
-  box-shadow: 0px 4px 4px #000000;
-  border: 1px solid black;
-`
-
 const Header = styled.header`
-  background: #161618;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.primary};
-  margin-bottom: 2rem;
+  background: ${({ theme }) => theme.colors.primary};
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: ${({ theme }) => theme.colors.foreground};
+`
+
+const Specification = styled.section`
+  margin: 2rem 0;
+  background: ${({ theme }) => theme.colors.white};
+  box-shadow: 0px 4px 10px 10px #e7f0f3;
+  color: ${({ theme }) => theme.colors.foreground};
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border-radius: 4px;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
 `
 
 const Heading = styled.h1`
@@ -48,15 +53,16 @@ const Links = styled.ul`
   }
 
   a {
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.foreground};
+    font-weight: 500;
   }
 `
 
 const Summary = styled.div`
-  padding: 0 2rem;
+  padding: 2rem;
   line-height: 2;
-  color: #c1c3cb;
-  font-family: Averta;
+  color: ${({ theme }) => theme.colors.foreground};
+  font-family: Nunito;
   font-weight: normal;
 
   @media screen and (max-width: 500px) {

@@ -11,6 +11,7 @@ const Card = styled.div`
   border-radius: 4px;
   height: 25rem;
   box-shadow: 0px 2px 8px #e7f0f3;
+  border: 1px solid ${({ theme }) => theme.colors.primary};
 `
 
 const Heading = styled.h2`
