@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next'
+import { Fragment } from 'react'
 import styled from 'styled-components'
 import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
 import { SanitizedHtml } from '../../components/common/SanitizedHtml'
@@ -33,14 +34,14 @@ export default function StagesPage({ tc39Process }: Props) {
         <SummaryParagraph key={`process-summary-paragraph-${i}`} html={paragraph} />
       ))}
       {Object.entries(tc39Process.processByStage).map(([stage, process]) => (
-        <>
+        <Fragment key={stage}>
           <SanitizedHtml html={process.purpose} />
           <SanitizedHtml html={process.entranceCriteria} />
           <SanitizedHtml html={process.acceptanceSignifies} />
           <SanitizedHtml html={process.specQuality} />
           <SanitizedHtml html={process.postAcceptanceChangesExpected} />
           <SanitizedHtml html={process.implementationTypesExpected} />
-        </>
+        </Fragment>
       ))}
     </>
   )
