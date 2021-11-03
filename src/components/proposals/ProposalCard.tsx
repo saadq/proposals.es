@@ -49,10 +49,6 @@ const CardContent = styled.div`
   cursor: pointer;
   min-width: 8rem;
   font-weight: bold;
-
-  code {
-    font-weight: bold;
-  }
 `
 
 const Stars = styled.div`
