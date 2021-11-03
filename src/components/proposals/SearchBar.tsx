@@ -34,15 +34,22 @@ const SearchInput = styled.input`
 interface Props {
   searchQuery: string
   setSearchQuery: (searchQuery: string) => void
+  placeholder: string
+  debounceRate?: number
 }
 
-export function SearchBar({ searchQuery, setSearchQuery }: Props) {
+export function SearchBar({
+  searchQuery,
+  setSearchQuery,
+  placeholder,
+  debounceRate = 100
+}: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleChange = useCallback(
     debounce((event: ChangeEvent<HTMLInputElement>) => {
       const query = event.target.value
       setSearchQuery(query)
-    }),
+    }, debounceRate),
     [setSearchQuery]
   )
 
@@ -74,7 +81,7 @@ export function SearchBar({ searchQuery, setSearchQuery }: Props) {
           }}
         />
       )}
-      <SearchInput placeholder="Search for proposals..." onChange={handleChange} />
+      <SearchInput placeholder={placeholder} onChange={handleChange} />
     </Container>
   )
 }

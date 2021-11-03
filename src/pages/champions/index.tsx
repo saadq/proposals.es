@@ -46,7 +46,12 @@ export default function ChampionsPage({ championNames }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <>
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          placeholder="Search for champions..."
+          debounceRate={0}
+        />
         <ul>
           {championsToShow.map((name) => (
             <li key={name}>

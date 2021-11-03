@@ -40,7 +40,11 @@ export default function ProposalsPage({ proposals }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          placeholder="Search for proposals..."
+        />
         {allStages.map((stage) => (
           <StageCard
             key={stage}
