@@ -19,6 +19,12 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   opacity: 0.5;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
 `
 
 export function Footer() {

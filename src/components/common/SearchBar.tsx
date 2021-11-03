@@ -8,6 +8,7 @@ const Container = styled.div<{ width: string }>`
   position: relative;
   margin: 0 auto;
   width: ${({ width }) => width};
+  max-width: 100%;
 `
 
 const SearchInput = styled.input`
