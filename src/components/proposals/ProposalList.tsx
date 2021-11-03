@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { Proposal } from '../../types'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { StarIcon } from '../common/StarIcon'
-import { SearchBar } from '../common/SearchBar'
 import { isGithubProposal } from '../../utils/github'
 import { GitHubIcon } from '../common/GitHubIcon'
 

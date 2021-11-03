@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { Proposal } from '../../types'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Breadcrumbs } from '../common/Breadcrumbs'
-import { Button } from '../common/Button'
 import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 
 const Container = styled.section`

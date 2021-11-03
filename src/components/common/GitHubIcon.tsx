@@ -1,7 +1,4 @@
-import { useTheme } from 'styled-components'
-
 export function GitHubIcon({ width = 20 }) {
-  const theme = useTheme()
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
