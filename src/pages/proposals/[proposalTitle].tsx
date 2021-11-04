@@ -26,7 +26,9 @@ export const getStaticProps: GetStaticProps<Partial<Props>, Params> = async ({
   const proposalTitle = params?.proposalTitle as string
   const proposalsByStage = await getProposalsForStages({ stages: allStages })
   const proposals = Object.values(proposalsByStage).flat()
-  const proposal = proposals.find((p) => p.title === proposalTitle) as Proposal
+  const proposal = proposals.find(
+    (p) => p.title === decodeURIComponent(proposalTitle)
+  ) as Proposal
 
   if (!proposal) {
     return {
@@ -57,7 +59,7 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
     const proposalPaths = proposals.map((proposal) => ({
       params: {
         stageName: stageName,
-        proposalTitle: proposal.title
+        proposalTitle: encodeURIComponent(proposal.title)
       }
     }))
 
