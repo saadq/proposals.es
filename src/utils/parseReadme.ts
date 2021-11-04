@@ -121,11 +121,6 @@ function getTextListFromCell($: CheerioAPI, cell: string) {
 }
 
 function parseTextItem($: CheerioAPI, item: string) {
-  const text = ($(item).text() || item).replace(/&nbsp;/gi, '').trim()
-  const textWithoutParens = text.includes('(') ? text.slice(0, text.indexOf('(')) : text
-  const textList = textWithoutParens.includes(',')
-    ? textWithoutParens.split(',').map((text) => text.trim())
-    : textWithoutParens.trim()
-
-  return textList
+  const title = $(item).text() || item
+  return title.replace(/&nbsp;/gi, '').trim()
 }
