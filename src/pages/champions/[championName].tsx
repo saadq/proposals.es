@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import type { ParsedUrlQuery } from 'querystring'
@@ -99,7 +100,7 @@ export default function ChampionPage({ championName, championedProposals }: Prop
         <h1>{championName}</h1>
         <ProposalRow>
           {championedProposals.map((proposal, index) => (
-            <>
+            <Fragment key={proposal.title}>
               {proposal.isAuthor ? <p>author</p> : null}
               {proposal.isChampion ? <p>champion</p> : null}
               <ProposalCard
@@ -108,7 +109,7 @@ export default function ChampionPage({ championName, championedProposals }: Prop
                 index={index}
                 stage="inactive"
               />
-            </>
+            </Fragment>
           ))}
         </ProposalRow>
       </>
