@@ -11,6 +11,7 @@ export type Stage = typeof allStages[number]
 export type ActiveStage = Exclude<Stage, 'inactive'>
 
 export interface Proposal {
+  stage: Stage
   type: 'ecma262' | 'ecma402' | 'inactive'
   title: string
   titleHtml: string

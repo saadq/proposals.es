@@ -1,15 +1,18 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 import { Proposal } from '../../types'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { StarIcon } from '../common/StarIcon'
 import { isGithubProposal } from '../../utils/github'
 import { GitHubIcon } from '../common/GitHubIcon'
+import { useCallback } from 'react'
 
 const List = styled.ul`
   padding: 0;
+  list-style-type: none;
 `
 
-const ListItem = styled.li`
+const ProposalLink = styled.a`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,11 +24,8 @@ const ListItem = styled.li`
   transition: background 0.4s ease;
   box-shadow: 0px 8px 10px #e7f0f3;
   font-weight: 800;
-
-  code {
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
+  color: ${({ theme }) => theme.colors.foreground};
+  text-decoration: none;
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary};
@@ -44,15 +44,16 @@ const Badges = styled.div`
 
 const StarsBadge = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.25rem;
 
   .feather-star {
     transition: fill 0.4s ease;
+    align-self: center;
   }
 
   span {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 `
 
@@ -78,35 +79,44 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
   const proposalsToShow = proposals
     .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
     .filter((proposal) =>
-      !searchQuery || searchQuery.length < 2
+      !searchQuery || searchQuery.trim().length < 1
         ? true
         : proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
+
+  const handleRepoClick = useCallback((repoLink: string) => {
+    document.location.href = repoLink
+  }, [])
 
   return (
     <>
       <List>
         {proposalsToShow.map((proposal) => (
-          <ListItem key={proposal.title}>
-            <SanitizedHtml html={proposal.titleHtml} />
-            <Badges>
-              {badges?.includes('stars') && proposal.stars != null && (
-                <StarsBadge>
-                  <StarIcon />
-                  <span>{proposal.stars}</span>
-                </StarsBadge>
-              )}
-              {badges?.includes('repo') && isGithubProposal(proposal) && (
-                <RepoLink
-                  href={proposal.link}
-                  target="_blank"
-                  style={{ margin: 0, padding: 0 }}
-                >
-                  <GitHubIcon />
-                </RepoLink>
-              )}
-            </Badges>
-          </ListItem>
+          <li key={proposal.title}>
+            <Link href={`/proposals/${encodeURIComponent(proposal.title)}`} passHref>
+              <ProposalLink>
+                <SanitizedHtml html={proposal.titleHtml} />
+                <Badges>
+                  {badges?.includes('stars') && proposal.stars != null && (
+                    <StarsBadge>
+                      <StarIcon />
+                      <span>{proposal.stars}</span>
+                    </StarsBadge>
+                  )}
+                  {badges?.includes('repo') && isGithubProposal(proposal) && (
+                    <RepoLink
+                      onClick={() => handleRepoClick(proposal.link as string)}
+                      href={proposal.link}
+                      target="_blank"
+                      style={{ margin: 0, padding: 0 }}
+                    >
+                      <GitHubIcon />
+                    </RepoLink>
+                  )}
+                </Badges>
+              </ProposalLink>
+            </Link>
+          </li>
         ))}
       </List>
     </>

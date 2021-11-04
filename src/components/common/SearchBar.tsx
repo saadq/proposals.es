@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback } from 'react'
+import { ChangeEvent, FC, memo, useCallback } from 'react'
 import styled from 'styled-components'
 import { SearchIcon } from './SearchIcon'
 import { ClearSearchIcon } from './ClearSearchIcon'
@@ -39,51 +39,47 @@ interface Props {
   width?: string
 }
 
-export function SearchBar({
-  searchQuery,
-  setSearchQuery,
-  placeholder,
-  debounceRate = 100,
-  width = '100%'
-}: Props) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleChange = useCallback(
-    debounce((event: ChangeEvent<HTMLInputElement>) => {
-      const query = event.target.value
-      setSearchQuery(query)
-    }, debounceRate),
-    [setSearchQuery]
-  )
+export const SearchBar: FC<Props> = memo(
+  ({ searchQuery, setSearchQuery, placeholder, debounceRate, width = '100%' }) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const handleChange = useCallback(
+      debounce((event: ChangeEvent<HTMLInputElement>) => {
+        const query = event.target.value
+        setSearchQuery(query)
+      }, debounceRate),
+      [setSearchQuery]
+    )
 
-  const handleClearClick = useCallback(() => {
-    setSearchQuery('')
-  }, [setSearchQuery])
+    const handleClearClick = useCallback(() => {
+      setSearchQuery('')
+    }, [setSearchQuery])
 
-  return (
-    <Container width={width}>
-      <SearchIcon
-        style={{
-          position: 'absolute',
-          left: '1.5rem',
-          top: 0,
-          bottom: 0,
-          margin: 'auto'
-        }}
-      />
-      {searchQuery.trim() !== '' && (
-        <ClearSearchIcon
-          onClick={handleClearClick}
+    return (
+      <Container width={width}>
+        <SearchIcon
           style={{
-            cursor: 'pointer',
             position: 'absolute',
-            right: '2rem',
+            left: '1.5rem',
             top: 0,
             bottom: 0,
             margin: 'auto'
           }}
         />
-      )}
-      <SearchInput placeholder={placeholder} onChange={handleChange} />
-    </Container>
-  )
-}
+        {searchQuery.trim() !== '' && (
+          <ClearSearchIcon
+            onClick={handleClearClick}
+            style={{
+              cursor: 'pointer',
+              position: 'absolute',
+              right: '2rem',
+              top: 0,
+              bottom: 0,
+              margin: 'auto'
+            }}
+          />
+        )}
+        <SearchInput placeholder={placeholder} onChange={handleChange} />
+      </Container>
+    )
+  }
+)

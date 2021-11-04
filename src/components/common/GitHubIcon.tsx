@@ -1,11 +1,21 @@
-export function GitHubIcon({ width = 20 }) {
+interface Props {
+  width?: number
+  fill?: string
+  stroke?: string
+}
+
+export function GitHubIcon({
+  width = 20,
+  fill = 'none',
+  stroke = 'currentColor'
+}: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
+      fill={fill}
+      stroke={stroke}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

@@ -2,6 +2,12 @@ import { css } from 'styled-components'
 
 // Mostly copied from https://github.com/sindresorhus/github-markdown-css
 export const markdownStyles = css`
+  .markdown-body {
+    background: white;
+    padding: 3rem;
+    box-shadow: 0px 8px 10px #e7f0f3;
+  }
+
   .markdown-body .octicon {
     display: inline-block;
     fill: currentColor;
@@ -775,7 +781,7 @@ export const markdownStyles = css`
   }
 
   .markdown-body table tr:nth-child(2n) {
-    background-color: #e8edf3;
+    background-color: #f6f8fa;
   }
 
   .markdown-body img {
@@ -829,7 +835,7 @@ export const markdownStyles = css`
     overflow: auto;
     font-size: 85%;
     line-height: 1.45;
-    background-color: #e8edf3;
+    background-color: #f6f8fa;
     border-radius: 3px;
   }
 

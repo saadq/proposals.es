@@ -66,6 +66,7 @@ function parseReadme(readme: string, stage: Stage, isI18n?: boolean): Proposal[]
         const champions = getTextListFromCell($, championsHtml)
 
         const proposal: Proposal = {
+          stage,
           type: 'inactive',
           link: proposalLink.attr('href') ?? '',
           titleHtml: hasLink ? (proposalLink.html() as string) : titleHtml ?? '',
@@ -82,6 +83,7 @@ function parseReadme(readme: string, stage: Stage, isI18n?: boolean): Proposal[]
       const champions = getTextListFromCell($, colVals[2]).filter(Boolean)
 
       const proposal: Proposal = {
+        stage,
         type: isI18n ? 'ecma402' : 'ecma262',
         link: proposalLink.attr('href') ?? '',
         titleHtml: hasLink ? (proposalLink.html() as string) : colVals[0] ?? '',

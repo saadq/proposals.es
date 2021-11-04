@@ -7,7 +7,7 @@ import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
 import { Breadcrumbs } from '../../components/common/Breadcrumbs'
 import { SearchBar } from '../../components/common/SearchBar'
 import { ProposalList } from '../../components/proposals/ProposalList'
-import { formatStageName } from '../../utils/formatStageName'
+import { formatStageName } from '../../utils/format'
 import { useState } from 'react'
 
 interface Props {
@@ -92,9 +92,7 @@ export default function StagesPage({ stageName, proposals }: Props) {
       <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        placeholder={`Search for ${formatStageName(stageName)} proposals... (${
-          proposals.length
-        } total)`}
+        placeholder={`Search for proposals... (${proposals.length} total)`}
       />
       <ProposalList
         proposals={proposals}

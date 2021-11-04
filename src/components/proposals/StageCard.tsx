@@ -2,7 +2,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { ProposalCard } from './ProposalCard'
 import { Proposal, Stage } from '../../types'
-import { formatStageName } from '../../utils/formatStageName'
+import { formatStageName } from '../../utils/format'
 
 const Card = styled.div`
   display: flex;
@@ -50,9 +50,9 @@ export function StageCard({ stage, proposals, searchQuery }: Props) {
   const proposalsToShow = proposals
     .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
     .filter((proposal) =>
-      !searchQuery || searchQuery.length < 2
+      !searchQuery || searchQuery.trim().length < 1
         ? true
-        : proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
+        : proposal.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
     )
 
   return proposalsToShow.length === 0 ? null : (
