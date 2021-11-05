@@ -45,6 +45,6 @@ export interface Specification {
   name: string
   alias: string
   specLink: string
-  featureSetLink: string
-  summary: string
+  summary?: string
+  featureSetLink?: string
 }

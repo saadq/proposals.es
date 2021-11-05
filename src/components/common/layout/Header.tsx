@@ -24,12 +24,11 @@ const Nav = styled.nav`
   }
 `
 
-const NavLink = styled.a<{ activeRoute: string }>`
+const NavLink = styled.a<{ isActive: boolean }>`
   color: ${({ theme }) => theme.colors.primary};
   margin: 0 1rem;
-  text-decoration: ${(props) =>
-    props.activeRoute === props.href ? 'underline' : 'none'};
-  font-weight: ${(props) => (props.activeRoute === props.href ? 'bold' : 'normal')};
+  text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
+  font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
 
   &:hover {
     text-decoration: underline;
@@ -49,13 +48,17 @@ export function Header() {
         </Link>
         <Nav>
           <Link href="/" passHref>
-            <NavLink activeRoute={route}>Proposals</NavLink>
+            <NavLink isActive={route === '/' || route.startsWith('/proposals')}>
+              Proposals
+            </NavLink>
           </Link>
           <Link href="/champions" passHref>
-            <NavLink activeRoute={route}>Champions</NavLink>
+            <NavLink isActive={route.startsWith('/champions')}>Champions</NavLink>
           </Link>
           <Link href="/specifications" passHref>
-            <NavLink activeRoute={route}>Specifications</NavLink>
+            <NavLink isActive={route.startsWith('/specifications')}>
+              Specifications
+            </NavLink>
           </Link>
         </Nav>
       </Container>

@@ -2,9 +2,12 @@ import { load } from 'cheerio'
 import { Specification } from '../types'
 import { avoidRateLimit } from '../utils/avoidRateLimit'
 
-type SpecificationWithoutSummary = Omit<Specification, 'summary'>
-
-const specificationsWithoutSummaries: SpecificationWithoutSummary[] = [
+const specificationsWithoutSummaries: Specification[] = [
+  {
+    name: 'ES2022',
+    alias: 'ES13',
+    specLink: 'https://tc39.es/ecma262/'
+  },
   {
     name: 'ES2021',
     alias: 'ES12',
@@ -85,5 +88,8 @@ async function getAllSummaries(): Promise<string[]> {
     .slice(indexOfFirstSummary, indexOfFirstNonSummary)
     .reverse()
 
-  return summaries
+  const inProgressSummary =
+    'This proposal is currently ongoing. TC39 intends to submit a specification to the ECMA General Assembly for ratification in July of each year.'
+
+  return [inProgressSummary, ...summaries]
 }

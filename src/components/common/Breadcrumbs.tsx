@@ -50,7 +50,7 @@ export function Breadcrumbs({ crumbs }: Props) {
       {crumbs.map((crumb) => (
         <li key={crumb.link}>
           <Link href={crumb.link} passHref>
-            {crumb.isHtml ? <SanitizedHtml html={crumb.label} /> : crumb.label}
+            <a>{crumb.isHtml ? <SanitizedHtml html={crumb.label} /> : crumb.label}</a>
           </Link>
         </li>
       ))}

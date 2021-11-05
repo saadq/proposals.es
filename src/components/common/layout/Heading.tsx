@@ -17,7 +17,7 @@ function getDefaultFontSize(level?: HeadingLevel) {
     default:
       return '2rem'
     case 2:
-      return '1.5rem'
+      return '1.35rem'
     case 3:
       return '1.25rem'
     case 4:
@@ -32,7 +32,7 @@ function getDefaultFontSize(level?: HeadingLevel) {
 const HeadingText = styled.h1<Omit<Props, 'children'>>`
   font-size: ${({ fontSize, level }) => fontSize ?? getDefaultFontSize(level)};
   font-weight: ${({ fontWeight }) => fontWeight ?? 'bold'};
-  margin: ${({ margin, level }) => (margin ?? level === 1 ? '1rem 0' : 'initial')};
+  margin: ${({ margin, level }) => margin ?? (level === 1 ? '1rem 0' : 'initial')};
 `
 
 export function Heading({ level = 1, children, ...styleProps }: Props) {

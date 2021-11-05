@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next'
 import { Specification } from '../../components/specifications'
+import { Col, Container, Heading } from '../../components/common'
 import { getSpecifications } from '../../api/getSpecifications'
 import { Specification as SpecificationType } from '../../types'
 
@@ -19,10 +20,13 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 export default function SpecificationsPage({ specifications }: Props) {
   return (
-    <>
-      {specifications.map((specification) => (
-        <Specification specification={specification} key={specification.name} />
-      ))}
-    </>
+    <Container width="80%" maxWidth="1000px" margin="0 auto">
+      <Heading margin="0 0 2rem 0">ECMAScript Specifications</Heading>
+      <Col gap="3rem">
+        {specifications.map((specification) => (
+          <Specification specification={specification} key={specification.name} />
+        ))}
+      </Col>
+    </Container>
   )
 }
