@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import { Proposal } from '../../types'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { StarIcon } from '../common/icons/StarIcon'
 import { isGithubProposal } from '../../utils/github'
 import { GitHubIcon } from '../common/icons/GitHubIcon'
 import { useCallback } from 'react'
+import { ChampionedProposal } from '../../api/getAllChampions'
+import { AwardIcon } from '../common/icons/AwardIcon'
 
 const ProposalLink = styled.a`
   display: flex;
@@ -37,18 +38,27 @@ const Badges = styled.div`
   gap: 2rem;
 `
 
-const StarsBadge = styled.div`
+const Badge = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 0.25rem;
 
+  span {
+    font-size: 0.9rem;
+  }
+`
+
+const ChampionBadge = styled(Badge)`
+  padding: 0.5rem 1rem;
+  background: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.white};
+  border-radius: 4px;
+`
+
+const StarsBadge = styled(Badge)`
   .feather-star {
     transition: fill 0.4s ease;
     align-self: center;
-  }
-
-  span {
-    font-size: 0.9rem;
   }
 `
 
@@ -62,10 +72,10 @@ const RepoLink = styled.a`
   }
 `
 
-type Badge = 'stars' | 'author' | 'repo'
+type Badge = 'stars' | 'author' | 'champion' | 'repo'
 
 interface Props {
-  proposals: Proposal[]
+  proposals: ChampionedProposal[]
   badges?: Badge[]
   searchQuery?: string
 }
@@ -92,6 +102,18 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
               <ProposalLink>
                 <SanitizedHtml html={proposal.titleHtml} />
                 <Badges>
+                  {badges?.includes('author') && proposal.isAuthor && (
+                    <ChampionBadge>
+                      <AwardIcon />
+                      <span>Author</span>
+                    </ChampionBadge>
+                  )}
+                  {badges?.includes('champion') && proposal.isChampion && (
+                    <ChampionBadge>
+                      <AwardIcon />
+                      <span>Champion</span>
+                    </ChampionBadge>
+                  )}
                   {badges?.includes('stars') && proposal.stars != null && (
                     <StarsBadge>
                       <StarIcon />

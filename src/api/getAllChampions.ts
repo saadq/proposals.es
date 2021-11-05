@@ -2,8 +2,8 @@ import { allStages, Proposal } from '../types'
 import { getProposalsForStages } from './getProposalsForStages'
 
 export interface ChampionedProposal extends Proposal {
-  isAuthor: boolean
-  isChampion: boolean
+  isAuthor?: boolean
+  isChampion?: boolean
 }
 
 export interface Champion {

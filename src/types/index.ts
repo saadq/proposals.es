@@ -1,3 +1,5 @@
+import { ChampionedProposal } from '../api/getAllChampions'
+
 export const allStages = [
   'stage4',
   'stage3',
@@ -32,7 +34,7 @@ export type ProposalsByStage = Record<Stage, Proposal[]>
 
 export interface Champion {
   name: string
-  proposals: Proposal[]
+  proposals: ChampionedProposal[]
 }
 
 export interface SimplifiedChampion extends Omit<Champion, 'proposals'> {

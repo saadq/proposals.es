@@ -2,19 +2,14 @@ import { Fragment } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import type { ParsedUrlQuery } from 'querystring'
-import { getProposalsForStages } from '../../api/getProposalsForStages'
-import { ProposalCard } from '../../components/proposals'
-import { Row } from '../../components/common'
-import { allStages, Proposal } from '../../types'
-
-interface ChampionedProposal extends Proposal {
-  isAuthor: boolean
-  isChampion: boolean
-}
+import { Champion } from '../../types'
+import { getAllChampions } from '../../api/getAllChampions'
+import { ProposalList } from '../../components/proposals'
+import { Breadcrumbs, Container } from '../../components/common'
+import { Heading } from '../../components/common/layout/Heading'
 
 interface Props {
-  championName: string
-  championedProposals: ChampionedProposal[]
+  champion: Champion
 }
 
 interface Params extends ParsedUrlQuery {
@@ -27,48 +22,22 @@ interface StaticPath {
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
   const championName = params?.championName as string
-  const proposalsByStage = await getProposalsForStages({ stages: allStages })
-  const flattenedProposals = Object.values(proposalsByStage).flat()
-
-  const championedProposals = flattenedProposals.reduce(
-    (championedProposals, proposal) => {
-      const isChampion = proposal.champions.includes(championName)
-      const isAuthor = proposal.authors?.includes(championName) ?? false
-      return isChampion || isAuthor
-        ? [...championedProposals, { ...proposal, isAuthor, isChampion }]
-        : championedProposals
-    },
-    [] as ChampionedProposal[]
-  )
-
-  const sortedProposals = championedProposals.sort((a, b) => {
-    if (a.isChampion && a.isAuthor) {
-      return -1
-    }
-
-    if (a.isAuthor && !b.isAuthor) {
-      return -1
-    }
-
-    return 0
-  })
+  const allChampions = await getAllChampions()
+  const champion = allChampions.find(
+    (champion) => champion.name === championName
+  ) as Champion
 
   return {
     props: {
-      championName,
-      championedProposals: sortedProposals
+      champion
     }
   }
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
-  const proposalsByStage = await getProposalsForStages({ stages: allStages })
-  const flattenedProposals = Object.values(proposalsByStage).flat()
-  const championNames = flattenedProposals
-    .map((proposal) => [...proposal.champions, ...(proposal.authors ?? [])])
-    .flat()
-  const dedupedChampionNames = [...new Set(championNames)]
-  const paths: StaticPath[] = dedupedChampionNames.map((championName) => ({
+  const allChampions = await getAllChampions()
+  const championNames = allChampions.map((champion) => champion.name)
+  const paths: StaticPath[] = championNames.map((championName) => ({
     params: {
       championName
     }
@@ -80,34 +49,40 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
 }
 
-export default function ChampionPage({ championName, championedProposals }: Props) {
+export default function ChampionPage({ champion }: Props) {
+  const breadcrumbs = [
+    {
+      label: 'Home',
+      link: '/'
+    },
+    {
+      label: 'Champions',
+      link: '/Champions'
+    },
+    {
+      label: champion.name,
+      link: `/Champions/${champion.name}`
+    }
+  ]
+
   return (
     <>
       <Head>
-        <title>{championName} Proposals</title>
+        <title>{champion.name} Proposals</title>
         <meta
           name="description"
-          content={`These are the proposals championed or authored by ${championName}`}
+          content={`These are the proposals championed or authored by ${champion.name}`}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <>
-        <h1>{championName}</h1>
-        <Row>
-          {championedProposals.map((proposal, index) => (
-            <Fragment key={proposal.title}>
-              {proposal.isAuthor ? <p>author</p> : null}
-              {proposal.isChampion ? <p>champion</p> : null}
-              <ProposalCard
-                key={proposal.title}
-                proposal={proposal}
-                index={index}
-                stage="inactive"
-              />
-            </Fragment>
-          ))}
-        </Row>
-      </>
+      <Container width="80%" max-width="1000px" margin="0 auto">
+        <Breadcrumbs crumbs={breadcrumbs} />
+        <Heading>{champion.name}</Heading>
+        <Heading level={2} fontSize="1.25rem">
+          {champion.proposals.length} Proposals
+        </Heading>
+        <ProposalList proposals={champion.proposals} badges={['author', 'champion']} />
+      </Container>
     </>
   )
 }

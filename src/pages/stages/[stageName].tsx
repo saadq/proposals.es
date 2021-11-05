@@ -72,7 +72,7 @@ export default function StagesPage({ stageName, proposals }: Props) {
   ]
 
   return (
-    <Container width="90%" max-width="1000px" margin="0 auto">
+    <Container width="80%" max-width="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       <h1>{formatStageName(stageName)} Proposals</h1>
       {stageName === 'inactive' && (

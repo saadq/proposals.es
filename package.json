@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "debug": "NODE_OPTIONS='--inspect' next dev",
-    "build": "npm run format && npm run lint && npm run typecheck && cross-env IS_BUILD=true next build",
+    "prebuild": "npm run format && npm run lint",
+    "build": "cross-env IS_BUILD=true next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier \"src/**/*.{ts,tsx}\" --write",
