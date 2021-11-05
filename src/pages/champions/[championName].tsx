@@ -57,11 +57,11 @@ export default function ChampionPage({ champion }: Props) {
     },
     {
       label: 'Champions',
-      link: '/Champions'
+      link: '/champions'
     },
     {
       label: champion.name,
-      link: `/Champions/${champion.name}`
+      link: `/champions/${champion.name}`
     }
   ]
 

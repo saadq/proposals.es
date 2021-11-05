@@ -11,16 +11,34 @@ interface Props {
   margin?: string
 }
 
-const HeadingText = styled.h1<Omit<Props, 'children' | 'level'>>`
-  font-size: ${({ fontSize }) => fontSize ?? '2rem'};
+function getDefaultFontSize(level?: HeadingLevel) {
+  switch (level) {
+    case 1:
+    default:
+      return '2rem'
+    case 2:
+      return '1.5rem'
+    case 3:
+      return '1.25rem'
+    case 4:
+      return '1.15rem'
+    case 5:
+      return '1.05rem'
+    case 6:
+      return '1rem'
+  }
+}
+
+const HeadingText = styled.h1<Omit<Props, 'children'>>`
+  font-size: ${({ fontSize, level }) => fontSize ?? getDefaultFontSize(level)};
   font-weight: ${({ fontWeight }) => fontWeight ?? 'bold'};
-  margin: ${({ margin }) => margin ?? '0'};
+  margin: ${({ margin, level }) => (margin ?? level === 1 ? '1rem 0' : 'initial')};
 `
 
 export function Heading({ level = 1, children, ...styleProps }: Props) {
   const headingComponent = `h${level}` as AnyStyledComponent
   return (
-    <HeadingText as={headingComponent} {...styleProps}>
+    <HeadingText as={headingComponent} level={level} {...styleProps}>
       {children}
     </HeadingText>
   )

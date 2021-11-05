@@ -1,5 +1,6 @@
 export { GlobalStyle } from './GlobalStyle'
 export { Header } from './Header'
+export { Heading } from './Heading'
 export { Footer } from './Footer'
 export { Container } from './Container'
 export { Row } from './Row'

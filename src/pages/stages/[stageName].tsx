@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
-import { Container, Breadcrumbs, SearchBar } from '../../components/common'
+import { Container, Breadcrumbs, SearchBar, Heading } from '../../components/common'
 import { ProposalList } from '../../components/proposals'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
@@ -74,7 +74,7 @@ export default function StagesPage({ stageName, proposals }: Props) {
   return (
     <Container width="80%" max-width="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
-      <h1>{formatStageName(stageName)} Proposals</h1>
+      <Heading>{formatStageName(stageName)} Proposals</Heading>
       {stageName === 'inactive' && (
         <p>
           Inactive proposals are proposals that at one point were presented to the

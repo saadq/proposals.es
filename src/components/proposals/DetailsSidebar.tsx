@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import { SanitizedHtml, StarIcon, GitHubIcon } from '../common'
+import { SanitizedHtml, StarIcon, GitHubIcon, Heading } from '../common'
 import { formatStageName } from '../../utils/formatStageName'
 import { Proposal } from '../../types'
 import { getGitHubDetails, isGithubProposal } from '../../utils/github'
@@ -79,23 +79,23 @@ export function DetailsSidebar({ proposal }: Props) {
   return (
     <Sidebar>
       <DetailCard>
-        <h2>Proposal</h2>
-        <h3>{formatStageName(proposal.stage)}</h3>
+        <Heading level={2}>Proposal</Heading>
+        <Heading level={3}>{formatStageName(proposal.stage)}</Heading>
         {proposal.type !== 'inactive' && (
           <InfoRow>
-            <h3>
+            <Heading level={3}>
               <a
                 href={`https://www.ecma-international.org/publications-and-standards/standards/${proposal.type}/`}
               >
                 {proposal.type.toUpperCase()}
               </a>
-            </h3>
+            </Heading>
           </InfoRow>
         )}
       </DetailCard>
       {isGithubProposal(proposal) && (
         <DetailCard>
-          <h2>GitHub</h2>
+          <Heading level={2}>GitHub</Heading>
           <IconCol>
             <InfoRow>
               <StarIcon />
@@ -114,7 +114,7 @@ export function DetailsSidebar({ proposal }: Props) {
       )}
       {proposal.authors?.length !== 0 && (
         <DetailCard>
-          <h2>Authors</h2>
+          <Heading level={2}>Authors</Heading>
           <ChampionList>
             {proposal.authors?.map((author) => (
               <li key={author}>
@@ -127,7 +127,7 @@ export function DetailsSidebar({ proposal }: Props) {
         </DetailCard>
       )}
       <DetailCard>
-        <h2>Champions</h2>
+        <Heading level={2}>Champions</Heading>
         <ChampionList>
           {proposal.champions.map((champion) => (
             <li key={champion}>
@@ -144,7 +144,7 @@ export function DetailsSidebar({ proposal }: Props) {
       </DetailCard>
       {proposal.lastPresentedHtml && (
         <DetailCard>
-          <h2>Last presented</h2>
+          <Heading level={2}>Last presented</Heading>
           <SanitizedHtml html={proposal.lastPresentedHtml} />
         </DetailCard>
       )}

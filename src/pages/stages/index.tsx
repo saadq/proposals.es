@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { GetStaticProps } from 'next'
-import { SanitizedHtml } from '../../components/common'
+import { SanitizedHtml, Heading } from '../../components/common'
 import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
 
 interface Props {
@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 export default function StagesPage({ tc39Process }: Props) {
   return (
     <>
-      <h1>The TC39 Process</h1>
+      <Heading>The TC39 Process</Heading>
       {tc39Process.summaryParagraphs.map((paragraph, i) => (
         <SanitizedHtml key={`process-summary-paragraph-${i}`} html={paragraph} />
       ))}

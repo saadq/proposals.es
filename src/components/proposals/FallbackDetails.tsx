@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Proposal } from '../../types'
-import { SanitizedHtml } from '../common'
+import { SanitizedHtml, Heading } from '../common'
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,9 +21,9 @@ interface Props {
 export function FallbackDetails({ proposal }: Props) {
   return (
     <Wrapper>
-      <h1>
+      <Heading>
         <SanitizedHtml html={proposal.titleHtml} />
-      </h1>
+      </Heading>
       {proposal.link ? (
         <p>
           This proposal is not on GitHub. You can view the proposal directly{' '}
