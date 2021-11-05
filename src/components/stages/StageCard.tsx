@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import { ProposalCard } from './ProposalCard'
+import { ProposalCard } from '../proposals/ProposalCard'
 import { Proposal, Stage } from '../../types'
 import { formatStageName } from '../../utils/format'
 

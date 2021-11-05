@@ -1,14 +1,13 @@
+import { useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import styled from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
-import { Proposal, Stage, allStages } from '../../types'
+import { Breadcrumbs, SearchBar } from '../../components/common'
+import { ProposalList } from '../../components/proposals'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
-import { Breadcrumbs } from '../../components/common/Breadcrumbs'
-import { SearchBar } from '../../components/common/SearchBar'
-import { ProposalList } from '../../components/proposals/ProposalList'
 import { formatStageName } from '../../utils/format'
-import { useState } from 'react'
+import { Proposal, Stage, allStages } from '../../types'
 
 interface Props {
   stageName: Stage

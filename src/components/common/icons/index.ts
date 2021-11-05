@@ -1,0 +1,5 @@
+export { Logo } from './Logo'
+export { SearchIcon } from './SearchIcon'
+export { ClearSearchIcon } from './ClearSearchIcon'
+export { GitHubIcon } from './GitHubIcon'
+export { StarIcon } from './StarIcon'

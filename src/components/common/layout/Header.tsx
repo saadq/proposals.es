@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { Logo } from './Logo'
+import { Logo } from '../icons/Logo'
 
 const StyledHeader = styled.header`
   background: ${({ theme }) => theme.colors.header};

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal, Stage } from '../../types'
-import { StarIcon } from '../common/StarIcon'
+import { StarIcon } from '../common/icons/StarIcon'
 import { FC, memo } from 'react'
 
 const CardLink = styled.a`

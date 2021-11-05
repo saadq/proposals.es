@@ -1,11 +1,15 @@
+import marked from 'marked'
+import { useEffect } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
+import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 import { Proposal, allStages } from '../../types'
+import { DetailsSidebar } from '../../components/proposals'
+import { Breadcrumbs, SanitizedHtml, Container, Row } from '../../components/common'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
-import { ProposalDetails } from '../../components/proposals/ProposalDetails'
 import { getReadmeForProposal } from '../../api/getReadmeForProposal'
 import { getRepoDetailsForProposal } from '../../api/getRepoDetailsForProposal'
-import { isGithubProposal } from '../../utils/github'
+import { FallbackDetails } from '../../components/proposals/FallbackDetails'
 
 interface Props {
   proposal: Proposal
@@ -73,5 +77,55 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 }
 
 export default function ProposalDetailsPage({ proposal, readme }: Props) {
-  return <ProposalDetails proposal={proposal} readme={readme} />
+  useEffect(() => {
+    async function highlightReadme() {
+      const hljs = await import('highlight.js')
+      hljs.default.highlightAll()
+    }
+
+    if (readme) {
+      highlightReadme()
+    }
+  }, [readme])
+
+  const breadcrumbs = [
+    {
+      link: '/',
+      label: 'Proposals'
+    },
+    {
+      link: `/proposals/${encodeURIComponent(proposal.title)}`,
+      label: proposal.titleHtml,
+      isHtml: true
+    }
+  ]
+
+  return (
+    <Container width="1600px" maxWidth="100%" margin="0 auto">
+      <Breadcrumbs crumbs={breadcrumbs} />
+      {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
+      <Row gap="2rem">
+        {readme ? (
+          <article>
+            <SanitizedHtml
+              className="markdown-body"
+              html={marked(readme, {
+                baseUrl: getReadmeBaseUrl(proposal)
+              })}
+            />
+          </article>
+        ) : (
+          <iframe
+            src={proposal.link}
+            style={{
+              border: 'none',
+              width: '100%',
+              height: '100vh'
+            }}
+          />
+        )}
+        <DetailsSidebar proposal={proposal} />
+      </Row>
+    </Container>
+  )
 }

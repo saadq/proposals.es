@@ -2,9 +2,9 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { Proposal } from '../../types'
 import { SanitizedHtml } from '../common/SanitizedHtml'
-import { StarIcon } from '../common/StarIcon'
+import { StarIcon } from '../common/icons/StarIcon'
 import { isGithubProposal } from '../../utils/github'
-import { GitHubIcon } from '../common/GitHubIcon'
+import { GitHubIcon } from '../common/icons/GitHubIcon'
 import { useCallback } from 'react'
 
 const List = styled.ul`

@@ -1,8 +1,6 @@
 import type { AppProps } from 'next/app'
 import styled, { ThemeProvider } from 'styled-components'
-import { Header } from '../components/common/Header'
-import { Footer } from '../components/common/Footer'
-import { GlobalStyle } from '../components/common/GlobalStyle'
+import { Header, Footer, GlobalStyle } from '../components/common'
 import { lightTheme } from '../theme'
 
 const Page = styled.div`

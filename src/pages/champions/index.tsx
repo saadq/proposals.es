@@ -1,10 +1,10 @@
+import { useState } from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
+import { SearchBar } from '../../components/common'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { allStages } from '../../types'
-import { SearchBar } from '../../components/common/SearchBar'
-import { useState } from 'react'
 
 interface Props {
   championNames: string[]

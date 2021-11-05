@@ -4,7 +4,7 @@ import Head from 'next/head'
 import type { ParsedUrlQuery } from 'querystring'
 import styled from 'styled-components'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
-import { ProposalCard } from '../../components/proposals/ProposalCard'
+import { ProposalCard } from '../../components/proposals'
 import { allStages, Proposal } from '../../types'
 
 interface ChampionedProposal extends Proposal {
