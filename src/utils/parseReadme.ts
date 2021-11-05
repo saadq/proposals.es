@@ -62,8 +62,8 @@ function parseReadme(readme: string, stage: Stage, isI18n?: boolean): Proposal[]
 
       if (stage === 'inactive') {
         const [titleHtml, championsHtml, rationaleHtml] = colVals
-        const title = getTextListFromCell($, titleHtml)[0]
-        const champions = getTextListFromCell($, championsHtml)
+        const title = getProposalTitle($, titleHtml)
+        const champions = getChampionNames($, championsHtml)
 
         const proposal: Proposal = {
           stage,
@@ -78,9 +78,9 @@ function parseReadme(readme: string, stage: Stage, isI18n?: boolean): Proposal[]
         return proposal
       }
 
-      const title = getTextListFromCell($, colVals[0])[0]
-      const authors = getTextListFromCell($, colVals[1]).filter(Boolean)
-      const champions = getTextListFromCell($, colVals[2]).filter(Boolean)
+      const title = getProposalTitle($, colVals[0])
+      const authors = getChampionNames($, colVals[1]).filter(Boolean)
+      const champions = getChampionNames($, colVals[2]).filter(Boolean)
 
       const proposal: Proposal = {
         stage,
@@ -115,14 +115,38 @@ function getTableNumberForStage(stage: Stage, isI18n?: boolean) {
   return stage === 'stage2' ? 2 : 1
 }
 
-function getTextListFromCell($: CheerioAPI, cell: string) {
+function getProposalTitle($: CheerioAPI, cell: string) {
+  const titleList = getTextListFromCell($, cell, parseProposalTitleText)
+  return titleList[0]
+}
+
+function getChampionNames($: CheerioAPI, cell: string) {
+  const championNames = getTextListFromCell($, cell, parseChampionText)
+  return championNames
+}
+
+function getTextListFromCell(
+  $: CheerioAPI,
+  cell: string,
+  mapper: ($: CheerioAPI, item: string) => string | string[]
+) {
   return cell
     .split('<br>')
-    .map((item) => parseTextItem($, item))
+    .map((item: string) => mapper($, item))
     .flat()
 }
 
-function parseTextItem($: CheerioAPI, item: string) {
-  const title = $(item).text() || item
-  return title.replace(/&nbsp;/gi, '').trim()
+function parseProposalTitleText($: CheerioAPI, item: string) {
+  const text = $(item).text() || item
+  return text.replace(/&nbsp;/gi, '').trim()
+}
+
+function parseChampionText($: CheerioAPI, item: string) {
+  const text = ($(item).text() || item).replace(/&nbsp;/gi, '').trim()
+  const textWithoutParens = text.includes('(') ? text.slice(0, text.indexOf('(')) : text
+  const textList = textWithoutParens.includes(',')
+    ? textWithoutParens.split(',').map((text) => text.trim())
+    : textWithoutParens.trim()
+
+  return textList
 }
