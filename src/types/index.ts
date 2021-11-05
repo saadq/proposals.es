@@ -9,10 +9,11 @@ export const allStages = [
 
 export type Stage = typeof allStages[number]
 export type ActiveStage = Exclude<Stage, 'inactive'>
+export type ProposalType = 'ecma-262' | 'ecma-402' | 'inactive'
 
 export interface Proposal {
   stage: Stage
-  type: 'ecma262' | 'ecma402' | 'inactive'
+  type: ProposalType
   title: string
   titleHtml: string
   champions: string[]

@@ -1,15 +1,14 @@
-import marked from 'marked'
-import { useEffect } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
 import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 import { Proposal, allStages } from '../../types'
 import { DetailsSidebar } from '../../components/proposals'
-import { Breadcrumbs, SanitizedHtml, Container, Row } from '../../components/common'
+import { Breadcrumbs, Container, Row } from '../../components/common'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { getReadmeForProposal } from '../../api/getReadmeForProposal'
 import { getRepoDetailsForProposal } from '../../api/getRepoDetailsForProposal'
 import { FallbackDetails } from '../../components/proposals/FallbackDetails'
+import { Readme } from '../../components/proposals/Readme'
 
 interface Props {
   proposal: Proposal
@@ -77,17 +76,6 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 }
 
 export default function ProposalDetailsPage({ proposal, readme }: Props) {
-  useEffect(() => {
-    async function highlightReadme() {
-      const hljs = await import('highlight.js')
-      hljs.default.highlightAll()
-    }
-
-    if (readme) {
-      highlightReadme()
-    }
-  }, [readme])
-
   const breadcrumbs = [
     {
       link: '/',
@@ -106,15 +94,8 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
       {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
       <Row gap="2rem">
         {readme ? (
-          <article>
-            <SanitizedHtml
-              className="markdown-body"
-              html={marked(readme, {
-                baseUrl: getReadmeBaseUrl(proposal)
-              })}
-            />
-          </article>
-        ) : (
+          <Readme readme={readme} baseUrl={getReadmeBaseUrl(proposal)} />
+        ) : proposal.link ? (
           <iframe
             src={proposal.link}
             style={{
@@ -123,7 +104,7 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
               height: '100vh'
             }}
           />
-        )}
+        ) : null}
         <DetailsSidebar proposal={proposal} />
       </Row>
     </Container>

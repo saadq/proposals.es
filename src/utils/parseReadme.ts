@@ -79,12 +79,12 @@ function parseReadme(readme: string, stage: Stage, isI18n?: boolean): Proposal[]
       }
 
       const title = getProposalTitle($, colVals[0])
-      const authors = getChampionNames($, colVals[1]).filter(Boolean)
-      const champions = getChampionNames($, colVals[2]).filter(Boolean)
+      const authors = getChampionNames($, colVals[1])
+      const champions = getChampionNames($, colVals[2])
 
       const proposal: Proposal = {
         stage,
-        type: isI18n ? 'ecma402' : 'ecma262',
+        type: isI18n ? 'ecma-402' : 'ecma-262',
         link: proposalLink.attr('href') ?? '',
         titleHtml: hasLink ? (proposalLink.html() as string) : colVals[0] ?? '',
         title,
@@ -133,6 +133,7 @@ function getTextListFromCell(
   return cell
     .split('<br>')
     .map((item: string) => mapper($, item))
+    .filter(Boolean)
     .flat()
 }
 

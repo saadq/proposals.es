@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 import { SanitizedHtml, StarIcon, GitHubIcon } from '../common'
-import { formatProposalType, formatStageName } from '../../utils/format'
+import { formatStageName } from '../../utils/formatStageName'
 import { Proposal } from '../../types'
 import { getGitHubDetails, isGithubProposal } from '../../utils/github'
 
@@ -86,7 +86,13 @@ export function DetailsSidebar({ proposal }: Props) {
         <h3>{formatStageName(proposal.stage)}</h3>
         {proposal.type !== 'inactive' && (
           <InfoRow>
-            <h3>{formatProposalType(proposal.type)}</h3>
+            <h3>
+              <a
+                href={`https://www.ecma-international.org/publications-and-standards/standards/${proposal.type}/`}
+              >
+                {proposal.type.toUpperCase()}
+              </a>
+            </h3>
           </InfoRow>
         )}
       </DetailCard>
@@ -109,7 +115,7 @@ export function DetailsSidebar({ proposal }: Props) {
           </IconCol>
         </DetailCard>
       )}
-      {proposal.authors?.length && (
+      {proposal.authors?.length !== 0 && (
         <DetailCard>
           <h2>Authors</h2>
           <ChampionList>

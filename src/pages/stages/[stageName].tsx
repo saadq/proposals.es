@@ -6,7 +6,7 @@ import { Breadcrumbs, SearchBar } from '../../components/common'
 import { ProposalList } from '../../components/proposals'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
-import { formatStageName } from '../../utils/format'
+import { formatStageName } from '../../utils/formatStageName'
 import { Proposal, Stage, allStages } from '../../types'
 
 interface Props {

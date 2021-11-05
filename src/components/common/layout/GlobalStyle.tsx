@@ -14,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.colors.foreground};
     font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
     font-size: 1rem;
+    font-variant-ligatures: none;
   }
 
   h1 {
