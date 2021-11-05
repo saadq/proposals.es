@@ -51,9 +51,6 @@ const ChampionList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
 `
 
 const ChampionName = styled.a`

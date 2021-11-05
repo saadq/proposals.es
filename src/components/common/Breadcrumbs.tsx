@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import { SanitizedHtml } from './SanitizedHtml'
+import { SanitizedHtml } from '.'
 
 const BreadcrumbList = styled.ul`
   display: flex;
@@ -50,7 +50,7 @@ export function Breadcrumbs({ crumbs }: Props) {
       {crumbs.map((crumb) => (
         <li key={crumb.link}>
           <Link href={crumb.link} passHref>
-            <a>{crumb.isHtml ? <SanitizedHtml html={crumb.label} /> : crumb.label}</a>
+            {crumb.isHtml ? <SanitizedHtml html={crumb.label} /> : crumb.label}
           </Link>
         </li>
       ))}

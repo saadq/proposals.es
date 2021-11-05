@@ -7,11 +7,6 @@ import { isGithubProposal } from '../../utils/github'
 import { GitHubIcon } from '../common/icons/GitHubIcon'
 import { useCallback } from 'react'
 
-const List = styled.ul`
-  padding: 0;
-  list-style-type: none;
-`
-
 const ProposalLink = styled.a`
   display: flex;
   justify-content: space-between;
@@ -90,7 +85,7 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
 
   return (
     <>
-      <List>
+      <ul>
         {proposalsToShow.map((proposal) => (
           <li key={proposal.title}>
             <Link href={`/proposals/${encodeURIComponent(proposal.title)}`} passHref>
@@ -118,7 +113,7 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
             </Link>
           </li>
         ))}
-      </List>
+      </ul>
     </>
   )
 }

@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import styled from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
-import { Breadcrumbs, SearchBar } from '../../components/common'
+import { Container, Breadcrumbs, SearchBar } from '../../components/common'
 import { ProposalList } from '../../components/proposals'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
@@ -54,20 +53,14 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
 }
 
-const Container = styled.div`
-  width: 90%;
-  max-width: 1000px;
-  margin: 0 auto;
-`
-
-const Heading = styled.h1`
-  margin-bottom: 2rem;
-`
-
 export default function StagesPage({ stageName, proposals }: Props) {
   const [searchQuery, setSearchQuery] = useState('')
 
   const breadcrumbs = [
+    {
+      label: 'Home',
+      link: '/'
+    },
     {
       label: 'Stages',
       link: '/stages'
@@ -79,9 +72,9 @@ export default function StagesPage({ stageName, proposals }: Props) {
   ]
 
   return (
-    <Container>
+    <Container width="90%" max-width="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
-      <Heading>{formatStageName(stageName)} Proposals</Heading>
+      <h1>{formatStageName(stageName)} Proposals</h1>
       {stageName === 'inactive' && (
         <p>
           Inactive proposals are proposals that at one point were presented to the

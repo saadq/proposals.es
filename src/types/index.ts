@@ -30,6 +30,15 @@ export interface Proposal {
 
 export type ProposalsByStage = Record<Stage, Proposal[]>
 
+export interface Champion {
+  name: string
+  proposals: Proposal[]
+}
+
+export interface SimplifiedChampion extends Omit<Champion, 'proposals'> {
+  proposalCount: number
+}
+
 export interface Specification {
   name: string
   alias: string

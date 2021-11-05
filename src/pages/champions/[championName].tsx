@@ -2,9 +2,9 @@ import { Fragment } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import type { ParsedUrlQuery } from 'querystring'
-import styled from 'styled-components'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { ProposalCard } from '../../components/proposals'
+import { Row } from '../../components/common'
 import { allStages, Proposal } from '../../types'
 
 interface ChampionedProposal extends Proposal {
@@ -80,11 +80,6 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
 }
 
-const ProposalRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`
-
 export default function ChampionPage({ championName, championedProposals }: Props) {
   return (
     <>
@@ -98,7 +93,7 @@ export default function ChampionPage({ championName, championedProposals }: Prop
       </Head>
       <>
         <h1>{championName}</h1>
-        <ProposalRow>
+        <Row>
           {championedProposals.map((proposal, index) => (
             <Fragment key={proposal.title}>
               {proposal.isAuthor ? <p>author</p> : null}
@@ -111,7 +106,7 @@ export default function ChampionPage({ championName, championedProposals }: Prop
               />
             </Fragment>
           ))}
-        </ProposalRow>
+        </Row>
       </>
     </>
   )

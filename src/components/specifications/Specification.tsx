@@ -39,8 +39,6 @@ const Alias = styled.span`
 
 const Links = styled.ul`
   display: flex;
-  padding: 0;
-  list-style-type: none;
 
   @media screen and (max-width: 500px) {
     font-size: 0.75rem;
