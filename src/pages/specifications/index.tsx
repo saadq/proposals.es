@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next'
 import { Specification } from '../../components/specifications'
-import { Col, Container, Heading } from '../../components/common'
+import { Breadcrumbs, Col, Container, Heading } from '../../components/common'
 import { getSpecifications } from '../../api/getSpecifications'
 import { Specification as SpecificationType } from '../../types'
 
@@ -19,8 +19,20 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 }
 
 export default function SpecificationsPage({ specifications }: Props) {
+  const breadcrumbs = [
+    {
+      label: 'Home',
+      link: '/'
+    },
+    {
+      label: 'Specifications',
+      link: '/specifications'
+    }
+  ]
+
   return (
     <Container width="80%" maxWidth="1000px" margin="0 auto">
+      <Breadcrumbs crumbs={breadcrumbs} />
       <Heading margin="0 0 2rem 0">ECMAScript Specifications</Heading>
       <Col gap="3rem">
         {specifications.map((specification) => (

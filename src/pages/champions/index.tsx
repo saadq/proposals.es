@@ -43,7 +43,7 @@ export default function ChampionsPage({ champions }: Props) {
     },
     {
       label: 'Champions',
-      link: '/Champions'
+      link: '/champions'
     }
   ]
 
@@ -57,7 +57,7 @@ export default function ChampionsPage({ champions }: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container width="80%" max-width="1000px" margin="0 auto">
+      <Container width="80%" maxWidth="1000px" margin="0 auto">
         <Breadcrumbs crumbs={breadcrumbs} />
         <Heading>Champions</Heading>
         <SearchBar

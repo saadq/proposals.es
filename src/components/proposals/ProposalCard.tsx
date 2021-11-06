@@ -88,12 +88,12 @@ export const ProposalCard: FC<Props> = memo(({ stage, proposal, index }) => {
           <strong>
             <SanitizedHtml html={proposal.titleHtml} />
           </strong>
-          {proposal.stars != null && (
+          {proposal.stars != null ? (
             <Stars>
               <StarIcon />
               <span style={{ fontSize: '0.8rem' }}>{proposal.stars}</span>
             </Stars>
-          )}
+          ) : null}
         </CardContent>
       </CardLink>
     </Link>

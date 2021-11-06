@@ -75,7 +75,7 @@ export default function ChampionPage({ champion }: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container width="80%" max-width="1000px" margin="0 auto">
+      <Container width="80%" maxWidth="1000px" margin="0 auto">
         <Breadcrumbs crumbs={breadcrumbs} />
         <Heading>{champion.name}</Heading>
         <Heading level={2} fontSize="1.25rem">

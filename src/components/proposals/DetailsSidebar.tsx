@@ -10,6 +10,7 @@ const Sidebar = styled.aside`
   flex-direction: column;
   gap: 2rem;
   min-width: 20%;
+  align-self: flex-start;
 `
 
 const DetailCard = styled.div`
@@ -81,7 +82,7 @@ export function DetailsSidebar({ proposal }: Props) {
       <DetailCard>
         <Heading level={2}>Proposal</Heading>
         <Heading level={3}>{formatStageName(proposal.stage)}</Heading>
-        {proposal.type !== 'inactive' && (
+        {proposal.type !== 'inactive' ? (
           <InfoRow>
             <Heading level={3}>
               <a
@@ -91,9 +92,9 @@ export function DetailsSidebar({ proposal }: Props) {
               </a>
             </Heading>
           </InfoRow>
-        )}
+        ) : null}
       </DetailCard>
-      {isGithubProposal(proposal) && (
+      {isGithubProposal(proposal) ? (
         <DetailCard>
           <Heading level={2}>GitHub</Heading>
           <IconCol>
@@ -111,8 +112,8 @@ export function DetailsSidebar({ proposal }: Props) {
             </InfoRow>
           </IconCol>
         </DetailCard>
-      )}
-      {proposal.authors?.length !== 0 && (
+      ) : null}
+      {proposal.authors?.length && (
         <DetailCard>
           <Heading level={2}>Authors</Heading>
           <ChampionList>

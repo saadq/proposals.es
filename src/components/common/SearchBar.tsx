@@ -64,7 +64,7 @@ export const SearchBar: FC<Props> = memo(
             margin: 'auto'
           }}
         />
-        {searchQuery.trim() !== '' && (
+        {searchQuery.trim() !== '' ? (
           <ClearSearchIcon
             onClick={handleClearClick}
             style={{
@@ -76,7 +76,7 @@ export const SearchBar: FC<Props> = memo(
               margin: 'auto'
             }}
           />
-        )}
+        ) : null}
         <SearchInput placeholder={placeholder} onChange={handleChange} />
       </Container>
     )

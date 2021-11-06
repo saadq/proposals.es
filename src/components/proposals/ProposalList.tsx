@@ -6,7 +6,7 @@ import { isGithubProposal } from '../../utils/github'
 import { GitHubIcon } from '../common/icons/GitHubIcon'
 import { useCallback } from 'react'
 import { ChampionedProposal } from '../../api/getAllChampions'
-import { AwardIcon } from '../common/icons/AwardIcon'
+import { AwardIcon, PenIcon } from '../common/'
 
 const ProposalLink = styled.a`
   display: flex;
@@ -102,25 +102,25 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
               <ProposalLink>
                 <SanitizedHtml html={proposal.titleHtml} />
                 <Badges>
-                  {badges?.includes('author') && proposal.isAuthor && (
+                  {badges?.includes('author') && proposal.isAuthor ? (
                     <ChampionBadge>
-                      <AwardIcon />
+                      <PenIcon />
                       <span>Author</span>
                     </ChampionBadge>
-                  )}
-                  {badges?.includes('champion') && proposal.isChampion && (
+                  ) : null}
+                  {badges?.includes('champion') && proposal.isChampion ? (
                     <ChampionBadge>
                       <AwardIcon />
                       <span>Champion</span>
                     </ChampionBadge>
-                  )}
-                  {badges?.includes('stars') && proposal.stars != null && (
+                  ) : null}
+                  {badges?.includes('stars') && proposal.stars != null ? (
                     <StarsBadge>
                       <StarIcon />
                       <span>{proposal.stars}</span>
                     </StarsBadge>
-                  )}
-                  {badges?.includes('repo') && isGithubProposal(proposal) && (
+                  ) : null}
+                  {badges?.includes('repo') && isGithubProposal(proposal) ? (
                     <RepoLink
                       onClick={() => handleRepoClick(proposal.link as string)}
                       href={proposal.link}
@@ -129,7 +129,7 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
                     >
                       <GitHubIcon />
                     </RepoLink>
-                  )}
+                  ) : null}
                 </Badges>
               </ProposalLink>
             </Link>

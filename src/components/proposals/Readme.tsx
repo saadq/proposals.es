@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { SanitizedHtml } from '../common'
 
 const Article = styled.article`
+  flex: 1;
   max-width: 80%;
 `
 
