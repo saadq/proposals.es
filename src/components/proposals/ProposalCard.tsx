@@ -21,6 +21,7 @@ const CardLink = styled.a`
   flex-wrap: wrap;
   position: relative;
   border: 1px solid #e7f0f3;
+  max-width: 25rem;
 
   .feather-star {
     transition: fill 0.4s ease;
