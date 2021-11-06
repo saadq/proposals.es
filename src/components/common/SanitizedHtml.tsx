@@ -12,7 +12,6 @@ const Wrapper = styled.div<Omit<Props, 'className' | 'html'>>`
   overflow: hidden;
   word-wrap: break-word;
   margin: ${({ margin }) => margin ?? '0'};
-  padding: ${({ padding }) => padding ?? '0'};
 
   h1,
   h2,
