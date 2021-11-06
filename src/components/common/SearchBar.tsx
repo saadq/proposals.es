@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, memo, useCallback } from 'react'
+import { ChangeEvent, FC, memo, useCallback, useRef } from 'react'
 import styled from 'styled-components'
 import { SearchIcon, ClearSearchIcon } from './icons'
 import { debounce } from '../../utils/debounce'
@@ -40,6 +40,8 @@ interface Props {
 
 export const SearchBar: FC<Props> = memo(
   ({ searchQuery, setSearchQuery, placeholder, debounceRate, width = '100%' }) => {
+    const inputRef = useRef<HTMLInputElement>(null) // Don't use a controlled input to make typing smoother
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleChange = useCallback(
       debounce((event: ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +53,9 @@ export const SearchBar: FC<Props> = memo(
 
     const handleClearClick = useCallback(() => {
       setSearchQuery('')
+      if (inputRef.current) {
+        inputRef.current.value = ''
+      }
     }, [setSearchQuery])
 
     return (
@@ -77,7 +82,7 @@ export const SearchBar: FC<Props> = memo(
             }}
           />
         ) : null}
-        <SearchInput placeholder={placeholder} onChange={handleChange} />
+        <SearchInput placeholder={placeholder} onChange={handleChange} ref={inputRef} />
       </Container>
     )
   }
