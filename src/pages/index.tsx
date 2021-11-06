@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import { StageCard } from '../components/proposals'
+import { StageWithProposals } from '../components/proposals'
 import { SearchBar, Container } from '../components/common'
 import { getProposalsForStages } from '../api/getProposalsForStages'
 import { ProposalsByStage, allStages } from '../types'
@@ -40,7 +40,7 @@ export default function ProposalsPage({ proposals }: Props) {
           width="50rem"
         />
         {allStages.map((stage) => (
-          <StageCard
+          <StageWithProposals
             key={stage}
             stage={stage}
             proposals={proposals[stage]}

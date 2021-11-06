@@ -1,17 +1,24 @@
 import { useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
-import { Container, Breadcrumbs, SearchBar, Heading } from '../../components/common'
+import {
+  Container,
+  Breadcrumbs,
+  SearchBar,
+  Heading,
+  SanitizedHtml
+} from '../../components/common'
 import { ProposalList } from '../../components/proposals'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
-import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
 import { formatStageName } from '../../utils/formatStageName'
-import { Proposal, Stage, allStages } from '../../types'
+import { Proposal, Stage, allStages, ActiveStage } from '../../types'
+import { getStageDetails } from '../../api/getStageDetails'
+import { Disclaimer } from '../../components/common/Disclaimer'
 
 interface Props {
   stageName: Stage
   proposals: Proposal[]
-  tc39Process: Tc39Process
+  stageDetailsHtml: string
 }
 
 interface Params extends ParsedUrlQuery {
@@ -28,14 +35,14 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     stages: [stageName],
     includeRepoDetails: true
   })
-
-  const tc39Process = await getTc39Process()
+  const proposalsForStage = proposalsByStage[stageName] as Proposal[]
+  const stageDetailsHtml = await getStageDetails(stageName)
 
   return {
     props: {
-      stageName: stageName as Stage,
-      proposals: proposalsByStage[stageName] as Proposal[],
-      tc39Process: tc39Process
+      stageName,
+      stageDetailsHtml,
+      proposals: proposalsForStage
     }
   }
 }
@@ -53,7 +60,15 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
 }
 
-export default function StagesPage({ stageName, proposals }: Props) {
+const blogPostAnchorsByStage: Record<ActiveStage, string> = {
+  stage0: 'stage-1%3A-strawman',
+  stage1: 'stage-1%3A-proposal',
+  stage2: 'stage-2%3A-draft',
+  stage3: 'stage-3%3A-candidate',
+  stage4: 'stage-4%3A-finished'
+}
+
+export default function StagesPage({ stageName, stageDetailsHtml, proposals }: Props) {
   const [searchQuery, setSearchQuery] = useState('')
 
   const breadcrumbs = [
@@ -80,7 +95,23 @@ export default function StagesPage({ stageName, proposals }: Props) {
           Inactive proposals are proposals that at one point were presented to the
           committee but were subsequently abandoned, withdrawn, or rejected.
         </p>
-      ) : null}
+      ) : (
+        <>
+          <SanitizedHtml html={stageDetailsHtml} margin="1rem 0" />
+          <Disclaimer margin="0 0 1rem 0">
+            These stage details are taken from{' '}
+            <a
+              href={`https://2ality.com/2015/11/tc39-process.html#${
+                blogPostAnchorsByStage[stageName as ActiveStage]
+              }`}
+            >
+              Dr. Axel Rauschmayer&apos;s blog post.
+            </a>{' '}
+            You can read more about the TC39 process in their official{' '}
+            <a href="https://tc39.es/process-document/">process document</a>.
+          </Disclaimer>
+        </>
+      )}
       <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}

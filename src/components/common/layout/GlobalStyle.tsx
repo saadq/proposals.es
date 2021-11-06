@@ -22,15 +22,6 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
-  
-  code {
-    font-family: Fira Code, monospace;
-  }
-
-  sub {
-    vertical-align: top;
-    font-size: 1rem;
-  }
 
   svg.octicon {
     display: none;

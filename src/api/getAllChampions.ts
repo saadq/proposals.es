@@ -16,37 +16,40 @@ export type ProposalsByChampion = Record<string, ChampionedProposal[]>
 export async function getAllChampions(): Promise<Champion[]> {
   const allProposalsByStage = await getProposalsForStages({ stages: allStages })
   const allProposals = Object.values(allProposalsByStage).flat()
+
   const championNames = allProposals
     .map((proposal) => [...proposal.champions, ...(proposal.authors ?? [])])
     .flat()
+
   const dedupedChampionNames = [...new Set(championNames)]
 
-  const proposalsByChampion: ProposalsByChampion = dedupedChampionNames.reduce(
-    (proposalsByChampion, championName) => {
-      const championedProposals = allProposals.reduce((championedProposals, proposal) => {
-        const isChampion = proposal.champions.includes(championName)
-        const isAuthor = proposal.authors?.includes(championName) ?? false
-        return isChampion || isAuthor
-          ? [...championedProposals, { ...proposal, isAuthor, isChampion }]
-          : championedProposals
-      }, [] as ChampionedProposal[])
-
-      const sortedProposals = championedProposals.sort((a, b) =>
-        (a.isChampion && a.isAuthor) || (a.isAuthor && !b.isAuthor) ? -1 : 0
-      )
-
-      return {
-        ...proposalsByChampion,
-        [championName]: sortedProposals
+  const champions = dedupedChampionNames.reduce(
+    (champions, championName) => [
+      ...champions,
+      {
+        name: championName,
+        proposals: getProposalsForChampion(championName, allProposals)
       }
-    },
-    {}
+    ],
+    [] as Champion[]
   )
 
-  const championDetails: Champion[] = dedupedChampionNames.map((championName) => ({
-    name: championName,
-    proposals: proposalsByChampion[championName]
-  }))
+  return champions
+}
 
-  return championDetails
+function getProposalsForChampion(championName: string, allProposals: Proposal[]) {
+  const proposalsForChampion = allProposals.reduce((proposalsForChampion, proposal) => {
+    const isChampion = proposal.champions.includes(championName)
+    const isAuthor = proposal.authors?.includes(championName) ?? false
+
+    return isAuthor || isChampion
+      ? [...proposalsForChampion, { ...proposal, isAuthor, isChampion }]
+      : proposalsForChampion
+  }, [] as ChampionedProposal[])
+
+  const sortedProposals = proposalsForChampion.sort((a, b) =>
+    (a.isChampion && a.isAuthor) || (a.isAuthor && !b.isAuthor) ? -1 : 0
+  )
+
+  return sortedProposals
 }

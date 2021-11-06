@@ -6,7 +6,7 @@ import { Champion } from '../../types'
 import { getAllChampions } from '../../api/getAllChampions'
 import { ProposalList } from '../../components/proposals'
 import { Breadcrumbs, Container } from '../../components/common'
-import { Heading } from '../../components/common/layout/Heading'
+import { Heading } from '../../components/common/Heading'
 
 interface Props {
   champion: Champion

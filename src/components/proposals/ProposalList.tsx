@@ -4,7 +4,6 @@ import { SanitizedHtml } from '../common/SanitizedHtml'
 import { StarIcon } from '../common/icons/StarIcon'
 import { isGithubProposal } from '../../utils/github'
 import { GitHubIcon } from '../common/icons/GitHubIcon'
-import { useCallback } from 'react'
 import { ChampionedProposal } from '../../api/getAllChampions'
 import { AwardIcon, PenIcon } from '../common/'
 
@@ -62,14 +61,11 @@ const StarsBadge = styled(Badge)`
   }
 `
 
-const RepoLink = styled.a`
+const StyledGitHubIcon = styled(GitHubIcon)`
   display: flex;
   align-items: center;
-
-  .feather-github {
-    fill: ${({ theme }) => theme.colors.foreground};
-    stroke: none;
-  }
+  fill: ${({ theme }) => theme.colors.foreground};
+  stroke: none;
 `
 
 type Badge = 'stars' | 'author' | 'champion' | 'repo'
@@ -88,10 +84,6 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
         ? true
         : proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
-
-  const handleRepoClick = useCallback((repoLink: string) => {
-    document.location.href = repoLink
-  }, [])
 
   return (
     <>
@@ -121,14 +113,7 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
                     </StarsBadge>
                   ) : null}
                   {badges?.includes('repo') && isGithubProposal(proposal) ? (
-                    <RepoLink
-                      onClick={() => handleRepoClick(proposal.link as string)}
-                      href={proposal.link}
-                      target="_blank"
-                      style={{ margin: 0, padding: 0 }}
-                    >
-                      <GitHubIcon />
-                    </RepoLink>
+                    <StyledGitHubIcon />
                   ) : null}
                 </Badges>
               </ProposalLink>

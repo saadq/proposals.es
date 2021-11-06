@@ -1,1 +1,1 @@
-export { StageCard } from './StageCard'
+export { StageWithProposals } from './StageWithProposals'

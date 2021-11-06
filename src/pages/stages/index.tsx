@@ -1,39 +1,34 @@
-import { Fragment } from 'react'
 import { GetStaticProps } from 'next'
-import { SanitizedHtml, Heading } from '../../components/common'
-import { getTc39Process, Tc39Process } from '../../api/getTc39Process'
+import { SanitizedHtml, Heading, Container } from '../../components/common'
+import { StageList } from '../../components/stages/StageList'
+import { getTc39Process } from '../../api/getTc39Process'
+import { allStages } from '../../types'
+import { Disclaimer } from '../../components/common/Disclaimer'
 
 interface Props {
-  tc39Process: Tc39Process
+  processHtml: string
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const tc39Process = await getTc39Process()
+  const processHtml = await getTc39Process()
 
   return {
     props: {
-      tc39Process
+      processHtml
     }
   }
 }
 
-export default function StagesPage({ tc39Process }: Props) {
+export default function StagesPage({ processHtml }: Props) {
   return (
-    <>
-      <Heading>The TC39 Process</Heading>
-      {tc39Process.summaryParagraphs.map((paragraph, i) => (
-        <SanitizedHtml key={`process-summary-paragraph-${i}`} html={paragraph} />
-      ))}
-      {Object.entries(tc39Process.processByStage).map(([stage, process]) => (
-        <Fragment key={stage}>
-          <SanitizedHtml html={process.purpose} />
-          <SanitizedHtml html={process.entranceCriteria} />
-          <SanitizedHtml html={process.acceptanceSignifies} />
-          <SanitizedHtml html={process.specQuality} />
-          <SanitizedHtml html={process.postAcceptanceChangesExpected} />
-          <SanitizedHtml html={process.implementationTypesExpected} />
-        </Fragment>
-      ))}
-    </>
+    <Container width="100%" margin="0 auto">
+      <Heading>Proposal Stages</Heading>
+      <StageList stages={[...allStages].reverse()}>hello</StageList>
+      <Disclaimer margin="1rem 0 0 0">
+        The below process is taken from the official{' '}
+        <a href="https://tc39.es/process-document/">TC39 process document</a>.
+      </Disclaimer>
+      <SanitizedHtml html={processHtml} margin="2rem 0" />
+    </Container>
   )
 }

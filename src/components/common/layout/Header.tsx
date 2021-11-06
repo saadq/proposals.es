@@ -52,6 +52,9 @@ export function Header() {
               Proposals
             </NavLink>
           </Link>
+          <Link href="/stages" passHref>
+            <NavLink isActive={route.startsWith('/stages')}>Stages</NavLink>
+          </Link>
           <Link href="/champions" passHref>
             <NavLink isActive={route.startsWith('/champions')}>Champions</NavLink>
           </Link>

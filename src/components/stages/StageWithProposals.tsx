@@ -46,7 +46,7 @@ interface Props {
   searchQuery?: string
 }
 
-export function StageCard({ stage, proposals, searchQuery }: Props) {
+export function StageWithProposals({ stage, proposals, searchQuery }: Props) {
   const proposalsToShow = proposals
     .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
     .filter((proposal) =>
