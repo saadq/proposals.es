@@ -47,6 +47,11 @@ const StageLink = styled.a`
   }
 `
 
+const StageDescription = styled.p`
+  font-weight: normal;
+  font-size: 0.9rem;
+`
+
 interface StageDetails {
   description: string
   icon: IconType
@@ -103,7 +108,7 @@ export function StageList({ stages }: Props) {
               <Heading level={2} fontSize="1.75rem" margin="1rem 0 0 0">
                 {formatStageName(stage)}
               </Heading>
-              <p>{description}</p>
+              <StageDescription>{description}</StageDescription>
             </StageLink>
           </li>
         )
