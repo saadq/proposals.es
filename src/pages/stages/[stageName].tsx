@@ -89,7 +89,7 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
   return (
     <Container width="80%" maxWidth="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
-      <Heading>{formatStageName(stageName)} Proposals</Heading>
+      <Heading>{formatStageName(stageName)}</Heading>
       {stageName === 'inactive' ? (
         <p>
           Inactive proposals are proposals that at one point were presented to the
