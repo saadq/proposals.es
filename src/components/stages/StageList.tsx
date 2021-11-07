@@ -16,6 +16,7 @@ export const List = styled.ul`
   flex-wrap: wrap;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-bottom: 2rem;
 
   li {
     max-width: 30%;
