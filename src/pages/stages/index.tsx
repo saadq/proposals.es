@@ -1,7 +1,14 @@
+import { GetStaticProps } from 'next'
 import { Heading, Container } from '../../components/common'
-import { Disclaimer } from '../../components/common/Disclaimer'
 import { StageList } from '../../components/stages/StageList'
 import { allStages } from '../../types'
+import { Disclaimer } from '../../components/common/Disclaimer'
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {}
+  }
+}
 
 export default function StagesPage() {
   return (
