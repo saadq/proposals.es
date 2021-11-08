@@ -79,7 +79,8 @@ export default function ChampionPage({ champion }: Props) {
         <Breadcrumbs crumbs={breadcrumbs} />
         <Heading>{champion.name}</Heading>
         <Heading level={2} fontSize="1.25rem">
-          {champion.proposals.length} Proposals
+          {champion.proposals.length}{' '}
+          {champion.proposals.length === 1 ? 'Proposal' : 'Proposals'}
         </Heading>
         <ProposalList proposals={champion.proposals} badges={['author', 'champion']} />
       </Container>
