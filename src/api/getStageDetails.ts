@@ -14,7 +14,7 @@ export async function getStageDetails(stage: Stage): Promise<string> {
   await avoidRateLimit()
 
   if (stage === 'inactive') {
-    return 'This stage is inactive'
+    return 'Inactive proposals are proposals that at one point were presented to the committee but were subsequently abandoned, withdrawn, or rejected.'
   }
 
   const endpoint = 'https://2ality.com/2015/11/tc39-process.html'

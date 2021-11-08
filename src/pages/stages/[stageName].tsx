@@ -90,14 +90,9 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
     <Container width="80%" maxWidth="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       <Heading>{formatStageName(stageName)}</Heading>
-      {stageName === 'inactive' ? (
-        <p>
-          Inactive proposals are proposals that at one point were presented to the
-          committee but were subsequently abandoned, withdrawn, or rejected.
-        </p>
-      ) : (
-        <>
-          <SanitizedHtml html={stageDetailsHtml} margin="1rem 0" />
+      <>
+        <SanitizedHtml html={stageDetailsHtml} margin="1rem 0" />
+        {stageName !== 'inactive' ? (
           <Disclaimer margin="0 0 1rem 0">
             These stage details are taken from{' '}
             <a
@@ -110,8 +105,8 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
             You can read more about the TC39 process in their official{' '}
             <a href="https://tc39.es/process-document/">process document</a>.
           </Disclaimer>
-        </>
-      )}
+        ) : null}
+      </>
       <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
