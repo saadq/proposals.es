@@ -61,7 +61,7 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 }
 
 const blogPostAnchorsByStage: Record<ActiveStage, string> = {
-  stage0: 'stage-1%3A-strawman',
+  stage0: 'stage-0%3A-strawman',
   stage1: 'stage-1%3A-proposal',
   stage2: 'stage-2%3A-draft',
   stage3: 'stage-3%3A-candidate',
