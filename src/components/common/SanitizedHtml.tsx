@@ -32,44 +32,6 @@ const Wrapper = styled.div<Omit<Props, 'className' | 'html'>>`
     vertical-align: top;
     font-size: 1rem;
   }
-
-  table {
-    background: white;
-    box-shadow: 0px 4px 24px rgb(55 81 104 / 10%);
-    overflow: scroll;
-    border-collapse: collapse;
-    border: 1px solid ${({ theme }) => theme.colors.primary};
-    box-shadow: 0px 2px 8px #e7f0f3;
-
-    thead {
-      background: #efefef;
-      text-align: center;
-    }
-
-    tbody,
-    th,
-    tr,
-    td {
-      overflow: scroll;
-    }
-
-    td {
-      border-bottom: 1px solid ${({ theme }) => theme.colors.primary};
-    }
-
-    td,
-    th {
-      text-align: center;
-      padding: 1rem;
-    }
-
-    caption {
-      background: white;
-      padding: 1rem;
-      background: black;
-      color: white;
-    }
-  }
 `
 
 export function SanitizedHtml({ html, className, padding, margin }: Props) {
