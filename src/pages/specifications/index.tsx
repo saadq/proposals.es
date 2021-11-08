@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next'
 import { Specification } from '../../components/specifications'
-import { Breadcrumbs, Col, Container, Heading } from '../../components/common'
+import { Breadcrumbs, Col, PageContainer, Heading } from '../../components/common'
 import { getSpecifications } from '../../api/getSpecifications'
 import { Specification as SpecificationType } from '../../types'
 
@@ -31,7 +31,7 @@ export default function SpecificationsPage({ specifications }: Props) {
   ]
 
   return (
-    <Container width="80%" maxWidth="1000px" margin="0 auto">
+    <PageContainer width="80%" maxWidth="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       <Heading margin="0 0 2rem 0">ECMAScript Specifications</Heading>
       <Col gap="3rem">
@@ -39,6 +39,6 @@ export default function SpecificationsPage({ specifications }: Props) {
           <Specification specification={specification} key={specification.name} />
         ))}
       </Col>
-    </Container>
+    </PageContainer>
   )
 }

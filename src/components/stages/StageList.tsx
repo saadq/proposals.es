@@ -7,6 +7,7 @@ import type { IconType } from 'react-icons'
 import { GiScarecrow, GiTeamUpgrade } from 'react-icons/gi'
 import { RiDraftLine, RiCheckLine, RiCloseLine } from 'react-icons/ri'
 import { HiOutlineLightBulb } from 'react-icons/hi'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 export const List = styled.ul`
   display: flex;
@@ -18,8 +19,17 @@ export const List = styled.ul`
   flex-wrap: wrap;
   margin-bottom: 2rem;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
   li {
     max-width: 30%;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      max-width: 100%;
+    }
   }
 `
 
@@ -42,6 +52,11 @@ const StageLink = styled.a`
   border: 1 px solid #e7f0f3;
   box-shadow: 0px 10px 8px #e7f0f3;
 
+  @media (max-width: 768px) {
+    height: auto;
+    padding: 1rem;
+  }
+
   &:hover {
     background: ${({ theme }) => theme.colors.primary};
     color: black;
@@ -51,6 +66,10 @@ const StageLink = styled.a`
 const StageDescription = styled.p`
   font-weight: normal;
   font-size: 0.9rem;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `
 
 interface StageDetails {
@@ -97,6 +116,8 @@ interface Props {
 }
 
 export function StageList({ stages }: Props) {
+  const isMobile = useMediaQuery('(max-width: 768px)')
+
   return (
     <List>
       {stages.map((stage) => {
@@ -105,7 +126,7 @@ export function StageList({ stages }: Props) {
         return (
           <li key={stage}>
             <StageLink href={`/stages/${stage}`}>
-              <IconForStage size={50} />
+              <IconForStage size={isMobile ? 25 : 50} />
               <Heading level={2} fontSize="1.75rem" margin="1rem 0 0 0">
                 {formatStageName(stage)}
               </Heading>

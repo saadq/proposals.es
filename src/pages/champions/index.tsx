@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import { Container, Breadcrumbs, SearchBar, Heading } from '../../components/common'
+import { PageContainer, Breadcrumbs, SearchBar, Heading } from '../../components/common'
 import { getAllChampions } from '../../api/getAllChampions'
 import { ChampionList } from '../../components/champions'
 import { SimplifiedChampion } from '../../types'
@@ -57,7 +57,7 @@ export default function ChampionsPage({ champions }: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container width="80%" maxWidth="1000px" margin="0 auto">
+      <PageContainer width="80%" maxWidth="1000px" margin="0 auto">
         <Breadcrumbs crumbs={breadcrumbs} />
         <Heading>Champions</Heading>
         <SearchBar
@@ -67,7 +67,7 @@ export default function ChampionsPage({ champions }: Props) {
           debounceRate={0}
         />
         <ChampionList champions={championsToShow} />
-      </Container>
+      </PageContainer>
     </>
   )
 }

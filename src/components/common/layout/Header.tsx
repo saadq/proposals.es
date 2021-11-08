@@ -19,7 +19,7 @@ const Container = styled.div`
 `
 
 const Nav = styled.nav`
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 768px) {
     display: none;
   }
 `

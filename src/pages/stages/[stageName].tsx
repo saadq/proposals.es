@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
 import {
-  Container,
+  PageContainer,
   Breadcrumbs,
   SearchBar,
   Heading,
@@ -87,7 +87,7 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
   ]
 
   return (
-    <Container width="80%" maxWidth="1000px" margin="0 auto">
+    <PageContainer width="80%" maxWidth="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       <Heading>{formatStageName(stageName)}</Heading>
       <>
@@ -117,6 +117,6 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
         badges={['stars', 'repo']}
         searchQuery={searchQuery}
       />
-    </Container>
+    </PageContainer>
   )
 }

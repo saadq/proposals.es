@@ -3,7 +3,7 @@ import type { ParsedUrlQuery } from 'querystring'
 import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 import { Proposal, allStages } from '../../types'
 import { DetailsSidebar } from '../../components/proposals'
-import { Breadcrumbs, Container, Row } from '../../components/common'
+import { Breadcrumbs, PageContainer, Row } from '../../components/common'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { getReadmeForProposal } from '../../api/getReadmeForProposal'
 import { getRepoDetailsForProposal } from '../../api/getRepoDetailsForProposal'
@@ -89,7 +89,7 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
   ]
 
   return (
-    <Container width="1600px" maxWidth="100%" margin="0 auto">
+    <PageContainer width="1600px" maxWidth="100%" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
       <Row gap="2rem">
@@ -107,6 +107,6 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
         ) : null}
         <DetailsSidebar proposal={proposal} />
       </Row>
-    </Container>
+    </PageContainer>
   )
 }

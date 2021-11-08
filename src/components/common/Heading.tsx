@@ -29,10 +29,32 @@ function getDefaultFontSize(level?: HeadingLevel) {
   }
 }
 
+function getMobileFontSize(level?: HeadingLevel) {
+  switch (level) {
+    case 1:
+    default:
+      return '1.5rem'
+    case 2:
+      return '1.15rem'
+    case 3:
+      return '1.3rem'
+    case 4:
+      return '.7rem'
+    case 5:
+      return '.6rem'
+    case 6:
+      return '.55rem'
+  }
+}
+
 const HeadingText = styled.h1<Omit<Props, 'children'>>`
   font-size: ${({ fontSize, level }) => fontSize ?? getDefaultFontSize(level)};
   font-weight: ${({ fontWeight }) => fontWeight ?? 'bold'};
   margin: ${({ margin, level }) => margin ?? (level === 1 ? '1rem 0' : 'initial')};
+
+  @media (max-width: 768px) {
+    font-size: ${({ level }) => getMobileFontSize(level)};
+  }
 `
 
 export function Heading({ level = 1, children, ...styleProps }: Props) {

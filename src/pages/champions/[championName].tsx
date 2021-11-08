@@ -5,7 +5,7 @@ import type { ParsedUrlQuery } from 'querystring'
 import { Champion } from '../../types'
 import { getAllChampions } from '../../api/getAllChampions'
 import { ProposalList } from '../../components/proposals'
-import { Breadcrumbs, Container } from '../../components/common'
+import { Breadcrumbs, PageContainer } from '../../components/common'
 import { Heading } from '../../components/common/Heading'
 
 interface Props {
@@ -75,7 +75,7 @@ export default function ChampionPage({ champion }: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container width="80%" maxWidth="1000px" margin="0 auto">
+      <PageContainer width="80%" maxWidth="1000px" margin="0 auto">
         <Breadcrumbs crumbs={breadcrumbs} />
         <Heading>{champion.name}</Heading>
         <Heading level={2} fontSize="1.25rem">
@@ -83,7 +83,7 @@ export default function ChampionPage({ champion }: Props) {
           {champion.proposals.length === 1 ? 'Proposal' : 'Proposals'}
         </Heading>
         <ProposalList proposals={champion.proposals} badges={['author', 'champion']} />
-      </Container>
+      </PageContainer>
     </>
   )
 }
