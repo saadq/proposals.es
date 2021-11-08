@@ -28,9 +28,10 @@ const StageLink = styled.a`
   height: 20rem;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
-  padding: 2rem 1rem;
+  padding: 0 1rem;
   text-align: center;
   background: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 2px 8px #e7f0f3;
