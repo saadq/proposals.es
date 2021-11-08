@@ -26,9 +26,12 @@ const Nav = styled.nav`
 
 const NavLink = styled.a<{ isActive: boolean }>`
   color: ${({ theme }) => theme.colors.primary};
+  color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.primary : theme.colors.black};
   margin: 0 1rem;
-  text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
+  text-decoration: none;
   font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
+  font-size: 1.1rem;
 
   &:hover {
     text-decoration: underline;
