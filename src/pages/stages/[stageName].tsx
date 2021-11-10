@@ -87,7 +87,7 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
   ]
 
   return (
-    <PageContainer width="80%" maxWidth="1000px" margin="0 auto">
+    <PageContainer width="80%" mobileWidth="90%" maxWidth="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       <Heading>{formatStageName(stageName)}</Heading>
       <>
@@ -112,11 +112,7 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
         setSearchQuery={setSearchQuery}
         placeholder={`Search for proposals... (${proposals.length} total)`}
       />
-      <ProposalList
-        proposals={proposals}
-        badges={['stars', 'repo']}
-        searchQuery={searchQuery}
-      />
+      <ProposalList proposals={proposals} badges={['stars']} searchQuery={searchQuery} />
     </PageContainer>
   )
 }

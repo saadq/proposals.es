@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { SearchIcon, ClearSearchIcon } from './icons'
 import { debounce } from '../../utils/debounce'
 
-const Container = styled.div<{ width: string }>`
+const Container = styled.div<{ width: string; hideOnMobile?: boolean }>`
   position: relative;
   margin: 0 auto;
   width: ${({ width }) => width};
@@ -11,9 +11,9 @@ const Container = styled.div<{ width: string }>`
 `
 
 const SearchInput = styled.input`
-  border: none;
+  border: 1px solid #f4f6fb;
+  box-shadow: 0px 8px 10px #e7f0f3;
   padding: 1rem 4rem;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 4px;
   width: 100%;
   font-family: 'Nunito';
@@ -36,6 +36,7 @@ interface Props {
   placeholder: string
   debounceRate?: number
   width?: string
+  hideOnMobile?: boolean
 }
 
 export const SearchBar: FC<Props> = memo(

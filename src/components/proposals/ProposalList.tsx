@@ -2,10 +2,9 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { StarIcon } from '../common/icons/StarIcon'
-import { isGithubProposal } from '../../utils/github'
-import { GitHubIcon } from '../common/icons/GitHubIcon'
 import { ChampionedProposal } from '../../api/getAllChampions'
 import { AwardIcon, PenIcon } from '../common/'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 const ProposalLink = styled.a`
   display: flex;
@@ -52,6 +51,10 @@ const ChampionBadge = styled(Badge)`
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   border-radius: 4px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const StarsBadge = styled(Badge)`
@@ -61,14 +64,7 @@ const StarsBadge = styled(Badge)`
   }
 `
 
-const StyledGitHubIcon = styled(GitHubIcon)`
-  display: flex;
-  align-items: center;
-  fill: ${({ theme }) => theme.colors.foreground};
-  stroke: none;
-`
-
-type Badge = 'stars' | 'author' | 'champion' | 'repo'
+type Badge = 'stars' | 'author' | 'champion'
 
 interface Props {
   proposals: ChampionedProposal[]
@@ -77,6 +73,9 @@ interface Props {
 }
 
 export function ProposalList({ proposals, badges, searchQuery }: Props) {
+  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isDesktop = !isMobile && isMobile != null
+
   const proposalsToShow = proposals
     .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
     .filter((proposal) =>
@@ -94,13 +93,13 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
               <ProposalLink>
                 <SanitizedHtml html={proposal.titleHtml} />
                 <Badges>
-                  {badges?.includes('author') && proposal.isAuthor ? (
+                  {isDesktop && badges?.includes('author') && proposal.isAuthor ? (
                     <ChampionBadge>
                       <PenIcon />
                       <span>Author</span>
                     </ChampionBadge>
                   ) : null}
-                  {badges?.includes('champion') && proposal.isChampion ? (
+                  {isDesktop && badges?.includes('champion') && proposal.isChampion ? (
                     <ChampionBadge>
                       <AwardIcon />
                       <span>Champion</span>
@@ -111,9 +110,6 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
                       <StarIcon />
                       <span>{proposal.stars}</span>
                     </StarsBadge>
-                  ) : null}
-                  {badges?.includes('repo') && isGithubProposal(proposal) ? (
-                    <StyledGitHubIcon />
                   ) : null}
                 </Badges>
               </ProposalLink>

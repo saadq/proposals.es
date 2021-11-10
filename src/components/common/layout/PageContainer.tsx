@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 interface Props {
   width?: string
+  mobileWidth?: string
   maxWidth?: string
   minWidth?: string
   margin?: string
@@ -27,6 +28,6 @@ export const PageContainer = styled.section<Props>`
         `}
 
   @media (max-width: 1024px) {
-    width: 90%;
+    width: ${({ mobileWidth }) => mobileWidth ?? '90%'};
   }
 `

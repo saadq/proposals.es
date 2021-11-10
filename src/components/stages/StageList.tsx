@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import styled from 'styled-components'
 import { Stage } from '../../types'
 import { formatStageName } from '../../utils/formatStageName'
@@ -112,7 +111,6 @@ const detailsByStage: Record<Stage, StageDetails> = {
 
 interface Props {
   stages: Stage[]
-  children: ReactNode
 }
 
 export function StageList({ stages }: Props) {

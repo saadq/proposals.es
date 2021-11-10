@@ -14,7 +14,7 @@ export default function StagesPage() {
   return (
     <PageContainer width="80%" margin="0 auto">
       <Heading>Stages</Heading>
-      <StageList stages={[...allStages].reverse()}>hello</StageList>
+      <StageList stages={[...allStages].reverse()} />
       <Disclaimer>
         These descriptions are gathered from{' '}
         <a href="https://github.com/tc39/proposals">tc39/proposals on GitHub</a> and the
