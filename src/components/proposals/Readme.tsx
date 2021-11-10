@@ -6,6 +6,11 @@ import { SanitizedHtml } from '../common'
 const Article = styled.article`
   flex: 1;
   max-width: 80%;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    margin: 0 auto;
+  }
 `
 
 interface Props {

@@ -3,12 +3,15 @@ import type { ParsedUrlQuery } from 'querystring'
 import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 import { Proposal, allStages } from '../../types'
 import { DetailsSidebar } from '../../components/proposals'
-import { Breadcrumbs, PageContainer, Row } from '../../components/common'
+import { Breadcrumbs, PageContainer, Flex } from '../../components/common'
 import { getProposalsForStages } from '../../api/getProposalsForStages'
 import { getReadmeForProposal } from '../../api/getReadmeForProposal'
 import { getRepoDetailsForProposal } from '../../api/getRepoDetailsForProposal'
 import { FallbackDetails } from '../../components/proposals/FallbackDetails'
 import { Readme } from '../../components/proposals/Readme'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { DetailsExpander } from '../../components/proposals/DetailsExpander'
+import { BackButton } from '../../components/common/BackButton'
 
 interface Props {
   proposal: Proposal
@@ -76,6 +79,9 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 }
 
 export default function ProposalDetailsPage({ proposal, readme }: Props) {
+  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isDesktop = !isMobile && isMobile != null
+
   const breadcrumbs = [
     {
       link: '/',
@@ -89,10 +95,16 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
   ]
 
   return (
-    <PageContainer width="1600px" maxWidth="100%" margin="0 auto">
+    <PageContainer width="1600px" mobileWidth="100%" maxWidth="100%" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
-      <Row gap="2rem">
+      <Flex layout={isDesktop ? 'row' : 'column'} gap="2rem">
+        {isMobile ? (
+          <>
+            <BackButton />
+            <DetailsExpander proposal={proposal} />
+          </>
+        ) : null}
         {readme ? (
           <Readme readme={readme} baseUrl={getReadmeBaseUrl(proposal)} />
         ) : proposal.link ? (
@@ -105,8 +117,8 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
             }}
           />
         ) : null}
-        <DetailsSidebar proposal={proposal} />
-      </Row>
+        {isDesktop ? <DetailsSidebar proposal={proposal} /> : null}
+      </Flex>
     </PageContainer>
   )
 }
