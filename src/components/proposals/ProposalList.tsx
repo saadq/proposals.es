@@ -71,7 +71,7 @@ const StarsBadge = styled(Badge)`
 `
 
 const NoResults = styled.p`
-  margin: 0 2rem 2rem 2rem;
+  margin: 2rem;
   font-weight: bold;
 `
 
