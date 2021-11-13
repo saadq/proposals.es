@@ -9,7 +9,6 @@ const Card = styled.div`
   flex-direction: column;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 4px;
-  height: 25rem;
   box-shadow: 0px 2px 8px #e7f0f3;
   border: 1px solid ${({ theme }) => theme.colors.primary};
 `

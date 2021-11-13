@@ -20,6 +20,11 @@ const ProposalLink = styled.a`
   font-weight: 800;
   color: ${({ theme }) => theme.colors.foreground};
   text-decoration: none;
+  width: 85%;
+
+  &:first-child {
+    margin-top: 0;
+  }
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary};
@@ -64,6 +69,11 @@ const StarsBadge = styled(Badge)`
   }
 `
 
+const NoResults = styled.p`
+  margin: 0 2rem 2rem 2rem;
+  font-weight: bold;
+`
+
 type Badge = 'stars' | 'author' | 'champion'
 
 interface Props {
@@ -84,39 +94,39 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
         : proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
 
-  return (
-    <>
-      <ul>
-        {proposalsToShow.map((proposal) => (
-          <li key={proposal.title}>
-            <Link href={`/proposals/${encodeURIComponent(proposal.title)}`} passHref>
-              <ProposalLink>
-                <SanitizedHtml html={proposal.titleHtml} />
-                <Badges>
-                  {isDesktop && badges?.includes('author') && proposal.isAuthor ? (
-                    <ChampionBadge>
-                      <PenIcon />
-                      <span>Author</span>
-                    </ChampionBadge>
-                  ) : null}
-                  {isDesktop && badges?.includes('champion') && proposal.isChampion ? (
-                    <ChampionBadge>
-                      <AwardIcon />
-                      <span>Champion</span>
-                    </ChampionBadge>
-                  ) : null}
-                  {badges?.includes('stars') && proposal.stars != null ? (
-                    <StarsBadge>
-                      <StarIcon />
-                      <span>{proposal.stars}</span>
-                    </StarsBadge>
-                  ) : null}
-                </Badges>
-              </ProposalLink>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </>
+  return proposalsToShow.length === 0 ? (
+    <NoResults>No search results for this stage</NoResults>
+  ) : (
+    <ul>
+      {proposalsToShow.map((proposal) => (
+        <li key={proposal.title}>
+          <Link href={`/proposals/${encodeURIComponent(proposal.title)}`} passHref>
+            <ProposalLink>
+              <SanitizedHtml html={proposal.titleHtml} />
+              <Badges>
+                {isDesktop && badges?.includes('author') && proposal.isAuthor ? (
+                  <ChampionBadge>
+                    <PenIcon />
+                    <span>Author</span>
+                  </ChampionBadge>
+                ) : null}
+                {isDesktop && badges?.includes('champion') && proposal.isChampion ? (
+                  <ChampionBadge>
+                    <AwardIcon />
+                    <span>Champion</span>
+                  </ChampionBadge>
+                ) : null}
+                {badges?.includes('stars') && proposal.stars != null ? (
+                  <StarsBadge>
+                    <StarIcon />
+                    <span>{proposal.stars}</span>
+                  </StarsBadge>
+                ) : null}
+              </Badges>
+            </ProposalLink>
+          </Link>
+        </li>
+      ))}
+    </ul>
   )
 }

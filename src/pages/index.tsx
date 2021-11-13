@@ -1,21 +1,19 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { PageContainer, Heading } from '../components/common'
+import { PageContainer, Col, SearchBar } from '../components/common'
 import { getProposalsForStages } from '../api/getProposalsForStages'
 import { ProposalsByStage, allStages } from '../types'
 import { useMediaQuery } from '../hooks/useMediaQuery'
-import { StageList } from '../components/stages/StageList'
+import { ProposalList } from '../components/proposals'
+import { formatStageName } from '../utils/formatStageName'
+import { GoChevronDown } from 'react-icons/go'
+import { Expander } from '../components/common/Expander'
 
 const DynamicStageWithProposals = dynamic(async () => {
   const { StageWithProposals } = await import('../components/stages/StageWithProposals')
   return StageWithProposals
-})
-
-const DynamicSearchBar = dynamic(async () => {
-  const { SearchBar } = await import('../components/common/SearchBar')
-  return SearchBar
 })
 
 interface Props {
@@ -49,35 +47,43 @@ export default function ProposalsPage({ proposals }: Props) {
       </Head>
       <PageContainer
         layout="column"
-        gap="3rem"
+        gap={isDesktop ? '3rem' : '1.25rem'}
         width="100%"
-        mobileWidth="90%"
+        mobileWidth="95%"
         margin="0 auto"
       >
-        {isDesktop ? (
-          <DynamicSearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            placeholder="Search for proposals..."
-            hideOnMobile
-            width="50rem"
-          />
-        ) : null}
-        {isMobile ? (
-          <>
-            <Heading margin="0">Stages</Heading>
-            <StageList stages={allStages.slice().reverse()} />
-          </>
-        ) : isDesktop ? (
-          allStages.map((stage) => (
+        <SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          placeholder="Search for proposals..."
+          hideOnMobile
+          width="50rem"
+        />
+        {allStages.map((stage) =>
+          isDesktop ? (
             <DynamicStageWithProposals
               key={stage}
               stage={stage}
               proposals={proposals[stage]}
               searchQuery={searchQuery}
             />
-          ))
-        ) : null}
+          ) : (
+            <Col>
+              <Expander
+                sticky
+                heading={formatStageName(stage)}
+                icon={<GoChevronDown />}
+                searchQuery={searchQuery}
+              >
+                <ProposalList
+                  proposals={proposals[stage]}
+                  searchQuery={searchQuery}
+                  badges={['stars']}
+                />
+              </Expander>
+            </Col>
+          )
+        )}
       </PageContainer>
     </>
   )

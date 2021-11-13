@@ -28,6 +28,6 @@ export const PageContainer = styled.section<Props>`
         `}
 
   @media (max-width: 768px) {
-    width: ${({ mobileWidth }) => mobileWidth ?? '90%'};
+    width: ${({ mobileWidth }) => mobileWidth ?? '100%'};
   }
 `

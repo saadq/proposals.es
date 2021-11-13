@@ -11,7 +11,7 @@ const Page = styled.div`
 
 const Main = styled.main`
   flex: 1;
-  margin: 3rem ${({ theme }) => theme.sizes.gutter};
+  margin: 3rem 0;
 `
 
 export default function App({ Component, pageProps }: AppProps) {
