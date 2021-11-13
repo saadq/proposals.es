@@ -82,10 +82,7 @@ export default function ChampionPage({ champion }: Props) {
           {champion.proposals.length}{' '}
           {champion.proposals.length === 1 ? 'Proposal' : 'Proposals'}
         </Heading>
-        <ProposalList
-          proposals={champion.proposals}
-          badges={['author', 'champion', 'stars']}
-        />
+        <ProposalList proposals={champion.proposals} badges={['author', 'champion']} />
       </PageContainer>
     </>
   )
