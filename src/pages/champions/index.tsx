@@ -57,7 +57,7 @@ export default function ChampionsPage({ champions }: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageContainer width="80%" maxWidth="1000px" margin="0 auto">
+      <PageContainer width="80%" mobileWidth="90%" maxWidth="1000px" margin="0 auto">
         <Breadcrumbs crumbs={breadcrumbs} />
         <Heading>Champions</Heading>
         <SearchBar

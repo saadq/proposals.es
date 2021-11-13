@@ -87,7 +87,7 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
   ]
 
   return (
-    <PageContainer width="80%" mobileWidth="90%" maxWidth="1000px" margin="0 auto">
+    <PageContainer width="80%" mobileWidth="95%" maxWidth="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       <Heading>{formatStageName(stageName)}</Heading>
       <>

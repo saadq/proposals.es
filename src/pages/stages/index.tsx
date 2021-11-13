@@ -12,7 +12,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 export default function StagesPage() {
   return (
-    <PageContainer width="80%" margin="0 auto">
+    <PageContainer width="80%" mobileWidth="95%" margin="0 auto">
       <Heading>Stages</Heading>
       <StageList stages={[...allStages].reverse()} />
       <Disclaimer>

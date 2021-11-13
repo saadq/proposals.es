@@ -36,7 +36,6 @@ export default function ProposalsPage({ proposals }: Props) {
   const [searchQuery, setSearchQuery] = useState('')
   const isMobile = useMediaQuery('(max-width: 768px)')
   const isDesktop = !isMobile && isMobile != null
-  console.log({ isMobile })
 
   return (
     <>
@@ -48,7 +47,7 @@ export default function ProposalsPage({ proposals }: Props) {
       <PageContainer
         layout="column"
         gap={isDesktop ? '3rem' : '1.25rem'}
-        width="100%"
+        width="95%"
         mobileWidth="95%"
         margin="0 auto"
       >
@@ -56,34 +55,35 @@ export default function ProposalsPage({ proposals }: Props) {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           placeholder="Search for proposals..."
-          hideOnMobile
           width="50rem"
         />
-        {allStages.map((stage) =>
-          isDesktop ? (
-            <DynamicStageWithProposals
-              key={stage}
-              stage={stage}
-              proposals={proposals[stage]}
-              searchQuery={searchQuery}
-            />
-          ) : (
-            <Col>
+        <Col gap={isDesktop ? '3rem' : '1rem'} margin="0">
+          {allStages.map((stage) =>
+            isDesktop ? (
+              <DynamicStageWithProposals
+                key={stage}
+                stage={stage}
+                proposals={proposals[stage]}
+                searchQuery={searchQuery}
+              />
+            ) : (
               <Expander
+                key={stage}
                 sticky
                 heading={formatStageName(stage)}
                 icon={<GoChevronDown />}
                 searchQuery={searchQuery}
               >
                 <ProposalList
+                  cardWidth="85%"
                   proposals={proposals[stage]}
                   searchQuery={searchQuery}
                   badges={['stars']}
                 />
               </Expander>
-            </Col>
-          )
-        )}
+            )
+          )}
+        </Col>
       </PageContainer>
     </>
   )

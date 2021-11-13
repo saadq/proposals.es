@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import { SearchIcon, ClearSearchIcon } from './icons'
 import { debounce } from '../../utils/debounce'
 
-const Container = styled.div<{ width: string; hideOnMobile?: boolean }>`
+const Container = styled.div<{ width: string }>`
   position: relative;
-  margin: 0 auto;
   width: ${({ width }) => width};
   max-width: 100%;
+  margin: 0 auto;
 `
 
 const SearchInput = styled.input`
@@ -36,7 +36,6 @@ interface Props {
   placeholder: string
   debounceRate?: number
   width?: string
-  hideOnMobile?: boolean
 }
 
 export const SearchBar: FC<Props> = memo(

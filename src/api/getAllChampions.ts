@@ -14,7 +14,11 @@ export interface Champion {
 export type ProposalsByChampion = Record<string, ChampionedProposal[]>
 
 export async function getAllChampions(): Promise<Champion[]> {
-  const allProposalsByStage = await getProposalsForStages({ stages: allStages })
+  const allProposalsByStage = await getProposalsForStages({
+    stages: allStages,
+    includeRepoDetails: true
+  })
+
   const allProposals = Object.values(allProposalsByStage).flat()
 
   const championNames = allProposals

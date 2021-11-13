@@ -10,15 +10,14 @@ const HeadingText = styled.h1<{ isExpanded?: boolean; sticky?: boolean }>`
   text-decoration: ${({ isExpanded }) => (isExpanded ? 'underline' : 'none')};
   font-weight: 800;
   margin: 0;
-  border: 1 px solid orange;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
   padding: 2rem;
+  background: white;
+  border: 1px solid #f4f6fb;
+  box-shadow: 0px 8px 10px #e7f0f3;
   border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
-  margin-bottom: 1rem;
 
   ${({ sticky }) =>
     sticky
@@ -84,12 +83,12 @@ export function Expander({ heading, sticky, searchQuery, children }: Props) {
   }, [])
 
   return (
-    <>
+    <div>
       <HeadingText isExpanded={isExpanded} onClick={handleExpanderClick} sticky={sticky}>
         {heading}
         {isExpanded ? <GoChevronUp size={24} /> : <GoChevronDown size={24} />}
       </HeadingText>
       <Content isExpanded={isExpanded}>{children}</Content>
-    </>
+    </div>
   )
 }

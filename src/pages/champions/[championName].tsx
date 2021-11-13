@@ -75,14 +75,17 @@ export default function ChampionPage({ champion }: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageContainer width="80%" maxWidth="1000px" margin="0 auto">
+      <PageContainer width="80%" mobileWidth="90%" maxWidth="1000px" margin="0 auto">
         <Breadcrumbs crumbs={breadcrumbs} />
         <Heading>{champion.name}</Heading>
-        <Heading level={2} fontSize="1.25rem">
+        <Heading level={2} fontSize="1.25rem" margin="1rem 0">
           {champion.proposals.length}{' '}
           {champion.proposals.length === 1 ? 'Proposal' : 'Proposals'}
         </Heading>
-        <ProposalList proposals={champion.proposals} badges={['author', 'champion']} />
+        <ProposalList
+          proposals={champion.proposals}
+          badges={['author', 'champion', 'stars']}
+        />
       </PageContainer>
     </>
   )

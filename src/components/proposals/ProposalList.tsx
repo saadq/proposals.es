@@ -6,7 +6,7 @@ import { ChampionedProposal } from '../../api/getAllChampions'
 import { AwardIcon, PenIcon } from '../common/'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 
-const ProposalLink = styled.a`
+const ProposalLink = styled.a<{ cardWidth?: string }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,10 +20,11 @@ const ProposalLink = styled.a`
   font-weight: 800;
   color: ${({ theme }) => theme.colors.foreground};
   text-decoration: none;
-  width: 85%;
+  width: ${({ cardWidth }) => cardWidth ?? '100%'};
+  gap: 2rem;
 
-  &:first-child {
-    margin-top: 0;
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
   }
 
   &:hover {
@@ -80,9 +81,10 @@ interface Props {
   proposals: ChampionedProposal[]
   badges?: Badge[]
   searchQuery?: string
+  cardWidth?: string
 }
 
-export function ProposalList({ proposals, badges, searchQuery }: Props) {
+export function ProposalList({ proposals, badges, searchQuery, cardWidth }: Props) {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const isDesktop = !isMobile && isMobile != null
 
@@ -95,13 +97,13 @@ export function ProposalList({ proposals, badges, searchQuery }: Props) {
     )
 
   return proposalsToShow.length === 0 ? (
-    <NoResults>No search results for this stage</NoResults>
+    <NoResults>No search results for this stage.</NoResults>
   ) : (
     <ul>
       {proposalsToShow.map((proposal) => (
         <li key={proposal.title}>
           <Link href={`/proposals/${encodeURIComponent(proposal.title)}`} passHref>
-            <ProposalLink>
+            <ProposalLink cardWidth={cardWidth}>
               <SanitizedHtml html={proposal.titleHtml} />
               <Badges>
                 {isDesktop && badges?.includes('author') && proposal.isAuthor ? (
