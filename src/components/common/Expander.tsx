@@ -70,7 +70,7 @@ export function Expander({ heading, sticky, searchQuery, children }: Props) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   useEffect(() => {
-    if (!searchQuery) {
+    if (searchQuery == null) {
       return
     }
 
