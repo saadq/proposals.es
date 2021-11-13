@@ -64,7 +64,7 @@ export function Header() {
             {isMenuOpen ? <CloseIcon size="1.75rem" /> : <MenuIcon size="1.75rem" />}
           </div>
         )}
-        {(!isMobile || (isMobile && isMenuOpen)) && <Navigation />}
+        {(isMobile === false || (isMobile && isMenuOpen)) && <Navigation />}
       </Container>
     </StyledHeader>
   )
