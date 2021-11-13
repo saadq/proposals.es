@@ -31,7 +31,7 @@ export default function SpecificationsPage({ specifications }: Props) {
   ]
 
   return (
-    <PageContainer width="80%" maxWidth="1000px" margin="0 auto">
+    <PageContainer width="80%" mobileWidth="95%" maxWidth="1000px" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       <Heading margin="0 0 2rem 0">ECMAScript Specifications</Heading>
       <Col gap="3rem">
