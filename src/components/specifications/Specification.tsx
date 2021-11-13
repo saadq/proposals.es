@@ -30,13 +30,11 @@ const Alias = styled.span`
 
 const Links = styled.ul`
   display: flex;
+  gap: 1rem;
 
   @media screen and (max-width: 500px) {
     font-size: 0.75rem;
-  }
-
-  li {
-    margin-right: 1rem;
+    gap: 0.5rem;
   }
 
   a {
@@ -48,6 +46,10 @@ const Links = styled.ul`
     text-decoration: none;
     background: ${({ theme }) => theme.colors.black};
     transition: 0.4s ease;
+
+    @media (max-width: 768px) {
+      padding: 0.35rem;
+    }
 
     &:hover {
       color: ${({ theme }) => theme.colors.black};
