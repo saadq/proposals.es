@@ -6,12 +6,14 @@
   "scripts": {
     "dev": "next dev",
     "debug": "NODE_OPTIONS='--inspect' next dev",
-    "prebuild": "npm run format && npm run lint",
+    "prebuild": "npm test",
     "build": "cross-env IS_BUILD=true next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier \"src/**/*.{ts,tsx}\" --write",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "pretest": "npm run format",
+    "test": "npm run lint && npm run typecheck"
   },
   "dependencies": {
     "@octokit/graphql": "^4.6.4",
