@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { GoChevronDown, GoChevronUp } from 'react-icons/go'
 import styled, { css } from 'styled-components'
 
