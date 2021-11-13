@@ -11,7 +11,6 @@ import { FallbackDetails } from '../../components/proposals/FallbackDetails'
 import { Readme } from '../../components/proposals/Readme'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { DetailsExpander } from '../../components/proposals/DetailsExpander'
-import { BackButton } from '../../components/common/BackButton'
 
 interface Props {
   proposal: Proposal
@@ -99,12 +98,7 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
       <Breadcrumbs crumbs={breadcrumbs} />
       {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
       <Flex layout={isDesktop ? 'row' : 'column'} gap="2rem">
-        {isMobile ? (
-          <>
-            <BackButton />
-            <DetailsExpander proposal={proposal} />
-          </>
-        ) : null}
+        {isMobile ? <DetailsExpander proposal={proposal} /> : null}
         {readme ? (
           <Readme readme={readme} baseUrl={getReadmeBaseUrl(proposal)} />
         ) : proposal.link ? (
