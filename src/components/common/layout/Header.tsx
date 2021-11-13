@@ -1,13 +1,21 @@
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { GoThreeBars as MenuIcon, GoX as CloseIcon } from 'react-icons/go'
 import { Logo } from '../icons/Logo'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { useCallback, useEffect, useState } from 'react'
+import { Navigation } from './Navigation'
+import { useRouter } from 'next/router'
 
 const StyledHeader = styled.header`
   background: ${({ theme }) => theme.colors.header};
   width: 100%;
   height: ${({ theme }) => theme.sizes.headerHeight};
   box-shadow: 0px 4px 24px rgba(55, 81, 104, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
 `
 
 const Container = styled.div`
@@ -18,28 +26,30 @@ const Container = styled.div`
   height: 100%;
 `
 
-const Nav = styled.nav`
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-`
-
-const NavLink = styled.a<{ isActive: boolean }>`
-  color: ${({ theme }) => theme.colors.primary};
-  color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.primary : theme.colors.black};
-  margin: 0 1rem;
-  text-decoration: none;
-  font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
-  font-size: 1.1rem;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`
+const scrollDisabledClass = 'scroll-disabled'
 
 export function Header() {
   const { route } = useRouter()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const isMobile = useMediaQuery('(max-width: 768px)')
+
+  const handleMenuClick = useCallback(() => {
+    setIsMenuOpen((currIsMenuOpen) => !currIsMenuOpen)
+  }, [])
+
+  useEffect(() => {
+    setIsMenuOpen(false)
+  }, [route])
+
+  useEffect(() => {
+    if (!isMobile) {
+      return
+    }
+
+    isMenuOpen
+      ? document.body.classList.add(scrollDisabledClass)
+      : document.body.classList.remove(scrollDisabledClass)
+  }, [isMobile, isMenuOpen])
 
   return (
     <StyledHeader>
@@ -49,24 +59,12 @@ export function Header() {
             <Logo width={175} />
           </a>
         </Link>
-        <Nav>
-          <Link href="/" passHref>
-            <NavLink isActive={route === '/' || route.startsWith('/proposals')}>
-              Proposals
-            </NavLink>
-          </Link>
-          <Link href="/stages" passHref>
-            <NavLink isActive={route.startsWith('/stages')}>Stages</NavLink>
-          </Link>
-          <Link href="/champions" passHref>
-            <NavLink isActive={route.startsWith('/champions')}>Champions</NavLink>
-          </Link>
-          <Link href="/specifications" passHref>
-            <NavLink isActive={route.startsWith('/specifications')}>
-              Specifications
-            </NavLink>
-          </Link>
-        </Nav>
+        {isMobile && (
+          <div onClick={handleMenuClick}>
+            {isMenuOpen ? <CloseIcon size="1.75rem" /> : <MenuIcon size="1.75rem" />}
+          </div>
+        )}
+        {(!isMobile || (isMobile && isMenuOpen)) && <Navigation />}
       </Container>
     </StyledHeader>
   )

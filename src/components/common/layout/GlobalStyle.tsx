@@ -17,6 +17,10 @@ export const GlobalStyle = createGlobalStyle`
     font-variant-ligatures: none;
   }
 
+  .scroll-disabled {
+    overflow: hidden
+  }
+
   ul {
     list-style-type: none;
     padding: 0;
