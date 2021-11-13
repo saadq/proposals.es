@@ -9,7 +9,7 @@ const Sidebar = styled.aside`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  min-width: 20%;
+  min-width: 15%;
   align-self: flex-start;
 `
 

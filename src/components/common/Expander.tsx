@@ -61,16 +61,19 @@ const Content = styled.div<{ isExpanded: boolean }>`
 
 interface Props {
   heading: string
-  icon: ReactElement
   children: ReactNode
   searchQuery?: string
   sticky?: boolean
 }
 
 export function Expander({ heading, sticky, searchQuery, children }: Props) {
-  const [isExpanded, setIsExpanded] = useState(searchQuery?.trim() !== '')
+  const [isExpanded, setIsExpanded] = useState(false)
 
   useEffect(() => {
+    if (!searchQuery) {
+      return
+    }
+
     if (searchQuery?.trim() !== '') {
       setIsExpanded(true)
     } else {

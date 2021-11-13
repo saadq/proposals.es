@@ -9,6 +9,10 @@ const BreadcrumbList = styled.ul`
   margin-bottom: 2rem;
   padding: 0;
 
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+
   li {
     display: flex;
 

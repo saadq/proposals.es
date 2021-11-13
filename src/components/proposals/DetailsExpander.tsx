@@ -4,16 +4,7 @@ import { SanitizedHtml, StarIcon, GitHubIcon, Heading } from '../common'
 import { formatStageName } from '../../utils/formatStageName'
 import { Proposal } from '../../types'
 import { getGitHubDetails, isGithubProposal } from '../../utils/github'
-import { Expander } from '../common/layout/Expander'
-
-const Sidebar = styled.aside`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  min-width: 20%;
-  align-self: flex-start;
-  width: 100%;
-`
+import { Expander } from '../common/Expander'
 
 const DetailCard = styled.div`
   display: flex;
@@ -79,82 +70,76 @@ export function DetailsExpander({ proposal }: Props) {
   const githubDetails = isGithubProposal(proposal) ? getGitHubDetails(proposal) : null
 
   return (
-    <Sidebar>
-      <Expander heading="Proposal">
-        <DetailCard>
-          <Heading level={3}>{formatStageName(proposal.stage)}</Heading>
-          {proposal.type !== 'inactive' ? (
-            <InfoRow>
-              <Heading level={3}>
-                <a
-                  href={`https://www.ecma-international.org/publications-and-standards/standards/${proposal.type}/`}
-                >
-                  {proposal.type.toUpperCase()}
-                </a>
-              </Heading>
-            </InfoRow>
-          ) : null}
-        </DetailCard>
-      </Expander>
+    <Expander heading="View proposal details">
+      <DetailCard>
+        <Heading level={2}>Proposal</Heading>
+        <Heading level={3}>{formatStageName(proposal.stage)}</Heading>
+        {proposal.type !== 'inactive' ? (
+          <InfoRow>
+            <Heading level={3}>
+              <a
+                href={`https://www.ecma-international.org/publications-and-standards/standards/${proposal.type}/`}
+              >
+                {proposal.type.toUpperCase()}
+              </a>
+            </Heading>
+          </InfoRow>
+        ) : null}
+      </DetailCard>
       {isGithubProposal(proposal) ? (
-        <Expander heading="GitHub">
-          <DetailCard>
-            <IconCol>
-              <InfoRow>
-                <StarIcon />
-                <span>{proposal.stars}</span>
-              </InfoRow>
-              <InfoRow>
-                <GitHubIcon />
-                <Link href={proposal.link as string} passHref>
-                  <a>
-                    {githubDetails?.owner}/{githubDetails?.repo}
-                  </a>
-                </Link>
-              </InfoRow>
-            </IconCol>
-          </DetailCard>
-        </Expander>
+        <DetailCard>
+          <Heading level={2}>GitHub</Heading>
+          <IconCol>
+            <InfoRow>
+              <StarIcon />
+              <span>{proposal.stars}</span>
+            </InfoRow>
+            <InfoRow>
+              <GitHubIcon />
+              <Link href={proposal.link as string} passHref>
+                <a>
+                  {githubDetails?.owner}/{githubDetails?.repo}
+                </a>
+              </Link>
+            </InfoRow>
+          </IconCol>
+        </DetailCard>
       ) : null}
       {proposal.authors?.length && (
-        <Expander heading="Authors">
-          <DetailCard>
-            <ChampionList>
-              {proposal.authors?.map((author) => (
-                <li key={author}>
-                  <Link href={`/champions/${encodeURIComponent(author)}`} passHref>
-                    <ChampionName key={author}>{author}</ChampionName>
-                  </Link>
-                </li>
-              ))}
-            </ChampionList>
-          </DetailCard>
-        </Expander>
-      )}
-      <Expander heading="Champions">
         <DetailCard>
+          <Heading level={2}>Authors</Heading>
           <ChampionList>
-            {proposal.champions.map((champion) => (
-              <li key={champion}>
-                <Link
-                  href={`/champions/${encodeURIComponent(champion)}`}
-                  passHref
-                  key={champion}
-                >
-                  <ChampionName key={champion}>{champion}</ChampionName>
+            {proposal.authors?.map((author) => (
+              <li key={author}>
+                <Link href={`/champions/${encodeURIComponent(author)}`} passHref>
+                  <ChampionName key={author}>{author}</ChampionName>
                 </Link>
               </li>
             ))}
           </ChampionList>
         </DetailCard>
-      </Expander>
-      {proposal.lastPresentedHtml && (
-        <Expander heading="Last presented">
-          <DetailCard>
-            <SanitizedHtml html={proposal.lastPresentedHtml} />
-          </DetailCard>
-        </Expander>
       )}
-    </Sidebar>
+      <DetailCard>
+        <Heading level={2}>Champions</Heading>
+        <ChampionList>
+          {proposal.champions.map((champion) => (
+            <li key={champion}>
+              <Link
+                href={`/champions/${encodeURIComponent(champion)}`}
+                passHref
+                key={champion}
+              >
+                <ChampionName key={champion}>{champion}</ChampionName>
+              </Link>
+            </li>
+          ))}
+        </ChampionList>
+      </DetailCard>
+      {proposal.lastPresentedHtml && (
+        <DetailCard>
+          <SanitizedHtml html={proposal.lastPresentedHtml} />
+        </DetailCard>
+      )}
+    </Expander>
   )
 }

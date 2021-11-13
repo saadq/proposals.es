@@ -94,7 +94,7 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
   ]
 
   return (
-    <PageContainer width="1600px" mobileWidth="95%" maxWidth="100%" margin="0 auto">
+    <PageContainer width="95%" mobileWidth="95%" maxWidth="100%" margin="0 auto">
       <Breadcrumbs crumbs={breadcrumbs} />
       {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
       <Flex layout={isDesktop ? 'row' : 'column'} gap="2rem">
