@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import { GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { PageContainer, Col, SearchBar, Heading } from '../components/common'
+import { PageContainer, Col, SearchBar, Heading, Spinner } from '../components/common'
 import { getProposalsForStages } from '../api/getProposalsForStages'
 import { ProposalsByStage, allStages } from '../types'
 import { useMediaQuery } from '../hooks/useMediaQuery'
@@ -58,33 +58,39 @@ export default function ProposalsPage({ proposals }: Props) {
           placeholder="Search for proposals..."
           width="50rem"
         />
-        <Col gap={isDesktop ? '3rem' : '1rem'} margin="0">
-          {allStages.map((stage) =>
-            isDesktop ? (
-              <DynamicStageWithProposals
-                key={stage}
-                stage={stage}
-                proposals={proposals[stage]}
-                searchQuery={searchQuery}
-              />
-            ) : (
-              <Expander
-                key={stage}
-                sticky
-                heading={formatStageName(stage)}
-                icon={<GoChevronDown />}
-                searchQuery={searchQuery}
-              >
-                <ProposalList
-                  cardWidth="85%"
+        {isMobile == null && isDesktop == null ? (
+          <Spinner />
+        ) : (
+          <Col gap={isDesktop ? '3rem' : '1rem'} margin="0">
+            {allStages.map((stage) =>
+              isDesktop ? (
+                <DynamicStageWithProposals
+                  key={stage}
+                  stage={stage}
                   proposals={proposals[stage]}
                   searchQuery={searchQuery}
-                  badges={['stars']}
                 />
-              </Expander>
-            )
-          )}
-        </Col>
+              ) : isMobile ? (
+                <Expander
+                  key={stage}
+                  sticky
+                  heading={formatStageName(stage)}
+                  icon={<GoChevronDown />}
+                  searchQuery={searchQuery}
+                >
+                  <ProposalList
+                    cardWidth="85%"
+                    proposals={proposals[stage]}
+                    searchQuery={searchQuery}
+                    badges={['stars']}
+                  />
+                </Expander>
+              ) : (
+                <Spinner />
+              )
+            )}
+          </Col>
+        )}
       </PageContainer>
     </>
   )
