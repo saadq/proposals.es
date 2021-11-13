@@ -85,9 +85,7 @@ export default function ProposalsPage({ proposals }: Props) {
                     badges={['stars']}
                   />
                 </Expander>
-              ) : (
-                <Spinner />
-              )
+              ) : null
             )}
           </Col>
         )}
