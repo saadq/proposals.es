@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import { GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { PageContainer, Col, SearchBar } from '../components/common'
+import { PageContainer, Col, SearchBar, Heading } from '../components/common'
 import { getProposalsForStages } from '../api/getProposalsForStages'
 import { ProposalsByStage, allStages } from '../types'
 import { useMediaQuery } from '../hooks/useMediaQuery'
@@ -51,6 +51,7 @@ export default function ProposalsPage({ proposals }: Props) {
         mobileWidth="95%"
         margin="0 auto"
       >
+        {isMobile ? <Heading margin="0">Proposals</Heading> : null}
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
