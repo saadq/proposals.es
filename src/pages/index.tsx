@@ -8,7 +8,6 @@ import { ProposalsByStage, allStages } from '../types'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import { ProposalList } from '../components/proposals'
 import { formatStageName } from '../utils/formatStageName'
-import { GoChevronDown } from 'react-icons/go'
 import { Expander } from '../components/common/Expander'
 
 const DynamicStageWithProposals = dynamic(async () => {
@@ -75,7 +74,6 @@ export default function ProposalsPage({ proposals }: Props) {
                   key={stage}
                   sticky
                   heading={formatStageName(stage)}
-                  icon={<GoChevronDown />}
                   searchQuery={searchQuery}
                 >
                   <ProposalList
