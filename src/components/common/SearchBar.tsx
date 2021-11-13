@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, memo, useCallback, useRef } from 'react'
+import { ChangeEvent, FC, KeyboardEventHandler, memo, useCallback, useRef } from 'react'
 import styled from 'styled-components'
 import { SearchIcon, ClearSearchIcon } from './icons'
 import { debounce } from '../../utils/debounce'
@@ -51,6 +51,13 @@ export const SearchBar: FC<Props> = memo(
       [setSearchQuery]
     )
 
+    // Dismiss keyboard view in mobile on enter
+    const handleEnter: KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {
+      if (e.key === 'Enter') {
+        inputRef.current?.blur()
+      }
+    }, [])
+
     const handleClearClick = useCallback(() => {
       setSearchQuery('')
       if (inputRef.current) {
@@ -82,7 +89,12 @@ export const SearchBar: FC<Props> = memo(
             }}
           />
         ) : null}
-        <SearchInput placeholder={placeholder} onChange={handleChange} ref={inputRef} />
+        <SearchInput
+          placeholder={placeholder}
+          onChange={handleChange}
+          onKeyDown={handleEnter}
+          ref={inputRef}
+        />
       </Container>
     )
   }
