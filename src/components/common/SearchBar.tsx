@@ -26,7 +26,7 @@ const SearchInput = styled.input`
 
   &:focus {
     outline: none;
-    box-shadow: 0px 0px 5px ${({ theme }) => theme.colors.primary};
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
   }
 `
 
