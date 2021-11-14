@@ -17,7 +17,7 @@ export const darkTheme: Theme = {
     background: black,
     foreground: white,
     primary: yellow,
-    header: '#000',
+    header: '#0d0d10',
     heading: '#FFF',
     card: black,
     badge: '#000',
