@@ -26,6 +26,12 @@ const Container = styled.div`
   height: 100%;
 `
 
+const LogoLink = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const scrollDisabledClass = 'scroll-disabled'
 
 interface Props {
@@ -59,9 +65,9 @@ export function Header({ theme, setTheme }: Props) {
     <StyledHeader>
       <Container>
         <Link href="/" passHref>
-          <a>
+          <LogoLink>
             <Logo width={175} />
-          </a>
+          </LogoLink>
         </Link>
         {isMobile && (
           <div onClick={handleMenuClick}>
