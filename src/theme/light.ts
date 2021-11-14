@@ -862,7 +862,6 @@ export const markdownLightTheme = css`
 
   .markdown-body .highlight pre,
   .markdown-body pre {
-    padding: 16px;
     overflow: auto;
     font-size: 85%;
     line-height: 1.45;

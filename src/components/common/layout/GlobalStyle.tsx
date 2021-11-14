@@ -34,4 +34,8 @@ export const GlobalStyle = createGlobalStyle`
     box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.primary};
   }
 
+  .markdown-body .highlight pre,
+  .markdown-body pre {
+    padding: 16px;
+  }
 `
