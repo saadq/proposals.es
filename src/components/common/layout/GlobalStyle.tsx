@@ -29,8 +29,9 @@ export const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
-  *:focus {
+  *:focus, a:focus {
     outline: none;
     box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.primary};
   }
+
 `

@@ -30,7 +30,7 @@ export const darkTheme: Theme = {
     header: '0px 4px 24px rgba(0, 0, 0, 0.5)',
     card: '0px 2px 4px black',
     searchBar: '0px 2px 2px black',
-    searchBarFocused: '0px 4px 4px black'
+    searchBarFocused: `0px 4px 4px ${yellow}`
   },
   borders: {
     card: '1px solid black',
