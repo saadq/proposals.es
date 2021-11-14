@@ -31,7 +31,7 @@ export const lightTheme: Theme = {
     header: '0px 4px 24px rgba(55, 81, 104, 0.1)',
     card: '0px 8px 10px #e7f0f3',
     searchBar: '0px 8px 10px #e7f0f3',
-    searchBarFocused: '0px 4px 4px black'
+    searchBarFocused: '0px 8px 10px #d7dee1'
   },
   borders: {
     card: '1px solid #e7f0f3',

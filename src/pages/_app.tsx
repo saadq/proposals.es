@@ -21,32 +21,32 @@ export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(lightTheme)
 
   useEffect(() => {
-    let preferredTheme: Theme | void
+    let preferredThemeName: Theme['name'] | void
 
     try {
       const item = window.localStorage.getItem(themeKey)
       if (item) {
-        preferredTheme = JSON.parse(item) as Theme
+        preferredThemeName = item as Theme['name']
       }
     } catch (error) {}
 
-    if (!preferredTheme) {
+    if (!preferredThemeName) {
       if (
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches
       ) {
-        preferredTheme = darkTheme
+        preferredThemeName = 'dark'
       } else {
-        preferredTheme = lightTheme
+        preferredThemeName = 'light'
       }
     }
 
-    setTheme(preferredTheme)
+    setTheme(preferredThemeName === 'dark' ? darkTheme : lightTheme)
   }, [])
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(themeKey, JSON.stringify(theme))
+      window.localStorage.setItem(themeKey, theme.name)
     } catch (error) {}
   }, [theme])
 
