@@ -29,8 +29,8 @@ export const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
-  :focus {
+  *:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(253, 123, 0, 0.4);
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.primary};
   }
 `
