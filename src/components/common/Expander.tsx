@@ -4,9 +4,10 @@ import styled, { css } from 'styled-components'
 
 const HeadingText = styled.h1<{ isExpanded?: boolean; sticky?: boolean }>`
   position: ${({ sticky }) => (sticky ? 'sticky' : 'initial')};
-  top: ${({ sticky }) => (sticky ? '0' : 'initial')};
+  top: ${({ sticky }) => (sticky ? '10px' : 'initial')};
   font-size: 1.5rem;
-  color: ${({ isExpanded, theme }) => (isExpanded ? theme.colors.primary : 'black')};
+  color: ${({ isExpanded, theme }) =>
+    isExpanded ? theme.colors.primary : theme.colors.foreground};
   text-decoration: ${({ isExpanded }) => (isExpanded ? 'underline' : 'none')};
   font-weight: 800;
   margin: 0;
@@ -14,9 +15,9 @@ const HeadingText = styled.h1<{ isExpanded?: boolean; sticky?: boolean }>`
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
-  background: white;
-  border: 1px solid #f4f6fb;
-  box-shadow: 0px 8px 10px #e7f0f3;
+  background: ${({ theme }) => theme.colors.card};
+  border: ${({ theme }) => theme.borders.card};
+  box-shadow: ${({ theme }) => theme.shadows.card};
   border-radius: 4px;
 
   ${({ sticky }) =>

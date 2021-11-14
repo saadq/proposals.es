@@ -6,40 +6,14 @@ import { ChampionedProposal } from '../../api/getAllChampions'
 import { AwardIcon, PenIcon } from '../common/'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 
-const ProposalLink = styled.a<{ cardWidth?: string }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem;
-  margin: 2rem auto;
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.4s ease;
-  box-shadow: 0px 8px 10px #e7f0f3;
-  font-weight: 800;
-  color: ${({ theme }) => theme.colors.foreground};
-  text-decoration: none;
-  width: ${({ cardWidth }) => cardWidth ?? '100%'};
-  gap: 2rem;
-
-  @media (max-width: 768px) {
-    padding: 2rem 1rem;
-  }
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.primary};
-
-    .feather-star {
-      fill: ${({ theme }) => theme.colors.foreground};
-    }
-  }
-`
-
 const Badges = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+
+  div {
+    transition: all 0.4s ease;
+  }
 `
 
 const Badge = styled.div`
@@ -54,8 +28,8 @@ const Badge = styled.div`
 
 const ChampionBadge = styled(Badge)`
   padding: 0.5rem 1rem;
-  background: ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.badge};
+  color: ${({ theme }) => theme.colors.badgeText};
   border-radius: 4px;
 
   @media (max-width: 768px) {
@@ -70,6 +44,42 @@ const StarsBadge = styled(Badge)`
   }
 `
 
+const ProposalLink = styled.a<{ cardWidth?: string }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  margin: 2rem auto;
+  background: ${({ theme }) => theme.colors.card};
+  border: ${({ theme }) => theme.borders.card};
+  box-shadow: ${({ theme }) => theme.shadows.card};
+  color: ${({ theme }) => theme.colors.foreground};
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  font-weight: 800;
+  text-decoration: none;
+  width: ${({ cardWidth }) => cardWidth ?? '100%'};
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.black};
+
+    .feather-star {
+      fill: ${({ theme }) => theme.colors.black};
+    }
+
+    ${ChampionBadge} {
+      background: ${({ theme }) => theme.colors.black};
+      color: ${({ theme }) => theme.colors.white};
+    }
+  }
+`
 const NoResults = styled.p`
   margin: 2rem;
   font-weight: bold;

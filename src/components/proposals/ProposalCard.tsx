@@ -8,9 +8,9 @@ import { FC, memo } from 'react'
 const CardLink = styled.a`
   color: ${({ theme }) => theme.colors.foreground};
   text-decoration: none;
-  background: white;
-  border: 1px solid #f4f6fb;
-  box-shadow: 0px 8px 10px #e7f0f3;
+  background: ${({ theme }) => theme.colors.card};
+  box-shadow: ${({ theme }) => theme.shadows.card};
+  border: ${({ theme }) => theme.borders.card};
   border-radius: 4px;
   padding: 2rem 3rem;
   justify-content: center;
@@ -20,7 +20,6 @@ const CardLink = styled.a`
   transition: all 0.4s ease;
   flex-wrap: wrap;
   position: relative;
-  border: 1px solid #e7f0f3;
   max-width: 25rem;
 
   .feather-star {
@@ -30,8 +29,7 @@ const CardLink = styled.a`
   &:hover {
     background: ${({ theme }) => theme.colors.primary};
     border: 1px solid ${({ theme }) => theme.colors.primary};
-    box-shadow: 0px 10px 8px #e7f0f3;
-    color: black;
+    color: ${({ theme }) => theme.colors.black};
 
     .feather-star {
       fill: ${({ theme }) => theme.colors.black};

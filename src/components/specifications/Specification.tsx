@@ -1,11 +1,10 @@
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { Heading } from '../common'
 import { Specification as SpecificationType } from '../../types'
 
 const Wrapper = styled.section`
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: 0px 4px 10px 10px #e7f0f3;
-  color: ${({ theme }) => theme.colors.foreground};
+  background: ${({ theme }) => theme.colors.card};
+  box-shadow: ${({ theme }) => theme.shadows.card};
   border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 4px;
 
@@ -38,13 +37,12 @@ const Links = styled.ul`
   }
 
   a {
-    color: ${({ theme }) => theme.colors.white};
     font-weight: bold;
     padding: 0.25rem 1rem;
-    border: 1px solid ${({ theme }) => theme.colors.black};
     border-radius: 4px;
     text-decoration: none;
-    background: ${({ theme }) => theme.colors.black};
+    background: ${({ theme }) => theme.colors.badge};
+    color: ${({ theme }) => theme.colors.badgeText};
     transition: 0.4s ease;
 
     @media (max-width: 768px) {
@@ -54,7 +52,6 @@ const Links = styled.ul`
     &:hover {
       color: ${({ theme }) => theme.colors.black};
       background: ${({ theme }) => theme.colors.white};
-      border-color: ${({ theme }) => theme.colors.white};
     }
   }
 `
@@ -77,10 +74,18 @@ interface Props {
 }
 
 export function Specification({ specification }: Props) {
+  const theme = useTheme()
+
   return (
     <Wrapper key={specification.name}>
       <Header>
-        <Heading level={2} fontSize="1.5rem" margin="1rem 0">
+        <Heading
+          level={2}
+          fontSize="1.5rem"
+          fontWeight="800"
+          margin="1rem 0"
+          color={theme.colors.black}
+        >
           {specification.name} <Alias>({specification.alias})</Alias>
         </Heading>
         <Links>

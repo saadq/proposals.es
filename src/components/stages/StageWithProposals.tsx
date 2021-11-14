@@ -7,20 +7,19 @@ import { formatStageName } from '../../utils/formatStageName'
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.card};
+  box-shadow: ${({ theme }) => theme.shadows.card};
+  border: ${({ theme }) => theme.borders.card};
   border-radius: 4px;
-  box-shadow: 0px 2px 8px #e7f0f3;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
 `
 
 const Heading = styled.h2`
   align-self: flex-start;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.heading};
   cursor: pointer;
   text-decoration: underline;
   font-size: 1.25rem;
   font-weight: 800;
-  background: ${({ theme }) => theme.colors.card};
   margin: 0;
   padding: 1.5rem 2.5rem;
   transition: color 0.2s ease-in-out;

@@ -9,6 +9,7 @@ interface Props {
   fontSize?: string
   fontWeight?: string | number
   margin?: string
+  color?: string
 }
 
 function getDefaultFontSize(level?: HeadingLevel) {
@@ -51,6 +52,7 @@ const HeadingText = styled.h1<Omit<Props, 'children'>>`
   font-size: ${({ fontSize, level }) => fontSize ?? getDefaultFontSize(level)};
   font-weight: ${({ fontWeight }) => fontWeight ?? 'bold'};
   margin: ${({ margin, level }) => margin ?? (level === 1 ? '1rem 0' : 'initial')};
+  color: ${({ theme, color }) => color ?? theme.colors.heading};
 
   @media (max-width: 768px) {
     font-size: ${({ level }) => getMobileFontSize(level)};

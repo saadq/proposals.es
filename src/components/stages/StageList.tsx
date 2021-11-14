@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 import { Stage } from '../../types'
 import { formatStageName } from '../../utils/formatStageName'
@@ -39,17 +40,15 @@ const StageLink = styled.a`
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.black};
   padding: 0 1rem;
   text-align: center;
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: 0px 2px 8px #e7f0f3;
-  border: 1px solid #f4f6fb;
+  background: ${({ theme }) => theme.colors.card};
+  color: ${({ theme }) => theme.colors.foreground};
+  box-shadow: ${({ theme }) => theme.shadows.card};
+  border: ${({ theme }) => theme.borders.card};
   transition: 0.4s ease;
   border-radius: 4px;
   font-weight: bold;
-  border: 1 px solid #e7f0f3;
-  box-shadow: 0px 10px 8px #e7f0f3;
 
   @media (max-width: 768px) {
     height: auto;
@@ -123,13 +122,15 @@ export function StageList({ stages }: Props) {
 
         return (
           <li key={stage}>
-            <StageLink href={`/stages/${stage}`}>
-              <IconForStage size={isMobile ? 25 : 50} />
-              <Heading level={2} fontSize="1.75rem" margin="1rem 0 0 0">
-                {formatStageName(stage)}
-              </Heading>
-              <StageDescription>{description}</StageDescription>
-            </StageLink>
+            <Link href={`/stages/${stage}`} passHref>
+              <StageLink>
+                <IconForStage size={isMobile ? 25 : 50} />
+                <Heading level={2} fontSize="1.75rem" margin="1rem 0 0 0">
+                  {formatStageName(stage)}
+                </Heading>
+                <StageDescription>{description}</StageDescription>
+              </StageLink>
+            </Link>
           </li>
         )
       })}

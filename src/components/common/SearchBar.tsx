@@ -11,8 +11,10 @@ const Container = styled.div<{ width: string }>`
 `
 
 const SearchInput = styled.input`
-  border: 1px solid #f4f6fb;
-  box-shadow: 0px 8px 10px #e7f0f3;
+  color: ${({ theme }) => theme.colors.foreground};
+  background: ${({ theme }) => theme.colors.searchBar};
+  border: ${({ theme }) => theme.borders.searchBar};
+  box-shadow: ${({ theme }) => theme.shadows.searchBar};
   padding: 1rem 4rem;
   border-radius: 4px;
   width: 100%;
@@ -26,7 +28,7 @@ const SearchInput = styled.input`
 
   &:focus {
     outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: ${({ theme }) => theme.shadows.searchBarFocused};
   }
 `
 

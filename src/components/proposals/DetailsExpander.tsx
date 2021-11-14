@@ -9,8 +9,8 @@ import { Expander } from '../common/Expander'
 const DetailCard = styled.div`
   display: flex;
   flex-direction: column;
-  background: white;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  background: ${({ theme }) => theme.colors.card};
+  box-shadow: ${({ theme }) => theme.shadows.card};
   padding: 1rem;
 
   h2,

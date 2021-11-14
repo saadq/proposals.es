@@ -16,9 +16,9 @@ const Sidebar = styled.aside`
 const DetailCard = styled.div`
   display: flex;
   flex-direction: column;
-  background: white;
-  border: 1px solid #e7f0f3;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  background: ${({ theme }) => theme.colors.card};
+  border: ${({ theme }) => theme.borders.card};
+  box-shadow: ${({ theme }) => theme.shadows.card};
   padding: 1rem;
 
   h2,

@@ -1,7 +1,8 @@
 import type { AppProps } from 'next/app'
+import { useEffect, useState } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import { Header, Footer, GlobalStyle } from '../components/common'
-import { lightTheme } from '../theme'
+import { darkTheme, lightTheme } from '../theme'
 
 const Page = styled.div`
   min-height: 100vh;
@@ -15,13 +16,21 @@ const Main = styled.main`
 `
 
 export default function App({ Component, pageProps }: AppProps) {
-  const theme = lightTheme // TODO – Don't hardcode this
+  const [theme, setTheme] = useState(lightTheme)
+
+  useEffect(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme(darkTheme)
+    } else {
+      setTheme(lightTheme)
+    }
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Page>
-        <Header />
+        <Header theme={theme} setTheme={setTheme} />
         <Main>
           <Component {...pageProps} />
         </Main>

@@ -1,6 +1,4 @@
 import { createGlobalStyle } from 'styled-components'
-import { markdownStyles } from '../../../theme/markdown'
-import 'highlight.js/styles/github.css'
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -31,5 +29,5 @@ export const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
-  ${markdownStyles}
+  
 `
