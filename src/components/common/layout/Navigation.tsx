@@ -99,7 +99,7 @@ export function Navigation({ theme, setTheme }: Props) {
         <NavLink isActive={route.startsWith('/specifications')}>Specifications</NavLink>
       </Link>
       <ThemeToggler onClick={toggleTheme}>
-        {theme.name === 'dark' ? <FaMoon size={24} /> : <FaSun size={24} />}
+        {theme.name === 'dark' ? <FaSun size={24} /> : <FaMoon size={24} />}
       </ThemeToggler>
     </Nav>
   )
