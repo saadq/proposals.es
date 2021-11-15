@@ -21,6 +21,7 @@ declare module 'styled-components' {
       headingBanner: string
       headingBannerText: string
       card: string
+      stageCard: string
       badge: string
       badgeText: string
       footer: string

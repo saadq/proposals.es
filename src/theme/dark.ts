@@ -23,6 +23,7 @@ export const darkTheme: Theme = {
     headingBanner: gray,
     headingBannerText: white,
     card: black,
+    stageCard: gray,
     badge: '#000',
     badgeText: white,
     searchBar: '#1b1c20',

@@ -23,6 +23,7 @@ export const lightTheme: Theme = {
     headingBanner: '#34373a',
     headingBannerText: gray,
     card: white,
+    stageCard: white,
     badge: black,
     badgeText: white,
     searchBar: white,

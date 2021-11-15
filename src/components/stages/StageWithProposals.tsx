@@ -7,7 +7,7 @@ import { formatStageName } from '../../utils/formatStageName'
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  background: ${({ theme }) => theme.colors.card};
+  background: ${({ theme }) => theme.colors.stageCard};
   box-shadow: ${({ theme }) => theme.shadows.card};
   border: ${({ theme }) => theme.borders.card};
   border-radius: 4px;

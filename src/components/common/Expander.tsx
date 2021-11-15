@@ -15,7 +15,7 @@ const HeadingText = styled.h1<{ isExpanded?: boolean; sticky?: boolean }>`
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
-  background: ${({ theme }) => theme.colors.card};
+  background: ${({ theme }) => theme.colors.stageCard};
   border: ${({ theme }) => theme.borders.card};
   box-shadow: ${({ theme }) => theme.shadows.card};
   border-radius: 4px;
