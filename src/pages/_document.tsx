@@ -1,4 +1,10 @@
-import NextDocument, { DocumentContext } from 'next/document'
+import NextDocument, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext
+} from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
 export default class Document extends NextDocument {
@@ -26,5 +32,29 @@ export default class Document extends NextDocument {
     } finally {
       sheet.seal()
     }
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head>
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-QN3Y98W8PC" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-QN3Y98W8PC');
+              `
+            }}
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
   }
 }
