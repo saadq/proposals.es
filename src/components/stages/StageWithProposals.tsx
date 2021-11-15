@@ -35,7 +35,7 @@ const ProposalsContainer = styled.div<{ layout?: 'horizontal' | 'vertical' }>`
   gap: 2rem;
   flex: 1;
   display: flex;
-  overflow: scroll;
+  overflow: auto;
   flex-wrap: ${({ layout }) => (layout === 'vertical' ? 'wrap' : 'initial')};
 `
 
