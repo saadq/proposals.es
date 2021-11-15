@@ -29,22 +29,24 @@ const Heading = styled.h2`
   }
 `
 
-const ProposalsContainer = styled.div`
+const ProposalsContainer = styled.div<{ layout?: 'horizontal' | 'vertical' }>`
   margin-bottom: 1.5rem;
   padding: 1.5rem 2.5rem;
   gap: 2rem;
   flex: 1;
   display: flex;
   overflow: scroll;
+  flex-wrap: ${({ layout }) => (layout === 'vertical' ? 'wrap' : 'initial')};
 `
 
 interface Props {
   stage: Stage
   proposals: Proposal[]
   searchQuery?: string
+  layout?: 'horizontal' | 'vertical'
 }
 
-export function StageWithProposals({ stage, proposals, searchQuery }: Props) {
+export function StageWithProposals({ stage, proposals, searchQuery, layout }: Props) {
   const proposalsToShow = proposals
     .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
     .filter((proposal) =>
@@ -60,13 +62,13 @@ export function StageWithProposals({ stage, proposals, searchQuery }: Props) {
           <Heading>{formatStageName(stage)}</Heading>
         </a>
       </Link>
-      <ProposalsContainer>
+      <ProposalsContainer layout={layout}>
         {proposalsToShow.map((proposal, i) => (
           <ProposalCard
             stage={stage}
             proposal={proposal}
-            index={i}
             key={proposal.title}
+            layout={layout}
           />
         ))}
       </ProposalsContainer>

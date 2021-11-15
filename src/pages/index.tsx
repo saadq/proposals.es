@@ -6,7 +6,7 @@ import { PageContainer, Col, SearchBar, Heading, Spinner } from '../components/c
 import { getProposalsForStages } from '../api/getProposalsForStages'
 import { ProposalsByStage, allStages } from '../types'
 import { useMediaQuery } from '../hooks/useMediaQuery'
-import { ProposalList } from '../components/proposals'
+import { ProposalList, LayoutPicker } from '../components/proposals'
 import { formatStageName } from '../utils/formatStageName'
 import { Expander } from '../components/common/Expander'
 
@@ -33,6 +33,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 export default function ProposalsPage({ proposals }: Props) {
   const [searchQuery, setSearchQuery] = useState('')
+  const [layout, setLayout] = useState<'horizontal' | 'vertical'>('horizontal')
   const isMobile = useMediaQuery('(max-width: 768px)')
   const isDesktop = !isMobile && isMobile != null
 
@@ -57,6 +58,7 @@ export default function ProposalsPage({ proposals }: Props) {
           placeholder="Search for proposals..."
           width="50rem"
         />
+        {isDesktop ? <LayoutPicker layout={layout} setLayout={setLayout} /> : null}
         {isMobile == null && isDesktop == null ? (
           <Spinner />
         ) : (
@@ -68,6 +70,7 @@ export default function ProposalsPage({ proposals }: Props) {
                   stage={stage}
                   proposals={proposals[stage]}
                   searchQuery={searchQuery}
+                  layout={layout}
                 />
               ) : isMobile ? (
                 <Expander
