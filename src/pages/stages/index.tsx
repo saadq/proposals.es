@@ -1,5 +1,5 @@
 import { GetStaticProps } from 'next'
-import { Heading, PageContainer } from '../../components/common'
+import { Breadcrumbs, Heading, PageContainer } from '../../components/common'
 import { StageList } from '../../components/stages/StageList'
 import { allStages } from '../../types'
 import { Disclaimer } from '../../components/common/Disclaimer'
@@ -10,9 +10,21 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
+const breadcrumbs = [
+  {
+    label: 'Home',
+    link: '/'
+  },
+  {
+    label: 'Stages',
+    link: '/stages'
+  }
+]
+
 export default function StagesPage() {
   return (
     <PageContainer width="80%" mobileWidth="95%" margin="0 auto">
+      <Breadcrumbs crumbs={breadcrumbs} />
       <Heading>Stages</Heading>
       <StageList stages={[...allStages].reverse()} />
       <Disclaimer>

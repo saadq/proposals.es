@@ -84,7 +84,7 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
   const breadcrumbs = [
     {
       link: '/',
-      label: 'Proposals'
+      label: 'Home'
     },
     {
       link: `/proposals/${encodeURIComponent(proposal.title)}`,
