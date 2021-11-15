@@ -1,4 +1,4 @@
-# proposals.es
+# [proposals.es](https://proposals.es)
 
 > A website for keeping up to date with ECMAScript proposals.
 
