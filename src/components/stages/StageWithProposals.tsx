@@ -35,7 +35,7 @@ const ProposalsContainer = styled.div`
   gap: 2rem;
   flex: 1;
   display: flex;
-  overflow: scroll;
+  overflow: auto;
 `
 
 interface Props {
