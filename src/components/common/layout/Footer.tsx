@@ -2,23 +2,30 @@ import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
   background: ${({ theme }) => theme.colors.footer};
-  width: 100%;
+  width: 95%;
   height: ${({ theme }) => theme.sizes.footerHeight};
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 0.8rem;
   padding: 3rem 0;
+  margin: 0 auto;
 `
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 ${({ theme }) => theme.sizes.gutter};
   width: 100%;
   height: 100%;
-  opacity: 0.5;
+
+  a {
+    color: ${({ theme }) => theme.colors.primary};
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -27,11 +34,21 @@ const Container = styled.div`
   }
 `
 
+const Links = styled.p`
+  display: flex;
+  gap: 0.5rem;
+`
+
 export function Footer() {
   return (
     <StyledFooter>
       <Container>
-        <p>© 2021 Saad Quadri</p>
+        <Links>
+          <span>
+            © 2021 <a href="https://saadq.com">Saad Quadri</a>
+          </span>{' '}
+          | <a href="https://github.com/saadq/proposals.es">GitHub</a>
+        </Links>
         <p>This site is not affiliated with TC39 or Ecma International.</p>
       </Container>
     </StyledFooter>
