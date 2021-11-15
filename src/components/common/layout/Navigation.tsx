@@ -98,6 +98,9 @@ export function Navigation({ theme, setTheme }: Props) {
       <Link href="/specifications" passHref>
         <NavLink isActive={route.startsWith('/specifications')}>Specifications</NavLink>
       </Link>
+      <NavLink isActive={false} href="https://github.com/saadq/proposals.es">
+        GitHub
+      </NavLink>
       <ThemeToggler onClick={toggleTheme}>
         {theme.name === 'dark' ? <FaSun size={24} /> : <FaMoon size={24} />}
       </ThemeToggler>

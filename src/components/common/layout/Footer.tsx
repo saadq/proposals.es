@@ -46,8 +46,7 @@ export function Footer() {
         <Links>
           <span>
             © 2021 <a href="https://saadq.com">Saad Quadri</a>
-          </span>{' '}
-          | <a href="https://github.com/saadq/proposals.es">GitHub</a>
+          </span>
         </Links>
         <p>This site is not affiliated with TC39 or Ecma International.</p>
       </Container>
