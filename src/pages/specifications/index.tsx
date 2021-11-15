@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next'
+import Head from 'next/head'
 import { Specification } from '../../components/specifications'
 import { Breadcrumbs, Col, PageContainer, Heading } from '../../components/common'
 import { getSpecifications } from '../../api/getSpecifications'
@@ -31,14 +32,24 @@ export default function SpecificationsPage({ specifications }: Props) {
   ]
 
   return (
-    <PageContainer width="80%" mobileWidth="95%" maxWidth="1000px" margin="0 auto">
-      <Breadcrumbs crumbs={breadcrumbs} />
-      <Heading margin="0 0 2rem 0">ECMAScript Specifications</Heading>
-      <Col gap="3rem">
-        {specifications.map((specification) => (
-          <Specification specification={specification} key={specification.name} />
-        ))}
-      </Col>
-    </PageContainer>
+    <>
+      <Head>
+        <title>ECMAScript Specifications</title>
+        <meta
+          name="description"
+          content="Specifications the ECMAScript 2021 general-purpose programming language."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <PageContainer width="80%" mobileWidth="95%" maxWidth="1000px" margin="0 auto">
+        <Breadcrumbs crumbs={breadcrumbs} />
+        <Heading margin="0 0 2rem 0">ECMAScript Specifications</Heading>
+        <Col gap="3rem">
+          {specifications.map((specification) => (
+            <Specification specification={specification} key={specification.name} />
+          ))}
+        </Col>
+      </PageContainer>
+    </>
   )
 }

@@ -50,10 +50,10 @@ export default function ChampionsPage({ champions }: Props) {
   return (
     <>
       <Head>
-        <title>EcmaScript Champions</title>
+        <title>ECMAScript Champions</title>
         <meta
           name="description"
-          content="These are all the champions/authors of EcmaScript Proposals"
+          content="These are all the champions/authors of ECMAScript Proposals"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import Head from 'next/head'
 import type { ParsedUrlQuery } from 'querystring'
 import {
   PageContainer,
@@ -87,32 +88,46 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
   ]
 
   return (
-    <PageContainer width="80%" mobileWidth="95%" maxWidth="1000px" margin="0 auto">
-      <Breadcrumbs crumbs={breadcrumbs} />
-      <Heading>{formatStageName(stageName)}</Heading>
-      <>
-        <SanitizedHtml html={stageDetailsHtml} margin="1rem 0" />
-        {stageName !== 'inactive' ? (
-          <Disclaimer margin="0 0 1rem 0">
-            These stage details are taken from{' '}
-            <a
-              href={`https://2ality.com/2015/11/tc39-process.html#${
-                blogPostAnchorsByStage[stageName as ActiveStage]
-              }`}
-            >
-              Dr. Axel Rauschmayer&apos;s blog post.
-            </a>{' '}
-            You can read more about the TC39 process in their official{' '}
-            <a href="https://tc39.es/process-document/">process document</a>.
-          </Disclaimer>
-        ) : null}
-      </>
-      <SearchBar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        placeholder={`Search for proposals... (${proposals.length} total)`}
-      />
-      <ProposalList proposals={proposals} badges={['stars']} searchQuery={searchQuery} />
-    </PageContainer>
+    <>
+      <Head>
+        <title>{formatStageName(stageName)}</title>
+        <meta
+          name="description"
+          content={`ECMAScript proposals for ${formatStageName(stageName)} `}
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <PageContainer width="80%" mobileWidth="95%" maxWidth="1000px" margin="0 auto">
+        <Breadcrumbs crumbs={breadcrumbs} />
+        <Heading>{formatStageName(stageName)}</Heading>
+        <>
+          <SanitizedHtml html={stageDetailsHtml} margin="1rem 0" />
+          {stageName !== 'inactive' ? (
+            <Disclaimer margin="0 0 1rem 0">
+              These stage details are taken from{' '}
+              <a
+                href={`https://2ality.com/2015/11/tc39-process.html#${
+                  blogPostAnchorsByStage[stageName as ActiveStage]
+                }`}
+              >
+                Dr. Axel Rauschmayer&apos;s blog post.
+              </a>{' '}
+              You can read more about the TC39 process in their official{' '}
+              <a href="https://tc39.es/process-document/">process document</a>.
+            </Disclaimer>
+          ) : null}
+        </>
+        <SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          placeholder={`Search for proposals... (${proposals.length} total)`}
+        />
+        <ProposalList
+          proposals={proposals}
+          badges={['stars']}
+          searchQuery={searchQuery}
+        />
+      </PageContainer>
+    </>
   )
 }

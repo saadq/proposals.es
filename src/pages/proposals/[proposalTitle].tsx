@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import Head from 'next/head'
 import type { ParsedUrlQuery } from 'querystring'
 import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 import { Proposal, allStages } from '../../types'
@@ -94,25 +95,32 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
   ]
 
   return (
-    <PageContainer width="95%" mobileWidth="95%" maxWidth="100%" margin="0 auto">
-      <Breadcrumbs crumbs={breadcrumbs} />
-      {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
-      <Flex layout={isDesktop ? 'row' : 'column'} gap="2rem">
-        {isMobile ? <DetailsExpander proposal={proposal} /> : null}
-        {readme ? (
-          <Readme readme={readme} baseUrl={getReadmeBaseUrl(proposal)} />
-        ) : proposal.link ? (
-          <iframe
-            src={proposal.link}
-            style={{
-              border: 'none',
-              width: '100%',
-              height: '100vh'
-            }}
-          />
-        ) : null}
-        {isDesktop ? <DetailsSidebar proposal={proposal} /> : null}
-      </Flex>
-    </PageContainer>
+    <>
+      <Head>
+        <title>{proposal.title} details</title>
+        <meta name="description" content={`Proposal details for ${proposal.title}`} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <PageContainer width="95%" mobileWidth="95%" maxWidth="100%" margin="0 auto">
+        <Breadcrumbs crumbs={breadcrumbs} />
+        {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
+        <Flex layout={isDesktop ? 'row' : 'column'} gap="2rem">
+          {isMobile ? <DetailsExpander proposal={proposal} /> : null}
+          {readme ? (
+            <Readme readme={readme} baseUrl={getReadmeBaseUrl(proposal)} />
+          ) : proposal.link ? (
+            <iframe
+              src={proposal.link}
+              style={{
+                border: 'none',
+                width: '100%',
+                height: '100vh'
+              }}
+            />
+          ) : null}
+          {isDesktop ? <DetailsSidebar proposal={proposal} /> : null}
+        </Flex>
+      </PageContainer>
+    </>
   )
 }
