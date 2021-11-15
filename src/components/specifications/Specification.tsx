@@ -5,7 +5,7 @@ import { Specification as SpecificationType } from '../../types'
 const Wrapper = styled.section`
   background: ${({ theme }) => theme.colors.card};
   box-shadow: ${({ theme }) => theme.shadows.card};
-  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border: 1px solid ${({ theme }) => theme.colors.card};
   border-radius: 4px;
 
   &:first-of-type {
@@ -15,12 +15,16 @@ const Wrapper = styled.section`
 
 const Header = styled.header`
   padding: 0 2rem;
-  background: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.headingBanner};
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+`
+
+const SpecHeading = styled(Heading)`
+  color: ${({ theme }) => theme.colors.headingBannerText};
 `
 
 const Alias = styled.span`
@@ -79,7 +83,7 @@ export function Specification({ specification }: Props) {
   return (
     <Wrapper key={specification.name}>
       <Header>
-        <Heading
+        <SpecHeading
           level={2}
           fontSize="1.5rem"
           fontWeight="800"
@@ -87,7 +91,7 @@ export function Specification({ specification }: Props) {
           color={theme.colors.black}
         >
           {specification.name} <Alias>({specification.alias})</Alias>
-        </Heading>
+        </SpecHeading>
         <Links>
           {specification.featureSetLink ? (
             <li>

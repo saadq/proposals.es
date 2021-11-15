@@ -3,6 +3,7 @@ import { baseTheme } from './base'
 
 const white = '#d0d0d0'
 const black = '#0F1013'
+const gray = '#1b1c20'
 const yellow = '#FD7B00'
 
 export const darkTheme: Theme = {
@@ -10,8 +11,8 @@ export const darkTheme: Theme = {
   ...baseTheme,
   colors: {
     ...baseTheme.colors,
-    white: '#d0d0d0',
-    gray: '#0F1013',
+    white,
+    gray,
     black,
     yellow,
     background: black,
@@ -19,6 +20,8 @@ export const darkTheme: Theme = {
     primary: yellow,
     header: '#0d0d10',
     heading: '#FFF',
+    headingBanner: gray,
+    headingBannerText: white,
     card: black,
     badge: '#000',
     badgeText: white,

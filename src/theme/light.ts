@@ -20,6 +20,8 @@ export const lightTheme: Theme = {
     primary: yellow,
     header: white,
     heading: black,
+    headingBanner: '#34373a',
+    headingBannerText: gray,
     card: white,
     badge: black,
     badgeText: white,

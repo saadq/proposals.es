@@ -18,6 +18,8 @@ declare module 'styled-components' {
       primary: string
       header: string
       heading: string
+      headingBanner: string
+      headingBannerText: string
       card: string
       badge: string
       badgeText: string
