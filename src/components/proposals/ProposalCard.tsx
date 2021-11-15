@@ -66,10 +66,10 @@ const Stars = styled.div`
 interface Props {
   stage: Stage
   proposal: Proposal
-  index: number
+  layout?: 'horizontal' | 'vertical'
 }
 
-export const ProposalCard: FC<Props> = memo(({ stage, proposal, index }) => {
+export const ProposalCard: FC<Props> = memo(({ stage, proposal, layout }) => {
   // TODO: Remove this when the multi-proposal edge case is handled.
   // Some proposals in the readmes can have multiple proposals in a single column (e.g. "Class Fields")
   if (proposal.titleHtml.includes('Class Fields')) {

@@ -28,6 +28,8 @@ export const lightTheme: Theme = {
     badgeText: white,
     searchBar: white,
     mobileMenu: white,
+    layoutIconHover: black,
+    layoutIconHoverText: white,
     footer: ''
   },
   shadows: {
@@ -38,7 +40,8 @@ export const lightTheme: Theme = {
   },
   borders: {
     card: '1px solid #e7f0f3',
-    searchBar: '1px solid #f4f6fb'
+    searchBar: '1px solid #f4f6fb',
+    layoutIcon: `1px solid ${black}`
   }
 }
 

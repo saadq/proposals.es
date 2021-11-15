@@ -27,6 +27,8 @@ declare module 'styled-components' {
       footer: string
       searchBar: string
       mobileMenu: string
+      layoutIconHover: string
+      layoutIconHoverText: string
     }
     shadows: {
       header: string
@@ -37,6 +39,7 @@ declare module 'styled-components' {
     borders: {
       card: string
       searchBar: string
+      layoutIcon: string
     }
   }
 

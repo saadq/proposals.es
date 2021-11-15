@@ -28,6 +28,8 @@ export const darkTheme: Theme = {
     badgeText: white,
     searchBar: '#1b1c20',
     mobileMenu: black,
+    layoutIconHover: white,
+    layoutIconHoverText: black,
     footer: black
   },
   shadows: {
@@ -38,7 +40,8 @@ export const darkTheme: Theme = {
   },
   borders: {
     card: '1px solid black',
-    searchBar: '1px solid black'
+    searchBar: '1px solid black',
+    layoutIcon: '1px solid white'
   }
 }
 
