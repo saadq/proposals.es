@@ -58,6 +58,10 @@ export const markdownDarkTheme = css`
     line-height: 1.5;
     word-wrap: break-word;
 
+    @media (max-width: 768px) {
+      padding: 1rem;
+    }
+
     pre,
     code {
       color: #adbac7;

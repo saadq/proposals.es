@@ -61,6 +61,10 @@ export const markdownLightTheme = css`
     box-shadow: rgb(231 240 243) 0px 8px 10px;
     font-family: Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
       sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+
+    @media (max-width: 768px) {
+      padding: 1rem;
+    }
   }
 
   .markdown-body .octicon {
