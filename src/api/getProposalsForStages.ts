@@ -1,7 +1,7 @@
 import { getRepoDetailsForAllProposals } from './getRepoDetailsForAllProposals'
 import { ProposalsByStage, Stage } from '../types'
 import { buildGetReadmesForStagesQuery } from './queries'
-import { parseProposalsFromReadmes } from '../utils/parseReadme'
+import { parseProposalsFromReadmes } from '../utils/parseProposalsFromReadme'
 import { getGithubProposalKey, isGithubProposal, request } from '../utils/github'
 import { GitHubResponse, ReadmeResponse, ReadmesByStage } from '../types/response'
 import { avoidRateLimit } from '../utils/avoidRateLimit'

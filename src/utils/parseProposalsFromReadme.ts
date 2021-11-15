@@ -19,6 +19,15 @@ const i18nStageKeyMap: Record<ActiveStage, ResponseKey> = {
   stage4: 'i18nStage4'
 }
 
+// Some of the proposals have different variations for the same champion name in the readmes.
+const championNameMap: Record<string, string> = {
+  'Frank Tang': 'Frank Yung-Fong Tang',
+  FrankYFTang: 'Frank Yung-Fong Tang',
+  'Lars Hansen': 'Lars T Hansen',
+  'Mark Miller': 'Mark S. Miller',
+  'Sebastian Markbage': 'Sebastian Markbåge'
+}
+
 export function parseProposalsFromReadmes(
   stages: readonly Stage[],
   allReadmesByStage: Partial<ReadmesByStage>
@@ -122,7 +131,10 @@ function getProposalTitle($: CheerioAPI, cell: string) {
 
 function getChampionNames($: CheerioAPI, cell: string) {
   const championNames = getTextListFromCell($, cell, parseChampionText)
-  return championNames
+  const normalizedChampionNames = championNames.map(
+    (championName) => championNameMap[championName] ?? championName
+  )
+  return normalizedChampionNames
 }
 
 function getTextListFromCell(
