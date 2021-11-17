@@ -12,15 +12,14 @@ const CardLink = styled.a`
   box-shadow: ${({ theme }) => theme.shadows.card};
   border: ${({ theme }) => theme.borders.card};
   border-radius: 4px;
-  padding: 2rem 3rem;
+  padding: 2rem 2rem;
   justify-content: center;
   align-items: center;
   display: flex;
-  flex: 1;
-  transition: all 0.4s ease;
-  flex-wrap: wrap;
-  position: relative;
   max-width: 25rem;
+  flex: 1 0 calc(25% - 4rem); /* 5 columns - padding */
+  transition: background-color 0.4s ease, color 0.4s ease;
+  position: relative;
 
   .feather-star {
     transition: fill 0.4s ease;
@@ -63,6 +62,18 @@ const Stars = styled.div`
   gap: 0.25rem;
 `
 
+const StarsCount = styled.span`
+  font-size: 0.8rem;
+`
+
+const ProposalTitle = styled.strong`
+  word-break: break-all;
+`
+
+// Handle weird edge case proposals that are just big blobs of text/placeholders/combinations of proposals
+// TODO: Split combined proposals (the Class Fields proposal card) into individual proposals
+const nonsenseProposals = ['Annex B', '(repo link TBD)', 'Class Fields (']
+
 interface Props {
   stage: Stage
   proposal: Proposal
@@ -70,9 +81,7 @@ interface Props {
 }
 
 export const ProposalCard: FC<Props> = memo(({ stage, proposal, layout }) => {
-  // TODO: Remove this when the multi-proposal edge case is handled.
-  // Some proposals in the readmes can have multiple proposals in a single column (e.g. "Class Fields")
-  if (proposal.titleHtml.includes('Class Fields')) {
+  if (nonsenseProposals.some((badProposal) => proposal.title.includes(badProposal))) {
     return null
   }
 
@@ -84,13 +93,13 @@ export const ProposalCard: FC<Props> = memo(({ stage, proposal, layout }) => {
     >
       <CardLink>
         <CardContent>
-          <strong>
+          <ProposalTitle>
             <SanitizedHtml html={proposal.titleHtml} />
-          </strong>
+          </ProposalTitle>
           {proposal.stars != null ? (
             <Stars>
               <StarIcon />
-              <span style={{ fontSize: '0.8rem' }}>{proposal.stars}</span>
+              <StarsCount>{proposal.stars}</StarsCount>
             </Stars>
           ) : null}
         </CardContent>
