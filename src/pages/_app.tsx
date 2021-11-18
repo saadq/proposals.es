@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styled, { Theme, ThemeProvider } from 'styled-components'
 import { Header, Footer, GlobalStyle } from '../components/common'
-import { darkTheme, lightTheme } from '../theme'
+import { usePreferredTheme } from '../hooks/usePreferredTheme'
 
 const Page = styled.div`
   min-height: 100vh;
@@ -16,40 +16,8 @@ const Main = styled.main`
   margin: 3rem 0;
 `
 
-const themeKey = '@proposals.es/theme'
-
 export default function App({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState(lightTheme)
-
-  useEffect(() => {
-    let preferredThemeName: Theme['name'] | void
-
-    try {
-      const item = window.localStorage.getItem(themeKey)
-      if (item) {
-        preferredThemeName = item as Theme['name']
-      }
-    } catch (error) {}
-
-    if (!preferredThemeName) {
-      if (
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches
-      ) {
-        preferredThemeName = 'dark'
-      } else {
-        preferredThemeName = 'light'
-      }
-    }
-
-    setTheme(preferredThemeName === 'dark' ? darkTheme : lightTheme)
-  }, [])
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(themeKey, theme.name)
-    } catch (error) {}
-  }, [theme])
+  const [theme, setTheme] = usePreferredTheme()
 
   return (
     <>
