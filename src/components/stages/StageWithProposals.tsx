@@ -114,7 +114,6 @@ export function StageWithProposals({ stage, proposals, searchQuery, layout }: Pr
   const isDesktop = !isMobile
 
   const handleExpandClick = useCallback(() => {
-    console.log('running')
     setIsExpanded((prevIsExpanded) => !prevIsExpanded)
   }, [])
 
