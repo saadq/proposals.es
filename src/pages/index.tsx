@@ -1,19 +1,10 @@
 import { Fragment, useState } from 'react'
 import { GetStaticProps } from 'next'
-import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { PageContainer, Col, SearchBar, Heading, Spinner } from '../components/common'
+import { PageContainer, Col, SearchBar } from '../components/common'
 import { getProposalsForStages } from '../api/getProposalsForStages'
 import { ProposalsByStage, allStages } from '../types'
-import { useMediaQuery } from '../hooks/useMediaQuery'
-import { ProposalList } from '../components/proposals'
-import { formatStageName } from '../utils/formatStageName'
-import { Expander } from '../components/common/Expander'
-
-const DynamicStageWithProposals = dynamic(async () => {
-  const { StageWithProposals } = await import('../components/stages/StageWithProposals')
-  return StageWithProposals
-})
+import { StageWithProposals } from '../components/proposals'
 
 interface Props {
   proposals: ProposalsByStage
@@ -27,66 +18,46 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { proposals },
-    revalidate: 1 * 60 * 60 // Revalidate every once per hour
+    revalidate: 1 * 60 * 60 * 24 // Revalidate once per day
   }
 }
 
 export default function ProposalsPage({ proposals }: Props) {
   const [searchQuery, setSearchQuery] = useState('')
-  const isMobile = useMediaQuery('(max-width: 768px)')
-  const isDesktop = !isMobile && isMobile != null
 
   return (
     <>
       <Head>
         <title>ECMAScript Proposals</title>
-        <meta name="description" content="ECMAScript proposals for all stages" />
+        <meta
+          name="description"
+          content="Browse ECMAScript/JavaScript proposals, champions, and more."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageContainer
         layout="column"
-        gap={isDesktop ? '3rem' : '1.25rem'}
+        gap="3rem"
         width="95%"
         mobileWidth="95%"
         margin="0 auto"
       >
-        {isMobile ? <Heading margin="0">Proposals</Heading> : null}
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           placeholder="Search for proposals..."
           width="50rem"
         />
-        {isMobile == null && isDesktop == null ? (
-          <Spinner />
-        ) : (
-          <Col gap={isDesktop ? '3rem' : '1rem'} margin="0">
-            {allStages.map((stage) =>
-              isDesktop ? (
-                <DynamicStageWithProposals
-                  key={stage}
-                  stage={stage}
-                  proposals={proposals[stage]}
-                  searchQuery={searchQuery}
-                />
-              ) : isMobile ? (
-                <Expander
-                  key={stage}
-                  sticky
-                  heading={formatStageName(stage)}
-                  searchQuery={searchQuery}
-                >
-                  <ProposalList
-                    cardWidth="85%"
-                    proposals={proposals[stage]}
-                    searchQuery={searchQuery}
-                    badges={['stars']}
-                  />
-                </Expander>
-              ) : null
-            )}
-          </Col>
-        )}
+        <Col gap="3rem" margin="0">
+          {allStages.map((stage) => (
+            <StageWithProposals
+              key={stage}
+              stage={stage}
+              proposals={proposals[stage]}
+              searchQuery={searchQuery}
+            />
+          ))}
+        </Col>
       </PageContainer>
     </>
   )

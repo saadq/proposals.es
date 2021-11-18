@@ -21,6 +21,10 @@ const CardLink = styled.a`
   transition: background-color 0.4s ease, color 0.4s ease;
   position: relative;
 
+  @media (max-width: 768px) {
+    max-width: initial;
+  }
+
   .feather-star {
     transition: fill 0.4s ease;
   }

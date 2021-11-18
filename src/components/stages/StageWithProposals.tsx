@@ -1,10 +1,11 @@
 import { useCallback, useState } from 'react'
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { ProposalCard } from '../proposals/ProposalCard'
 import { Proposal, Stage } from '../../types'
 import { formatStageName } from '../../utils/formatStageName'
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 const Card = styled.div<{ isExpanded: boolean }>`
   display: flex;
@@ -13,33 +14,51 @@ const Card = styled.div<{ isExpanded: boolean }>`
   box-shadow: ${({ theme }) => theme.shadows.card};
   border: ${({ theme }) => theme.borders.card};
   border-radius: 4px;
-  max-height: ${({ isExpanded }) => (isExpanded ? document.body.scrollHeight : '32rem')};
+  max-height: ${({ isExpanded }) => (isExpanded ? 'initial' : '32rem')};
 `
 
-const Heading = styled.h2`
-  align-self: flex-start;
-  color: ${({ theme }) => theme.colors.heading};
-  cursor: pointer;
-  text-decoration: underline;
-  font-size: 1.25rem;
-  font-weight: 800;
-  margin: 0;
-  padding: 1.5rem 2.5rem;
-  transition: color 0.2s ease-in-out;
-  scroll-margin: 1rem;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
+const StickyContainer = styled.div`
+  @media (max-width: 768px) {
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: ${({ theme }) => theme.colors.stageCard};
+    text-align: center;
+    gap: 3rem;
   }
 `
 
-const ProposalsContainer = styled.div<{ layout?: 'horizontal' | 'vertical' }>`
+const StageHeading = styled.h2`
+  padding: 1.5rem 2.5rem;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+`
+
+const HeadingLink = styled.a`
+  font-size: 0.85rem;
+  color: ${({ theme }) => theme.colors.foreground};
+`
+
+const ProposalsContainer = styled.div<{ isExpanded?: boolean }>`
   padding: 1.5rem 2.5rem;
   gap: 2rem;
   flex: 1;
   display: flex;
   overflow: hidden;
   flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    display: ${({ isExpanded }) => (isExpanded ? 'flex' : 'none')};
+    flex-direction: column;
+  }
 `
 
 const ExpanderButton = styled.button`
@@ -70,6 +89,18 @@ const ExpanderButton = styled.button`
   }
 `
 
+const DesktopExpanderButton = styled(ExpanderButton)`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`
+
+const MobileExpanderButton = styled(ExpanderButton)`
+  @media (min-width: 768px) {
+    display: none;
+  }
+`
+
 interface Props {
   stage: Stage
   proposals: Proposal[]
@@ -79,10 +110,19 @@ interface Props {
 
 export function StageWithProposals({ stage, proposals, searchQuery, layout }: Props) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const isMobile = !!useMediaQuery('(max-width: 768px)')
+  const isDesktop = !isMobile
 
   const handleExpandClick = useCallback(() => {
+    console.log('running')
     setIsExpanded((prevIsExpanded) => !prevIsExpanded)
   }, [])
+
+  const handleMobileClick = useCallback(() => {
+    if (isMobile) {
+      handleExpandClick()
+    }
+  }, [isMobile, handleExpandClick])
 
   const proposalsToShow = proposals
     .sort((a, b) => (b?.stars ?? 0) - (a?.stars ?? 0))
@@ -94,12 +134,19 @@ export function StageWithProposals({ stage, proposals, searchQuery, layout }: Pr
 
   return proposalsToShow.length === 0 ? null : (
     <Card isExpanded={isExpanded || !!searchQuery?.trim()}>
-      <Link href={`/stages/${stage}`} passHref>
-        <a>
-          <Heading>{formatStageName(stage)}</Heading>
-        </a>
-      </Link>
-      <ProposalsContainer layout={layout}>
+      <StickyContainer onClick={handleMobileClick}>
+        <Link href={`/stages/${stage}`} passHref>
+          <HeadingLink>
+            <StageHeading>{formatStageName(stage)}</StageHeading>
+          </HeadingLink>
+        </Link>
+        {isMobile ? (
+          <MobileExpanderButton>
+            {isExpanded ? <FaChevronUp size={18} /> : <FaChevronDown size={18} />}
+          </MobileExpanderButton>
+        ) : null}
+      </StickyContainer>
+      <ProposalsContainer isExpanded={isExpanded}>
         {proposalsToShow.map((proposal, i) => (
           <ProposalCard
             stage={stage}
@@ -109,10 +156,10 @@ export function StageWithProposals({ stage, proposals, searchQuery, layout }: Pr
           />
         ))}
       </ProposalsContainer>
-      {!searchQuery?.trim() ? (
-        <ExpanderButton onClick={handleExpandClick}>
+      {isDesktop && !searchQuery?.trim() ? (
+        <DesktopExpanderButton onClick={handleExpandClick}>
           {isExpanded ? <FaChevronUp size={24} /> : <FaChevronDown size={24} />}
-        </ExpanderButton>
+        </DesktopExpanderButton>
       ) : null}
     </Card>
   )

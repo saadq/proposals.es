@@ -97,7 +97,7 @@ export default function StagesPage({ stageName, stageDetailsHtml, proposals }: P
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageContainer width="80%" mobileWidth="95%" maxWidth="1000px" margin="0 auto">
+      <PageContainer width="80%" mobileWidth="85%" maxWidth="1000px" margin="0 auto">
         <Breadcrumbs crumbs={breadcrumbs} />
         <Heading>{formatStageName(stageName)}</Heading>
         <>

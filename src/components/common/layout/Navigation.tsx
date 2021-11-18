@@ -29,6 +29,7 @@ const NavLink = styled.a<{ isActive: boolean }>`
   text-decoration: none;
   font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
   font-size: 1.1rem;
+  padding: 5px;
 
   @media (max-width: 768px) {
     margin: 0;
