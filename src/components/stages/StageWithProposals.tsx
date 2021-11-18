@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import Link from 'next/link'
 import styled from 'styled-components'
@@ -6,6 +6,7 @@ import { ProposalCard } from '../proposals/ProposalCard'
 import { Proposal, Stage } from '../../types'
 import { formatStageName } from '../../utils/formatStageName'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { useExpandedStages } from '../../hooks/useExpandedStages'
 
 const Card = styled.div<{ isExpanded: boolean }>`
   display: flex;
@@ -56,8 +57,10 @@ const ProposalsContainer = styled.div<{ isExpanded?: boolean }>`
 
   @media (max-width: 768px) {
     padding: 1.5rem;
-    display: ${({ isExpanded }) => (isExpanded ? 'flex' : 'none')};
     flex-direction: column;
+    flex-wrap: nowrap;
+    max-height: ${({ isExpanded }) => (isExpanded ? 'initial' : '0')};
+    padding: ${({ isExpanded }) => (isExpanded ? '1.5rem' : '0')};
   }
 `
 
@@ -89,18 +92,6 @@ const ExpanderButton = styled.button`
   }
 `
 
-const DesktopExpanderButton = styled(ExpanderButton)`
-  @media (max-width: 768px) {
-    display: none;
-  }
-`
-
-const MobileExpanderButton = styled(ExpanderButton)`
-  @media (min-width: 768px) {
-    display: none;
-  }
-`
-
 interface Props {
   stage: Stage
   proposals: Proposal[]
@@ -109,13 +100,20 @@ interface Props {
 }
 
 export function StageWithProposals({ stage, proposals, searchQuery, layout }: Props) {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const { expandedStages, setExpandedStages } = useExpandedStages()
+  const isExpanded = expandedStages.includes(stage)
   const isMobile = !!useMediaQuery('(max-width: 768px)')
   const isDesktop = !isMobile
 
   const handleExpandClick = useCallback(() => {
-    setIsExpanded((prevIsExpanded) => !prevIsExpanded)
-  }, [])
+    setExpandedStages((prevExpandedStages) => {
+      if (prevExpandedStages.includes(stage)) {
+        return expandedStages.filter((currStage) => currStage !== stage)
+      } else {
+        return [...prevExpandedStages, stage]
+      }
+    })
+  }, [expandedStages, setExpandedStages, stage])
 
   const handleMobileClick = useCallback(() => {
     if (isMobile) {
@@ -140,9 +138,9 @@ export function StageWithProposals({ stage, proposals, searchQuery, layout }: Pr
           </HeadingLink>
         </Link>
         {isMobile ? (
-          <MobileExpanderButton>
+          <ExpanderButton>
             {isExpanded ? <FaChevronUp size={18} /> : <FaChevronDown size={18} />}
-          </MobileExpanderButton>
+          </ExpanderButton>
         ) : null}
       </StickyContainer>
       <ProposalsContainer isExpanded={isExpanded}>
@@ -156,9 +154,9 @@ export function StageWithProposals({ stage, proposals, searchQuery, layout }: Pr
         ))}
       </ProposalsContainer>
       {isDesktop && !searchQuery?.trim() ? (
-        <DesktopExpanderButton onClick={handleExpandClick}>
+        <ExpanderButton onClick={handleExpandClick}>
           {isExpanded ? <FaChevronUp size={24} /> : <FaChevronDown size={24} />}
-        </DesktopExpanderButton>
+        </ExpanderButton>
       ) : null}
     </Card>
   )

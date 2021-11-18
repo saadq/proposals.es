@@ -1,9 +1,11 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
-import styled, { Theme, ThemeProvider } from 'styled-components'
+import { useState } from 'react'
+import styled, { ThemeProvider } from 'styled-components'
 import { Header, Footer, GlobalStyle } from '../components/common'
+import { ExpandedStagesProvider } from '../hooks/useExpandedStages'
 import { usePreferredTheme } from '../hooks/usePreferredTheme'
+import { Stage } from '../types'
 
 const Page = styled.div`
   min-height: 100vh;
@@ -18,6 +20,7 @@ const Main = styled.main`
 
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = usePreferredTheme()
+  const [expandedStages, setExpandedStages] = useState<Stage[]>([])
 
   return (
     <>
@@ -36,7 +39,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <Page>
           <Header theme={theme} setTheme={setTheme} />
           <Main>
-            <Component {...pageProps} />
+            <ExpandedStagesProvider value={{ expandedStages, setExpandedStages }}>
+              <Component {...pageProps} />
+            </ExpandedStagesProvider>
           </Main>
           <Footer />
         </Page>
