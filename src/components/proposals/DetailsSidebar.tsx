@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import { SanitizedHtml, StarIcon, GitHubIcon, Heading } from '../common'
+import { SanitizedHtml, Heading } from '../common'
+import { StarIcon } from '../common/StarIcon'
+import { GitHubIcon } from '../common/GitHubIcon'
 import { formatStageName } from '../../utils/formatStageName'
 import { Proposal } from '../../types'
 import { getGitHubDetails, isGithubProposal } from '../../utils/github'
@@ -16,9 +18,9 @@ const Sidebar = styled.aside`
 const DetailCard = styled.div`
   display: flex;
   flex-direction: column;
-  background: ${({ theme }) => theme.colors.card};
-  border: ${({ theme }) => theme.borders.card};
-  box-shadow: ${({ theme }) => theme.shadows.card};
+  background: var(--card-color);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
   padding: 1rem;
 
   h2,
@@ -65,8 +67,8 @@ const ChampionName = styled.a`
   transition: 0.4s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.black};
+    background: var(--primary);
+    color: var(--black);
   }
 `
 

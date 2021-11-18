@@ -11,15 +11,16 @@ import { useExpandedStages } from '../../hooks/useExpandedStages'
 const Card = styled.div<{ isExpanded: boolean }>`
   display: flex;
   flex-direction: column;
-  background: ${({ theme }) => theme.colors.stageCard};
-  box-shadow: ${({ theme }) => theme.shadows.card};
-  border: ${({ theme }) => theme.borders.card};
+  background: var(--stage-card-color);
+  box-shadow: var(--card-shadow);
+  border: var(--card-border);
   border-radius: 4px;
   max-height: ${({ isExpanded }) => (isExpanded ? 'initial' : '32rem')};
 `
 
 const StickyContainer = styled.div`
   @media (max-width: 768px) {
+    z-index: 5;
     padding: 0 2rem;
     display: flex;
     justify-content: space-between;
@@ -27,7 +28,7 @@ const StickyContainer = styled.div`
     position: sticky;
     top: 0;
     z-index: 99;
-    background: ${({ theme }) => theme.colors.stageCard};
+    background: var(--stage-card-color);
     text-align: center;
     gap: 3rem;
   }
@@ -44,7 +45,7 @@ const StageHeading = styled.h2`
 
 const HeadingLink = styled.a`
   font-size: 0.85rem;
-  color: ${({ theme }) => theme.colors.foreground};
+  color: var(--foreground);
 `
 
 const ProposalsContainer = styled.div<{ isExpanded?: boolean }>`
@@ -69,9 +70,9 @@ const ExpanderButton = styled.button`
   justify-content: center;
   align-items: center;
   background: transparent;
-  border: 2px solid ${({ theme }) => theme.colors.foreground};
+  border: 2px solid var(--foreground);
   border-radius: 50px;
-  color: ${({ theme }) => theme.colors.foreground};
+  color: var(--foreground);
   align-self: center;
   margin: 2.5rem 0;
   padding: 0.5rem;
@@ -79,11 +80,11 @@ const ExpanderButton = styled.button`
   transition: 0.4s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary};
-    border-color: ${({ theme }) => theme.colors.black};
+    background: var(--primary);
+    border-color: var(--black);
 
     svg {
-      fill: ${({ theme }) => theme.colors.black};
+      fill: var(--black);
     }
   }
 

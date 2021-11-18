@@ -52,7 +52,7 @@ const HeadingText = styled.h1<Omit<Props, 'children'>>`
   font-size: ${({ fontSize, level }) => fontSize ?? getDefaultFontSize(level)};
   font-weight: ${({ fontWeight }) => fontWeight ?? 'bold'};
   margin: ${({ margin, level }) => margin ?? (level === 1 ? '1rem 0' : 'initial')};
-  color: ${({ theme, color }) => color ?? theme.colors.heading};
+  color: ${({ color }) => color ?? 'var(--heading-color)'};
 
   @media (max-width: 768px) {
     font-size: ${({ level }) => getMobileFontSize(level)};

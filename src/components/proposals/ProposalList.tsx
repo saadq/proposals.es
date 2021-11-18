@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
-import { StarIcon } from '../common/icons/StarIcon'
+import { IoRibbonSharp as AwardIcon } from 'react-icons/io5'
+import { FiEdit2 as PenIcon } from 'react-icons/fi'
+import { StarIcon } from '../common/StarIcon'
 import { ChampionedProposal } from '../../api/getAllChampions'
-import { AwardIcon, PenIcon } from '../common/'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 const Badges = styled.div`
@@ -18,7 +19,7 @@ const Badges = styled.div`
 
 const Badge = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 0.25rem;
 
   span {
@@ -28,8 +29,8 @@ const Badge = styled.div`
 
 const ChampionBadge = styled(Badge)`
   padding: 0.5rem 1rem;
-  background: ${({ theme }) => theme.colors.badge};
-  color: ${({ theme }) => theme.colors.badgeText};
+  background: var(--badge-color);
+  color: var(--badge-text-color);
   border-radius: 4px;
 
   @media (max-width: 768px) {
@@ -50,10 +51,10 @@ const ProposalLink = styled.a<{ cardWidth?: string }>`
   align-items: center;
   padding: 2rem;
   margin: 2rem auto;
-  background: ${({ theme }) => theme.colors.stageCard};
-  border: ${({ theme }) => theme.borders.card};
-  box-shadow: ${({ theme }) => theme.shadows.card};
-  color: ${({ theme }) => theme.colors.foreground};
+  background: var(--stage-card-color);
+  border: var(--card-color);
+  box-shadow: var(--card-shadow);
+  color: var(--foreground);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.4s ease;
@@ -67,16 +68,16 @@ const ProposalLink = styled.a<{ cardWidth?: string }>`
   }
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.black};
+    background: var(--primary);
+    color: var(--black);
 
     .feather-star {
-      fill: ${({ theme }) => theme.colors.black};
+      fill: var(--black);
     }
 
     ${ChampionBadge} {
-      background: ${({ theme }) => theme.colors.black};
-      color: ${({ theme }) => theme.colors.white};
+      background: var(--black);
+      color: var(--white);
     }
   }
 `

@@ -42,10 +42,10 @@ const StageLink = styled.a`
   text-decoration: none;
   padding: 0 1rem;
   text-align: center;
-  background: ${({ theme }) => theme.colors.stageCard};
-  color: ${({ theme }) => theme.colors.foreground};
-  box-shadow: ${({ theme }) => theme.shadows.card};
-  border: ${({ theme }) => theme.borders.card};
+  background: var(--stage-card-color);
+  color: var(--foreground);
+  box-shadow: var(--card-shadow);
+  border: var(--card-border);
   transition: 0.4s ease;
   border-radius: 4px;
   font-weight: bold;
@@ -56,7 +56,7 @@ const StageLink = styled.a`
   }
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary};
+    background: var(--primary);
     color: black;
   }
 `

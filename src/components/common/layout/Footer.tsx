@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
-  background: ${({ theme }) => theme.colors.footer};
   width: 95%;
-  height: ${({ theme }) => theme.sizes.footerHeight};
+  height: var(--footer-height);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,7 +19,7 @@ const Container = styled.div`
   height: 100%;
 
   a {
-    color: ${({ theme }) => theme.colors.primary};
+    color: var(--primary);
 
     &:hover {
       opacity: 1;

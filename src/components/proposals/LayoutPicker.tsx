@@ -16,28 +16,25 @@ const LayoutIcon = styled.div<{ isActive: boolean }>`
   cursor: pointer;
   justify-content: center;
   align-items: center;
-  border: ${({ theme }) => theme.borders.layoutIcon};
-  background: ${({ theme }) => theme.colors.background};
-  color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.primary : theme.colors.foreground};
+  border: var(--layout-icon-border);
+  background: var(--background);
+  color: ${({ isActive }) => (isActive ? 'var(--primary)' : 'var(--foreground')};
 
   &:hover {
-    color: ${({ theme }) => theme.colors.primary};
+    color: var(--primary);
 
     span {
-      color: ${({ theme }) => theme.colors.primary};
+      color: var(--primary);
     }
   }
 
   span {
-    color: ${({ isActive, theme }) =>
-      isActive ? theme.colors.primary : theme.colors.foreground};
+    color: ${({ isActive }) => (isActive ? 'var(--primary)' : 'var(--foreground)')};
     text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
   }
 
   svg {
-    fill: ${({ isActive, theme }) =>
-      isActive ? theme.colors.primary : theme.colors.foreground};
+    fill: ${({ isActive }) => (isActive ? 'var(--primary)' : 'var(--foreground)')};
   }
 
   &:first-child {

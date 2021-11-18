@@ -1,7 +1,0 @@
-export { Logo } from './Logo'
-export { SearchIcon } from './SearchIcon'
-export { ClearSearchIcon } from './ClearSearchIcon'
-export { GitHubIcon } from './GitHubIcon'
-export { PenIcon } from './PenIcon'
-export { AwardIcon } from './AwardIcon'
-export { StarIcon } from './StarIcon'

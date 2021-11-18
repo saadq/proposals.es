@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, KeyboardEventHandler, memo, useCallback, useRef } from 'react'
 import styled from 'styled-components'
-import { SearchIcon, ClearSearchIcon } from './icons'
+import { FiSearch as SearchIcon, FiX as ClearSearchIcon } from 'react-icons/fi'
 import { debounce } from '../../utils/debounce'
 
 const Container = styled.div<{ width: string }>`
@@ -11,10 +11,10 @@ const Container = styled.div<{ width: string }>`
 `
 
 const SearchInput = styled.input`
-  color: ${({ theme }) => theme.colors.foreground};
-  background: ${({ theme }) => theme.colors.searchBar};
-  border: ${({ theme }) => theme.borders.searchBar};
-  box-shadow: ${({ theme }) => theme.shadows.searchBar};
+  color: var(--foreground);
+  background: var(--search-bar-color);
+  border: var(--search-bar-border);
+  box-shadow: var(--search-bar-shadow);
   padding: 1rem 4rem;
   border-radius: 4px;
   width: 100%;
@@ -28,7 +28,7 @@ const SearchInput = styled.input`
 
   &:focus {
     outline: none;
-    box-shadow: ${({ theme }) => theme.shadows.searchBarFocused};
+    box-shadow: var(--search-bar-focused-shadow);
   }
 `
 

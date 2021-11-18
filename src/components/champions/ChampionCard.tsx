@@ -7,22 +7,22 @@ const ChampionLink = styled.a`
   align-items: center;
   padding: 2rem;
   margin: 2rem auto;
-  background: ${({ theme }) => theme.colors.stageCard};
-  box-shadow: ${({ theme }) => theme.shadows.card};
-  border: ${({ theme }) => theme.borders.card};
+  background: var(--stage-card-color);
+  box-shadow: var(--card-shadow);
+  border: var(--card-border);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.4s ease;
   font-weight: 800;
-  color: ${({ theme }) => theme.colors.foreground};
+  color: var(--foreground);
   text-decoration: none;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.black};
+    background: var(--primary);
+    color: var(--black);
 
     .feather-star {
-      fill: ${({ theme }) => theme.colors.foreground};
+      fill: var(--foreground);
     }
   }
 `

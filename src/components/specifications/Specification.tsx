@@ -1,11 +1,11 @@
-import styled, { useTheme } from 'styled-components'
+import styled from 'styled-components'
 import { Heading } from '../common'
 import { Specification as SpecificationType } from '../../types'
 
 const Wrapper = styled.section`
-  background: ${({ theme }) => theme.colors.card};
-  box-shadow: ${({ theme }) => theme.shadows.card};
-  border: 1px solid ${({ theme }) => theme.colors.card};
+  background: var(--card-color);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--card-border);
   border-radius: 4px;
 
   &:first-of-type {
@@ -15,7 +15,7 @@ const Wrapper = styled.section`
 
 const Header = styled.header`
   padding: 0 2rem;
-  background: ${({ theme }) => theme.colors.headingBanner};
+  background: var(--heading-banner-color);
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   display: flex;
@@ -24,7 +24,7 @@ const Header = styled.header`
 `
 
 const SpecHeading = styled(Heading)`
-  color: ${({ theme }) => theme.colors.headingBannerText};
+  color: var(--white);
 `
 
 const Alias = styled.span`
@@ -45,8 +45,8 @@ const Links = styled.ul`
     padding: 0.25rem 1rem;
     border-radius: 4px;
     text-decoration: none;
-    background: ${({ theme }) => theme.colors.badge};
-    color: ${({ theme }) => theme.colors.badgeText};
+    background: var(--badge-color);
+    color: var(--badge-text-color);
     transition: 0.4s ease;
 
     @media (max-width: 768px) {
@@ -54,8 +54,8 @@ const Links = styled.ul`
     }
 
     &:hover {
-      color: ${({ theme }) => theme.colors.black};
-      background: ${({ theme }) => theme.colors.white};
+      color: var(--black);
+      background: var(--white);
     }
   }
 `
@@ -64,7 +64,7 @@ const Summary = styled.div`
   padding: 1.5rem;
 
   line-height: 2;
-  color: ${({ theme }) => theme.colors.foreground};
+  color: var(--foreground);
   font-family: Varela Round;
   font-weight: normal;
 
@@ -78,18 +78,10 @@ interface Props {
 }
 
 export function Specification({ specification }: Props) {
-  const theme = useTheme()
-
   return (
     <Wrapper key={specification.name}>
       <Header>
-        <SpecHeading
-          level={2}
-          fontSize="1.5rem"
-          fontWeight="800"
-          margin="1rem 0"
-          color={theme.colors.black}
-        >
+        <SpecHeading level={2} fontSize="1.5rem" fontWeight="800" margin="1rem 0">
           {specification.name} <Alias>({specification.alias})</Alias>
         </SpecHeading>
         <Links>

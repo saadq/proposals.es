@@ -1,17 +1,17 @@
 import Link from 'next/link'
-import styled, { Theme } from 'styled-components'
+import styled from 'styled-components'
 import { GoThreeBars as MenuIcon, GoX as CloseIcon } from 'react-icons/go'
-import { Logo } from '../icons/Logo'
+import { Logo } from '../Logo'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Navigation } from './Navigation'
 import { useRouter } from 'next/router'
 
 const StyledHeader = styled.header`
-  background: ${({ theme }) => theme.colors.header};
+  background: var(--header-color);
   width: 100%;
-  height: ${({ theme }) => theme.sizes.headerHeight};
-  box-shadow: ${({ theme }) => theme.shadows.header};
+  height: var(--header-height);
+  box-shadow: var(--header-shadow);
 
   @media (max-width: 768px) {
     padding: 0 1rem;
@@ -22,7 +22,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 ${({ theme }) => theme.sizes.gutter};
+  margin: 0 var(--gutter-width);
   height: 100%;
 `
 
@@ -34,12 +34,7 @@ const LogoLink = styled.a`
 
 const scrollDisabledClass = 'scroll-disabled'
 
-interface Props {
-  theme: Theme
-  setTheme: Dispatch<SetStateAction<Theme>>
-}
-
-export function Header({ theme, setTheme }: Props) {
+export function Header() {
   const { route } = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const isMobile = useMediaQuery('(max-width: 768px)')
@@ -74,9 +69,7 @@ export function Header({ theme, setTheme }: Props) {
             {isMenuOpen ? <CloseIcon size="1.75rem" /> : <MenuIcon size="1.75rem" />}
           </div>
         )}
-        {(isMobile === false || (isMobile && isMenuOpen)) && (
-          <Navigation theme={theme} setTheme={setTheme} />
-        )}
+        {(isMobile === false || (isMobile && isMenuOpen)) && <Navigation />}
       </Container>
     </StyledHeader>
   )

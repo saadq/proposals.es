@@ -27,7 +27,7 @@ const BreadcrumbList = styled.ul`
   }
 
   a {
-    color: ${({ theme }) => theme.colors.primary};
+    color: var(--primary);
     text-decoration: none;
 
     &:hover {

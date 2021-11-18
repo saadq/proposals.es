@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import styled, { Theme } from 'styled-components'
-import { Dispatch, SetStateAction, useCallback } from 'react'
+import styled from 'styled-components'
 import { FaSun, FaMoon } from 'react-icons/fa'
-import { darkTheme, lightTheme } from '../../../theme'
+import { useTheme } from '../../../hooks/useTheme'
 
 const Nav = styled.nav`
   display: flex;
@@ -11,20 +10,19 @@ const Nav = styled.nav`
 
   @media (max-width: 768px) {
     position: fixed;
-    top: ${({ theme }) => theme.sizes.headerHeight};
+    top: var(--header-height);
     left: 0;
     display: flex;
     flex-direction: column;
-    background: ${({ theme }) => theme.colors.mobileMenu};
-    z-index: 999;
+    background: var(--mobile-menu-color);
+    z-index: 10;
     width: 100vw;
     min-height: 100vh;
   }
 `
 
 const NavLink = styled.a<{ isActive: boolean }>`
-  color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.primary : theme.colors.foreground};
+  color: ${({ isActive }) => (isActive ? 'var(--primary)' : 'var(--foreground)')};
   margin: 0 1rem;
   text-decoration: none;
   font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
@@ -37,7 +35,7 @@ const NavLink = styled.a<{ isActive: boolean }>`
     border-bottom: 1px solid black;
     width: 100%;
     font-size: 1.5rem;
-    background: ${({ theme }) => theme.colors.background};
+    background: var(--background);
   }
 
   &:hover {
@@ -54,13 +52,13 @@ const ThemeToggler = styled.button`
   padding: 0.7rem;
 
   svg {
-    fill: ${({ theme }) => theme.colors.foreground};
+    fill: var(--foreground);
   }
 
   &:hover {
-    background: ${({ theme }) => theme.colors.background};
+    background: var(--background);
     svg {
-      fill: ${({ theme }) => theme.colors.foreground};
+      fill: var(--foreground);
     }
   }
 
@@ -70,18 +68,9 @@ const ThemeToggler = styled.button`
   }
 `
 
-interface Props {
-  theme: Theme
-  setTheme: Dispatch<SetStateAction<Theme>>
-}
-
-export function Navigation({ theme, setTheme }: Props) {
+export function Navigation() {
+  const [theme, toggleTheme] = useTheme()
   const { route } = useRouter()
-
-  const toggleTheme = useCallback(() => {
-    const newTheme = theme.name === 'dark' ? lightTheme : darkTheme
-    setTheme(newTheme)
-  }, [theme.name, setTheme])
 
   return (
     <Nav>
@@ -103,7 +92,7 @@ export function Navigation({ theme, setTheme }: Props) {
         GitHub
       </NavLink>
       <ThemeToggler onClick={toggleTheme}>
-        {theme.name === 'dark' ? <FaSun size={24} /> : <FaMoon size={24} />}
+        {theme === 'dark' ? <FaSun size={24} /> : <FaMoon size={24} />}
       </ThemeToggler>
     </Nav>
   )

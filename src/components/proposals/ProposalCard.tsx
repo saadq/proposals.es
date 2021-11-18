@@ -2,15 +2,15 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal, Stage } from '../../types'
-import { StarIcon } from '../common/icons/StarIcon'
+import { StarIcon } from '../common/StarIcon'
 import { FC, memo } from 'react'
 
 const CardLink = styled.a`
-  color: ${({ theme }) => theme.colors.foreground};
+  color: var(--foreground);
   text-decoration: none;
-  background: ${({ theme }) => theme.colors.card};
-  box-shadow: ${({ theme }) => theme.shadows.card};
-  border: ${({ theme }) => theme.borders.card};
+  background: var(--card-color);
+  box-shadow: var(--card-shadow);
+  border: var(--card-border);
   border-radius: 4px;
   padding: 2rem 2rem;
   justify-content: center;
@@ -25,17 +25,17 @@ const CardLink = styled.a`
     max-width: initial;
   }
 
-  .feather-star {
+  svg {
     transition: fill 0.4s ease;
   }
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary};
-    border: 1px solid ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.black};
+    background: var(--primary);
+    border: 1px solid var(--primary);
+    color: var(--black);
 
-    .feather-star {
-      fill: ${({ theme }) => theme.colors.black};
+    svg {
+      fill: var(--black);
     }
   }
 `
@@ -64,6 +64,10 @@ const Stars = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
+
+  svg {
+    fill: var(--primary);
+  }
 `
 
 const StarsCount = styled.span`

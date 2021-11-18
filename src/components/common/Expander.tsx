@@ -6,8 +6,7 @@ const HeadingText = styled.h1<{ isExpanded?: boolean; sticky?: boolean }>`
   position: ${({ sticky }) => (sticky ? 'sticky' : 'initial')};
   top: ${({ sticky }) => (sticky ? '10px' : 'initial')};
   font-size: 1.5rem;
-  color: ${({ isExpanded, theme }) =>
-    isExpanded ? theme.colors.primary : theme.colors.foreground};
+  color: ${({ isExpanded }) => (isExpanded ? 'var(--primary)' : 'var(--foreground)')};
   text-decoration: ${({ isExpanded }) => (isExpanded ? 'underline' : 'none')};
   font-weight: 800;
   margin: 0;
@@ -15,9 +14,9 @@ const HeadingText = styled.h1<{ isExpanded?: boolean; sticky?: boolean }>`
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
-  background: ${({ theme }) => theme.colors.stageCard};
-  border: ${({ theme }) => theme.borders.card};
-  box-shadow: ${({ theme }) => theme.shadows.card};
+  background: var(--stage-card-color);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
   border-radius: 4px;
 
   ${({ sticky }) =>
