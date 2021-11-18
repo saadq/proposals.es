@@ -1,6 +1,8 @@
 module.exports = {
   reactStrictMode: true,
+  swcMinify: true,
   experimental: {
-    scrollRestoration: true
+    scrollRestoration: true,
+    styledComponents: true
   }
 }
