@@ -17,6 +17,16 @@ module.exports = {
             }
           ],
           destination: '/wasm/:path*'
+        },
+        {
+          source: '/:path*',
+          has: [
+            {
+              type: 'host',
+              value: 'www.wasm.proposals.es'
+            }
+          ],
+          destination: '/wasm/:path*'
         }
       ]
     }
