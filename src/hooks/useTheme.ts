@@ -12,7 +12,9 @@ export function useTheme(): ThemeHook {
   }, [])
 
   useEffect(() => {
-    document.body.className = theme
+    const oldTheme = theme === 'light' ? 'dark' : 'light'
+    document.body.classList.remove(oldTheme)
+    document.body.classList.add(theme)
     try {
       localStorage.setItem('theme', theme)
     } catch (err) {}
