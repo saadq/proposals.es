@@ -7,7 +7,7 @@ const ChampionLink = styled.a`
   align-items: center;
   padding: 2rem;
   margin: 2rem auto;
-  background: var(--stage-card-color);
+  background: var(--card-color);
   box-shadow: var(--card-shadow);
   border: var(--card-border);
   border-radius: 4px;

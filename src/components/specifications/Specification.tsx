@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Heading } from '../common'
 import { Specification as SpecificationType } from '../../types'
 
 const Wrapper = styled.section`
@@ -23,8 +22,8 @@ const Header = styled.header`
   align-items: center;
 `
 
-const SpecHeading = styled(Heading)`
-  color: var(--white);
+const SpecHeading = styled.h2`
+  color: var(--heading-banner-text-color);
 `
 
 const Alias = styled.span`

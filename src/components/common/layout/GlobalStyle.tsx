@@ -26,6 +26,7 @@ const lightThemeVars = css`
   --mobile-menu-color: var(--white);
   --layout-icon-hover-color: var(--black);
   --layout-icon-hover-text-color: var(--white);
+  --sidebar-card-color: var(--white);
 
   --header-shadow: 0px 4px 24px rgba(55, 81, 104, 0.1);
   --card-shadow: 0px 8px 10px #e7f0f3;
@@ -43,14 +44,15 @@ const darkThemeVars = css`
   --white: #d0d0d0;
   --black: #0f1013;
   --gray: #1b1c20;
+  --dark-gray: #15161a;
   --background: var(--black);
   --foreground: var(--white);
   --header-color: #0d0d10;
   --heading-color: #fff;
-  --heading-banner-color: var(--gray);
+  --heading-banner-color: #272930;
   --heading-banner-text-color: var(--white);
-  --card-color: var(--black);
-  --stage-card-color: var(--gray);
+  --card-color: var(--dark-gray);
+  --stage-card-color: var(--black);
   --badge-color: #000;
   --badge-text-color: var(--white);
   --search-bar-color: #1b1c20;

@@ -42,7 +42,7 @@ const StageLink = styled.a`
   text-decoration: none;
   padding: 0 1rem;
   text-align: center;
-  background: var(--stage-card-color);
+  background: var(--card-color);
   color: var(--foreground);
   box-shadow: var(--card-shadow);
   border: var(--card-border);
