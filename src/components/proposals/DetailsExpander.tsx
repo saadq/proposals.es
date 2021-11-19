@@ -97,7 +97,7 @@ export function DetailsExpander({ proposal }: Props) {
               <span>{proposal.stars}</span>
             </InfoRow>
             <InfoRow>
-              <GitHubIcon size={70} />
+              <GitHubIcon />
               <Link href={proposal.link as string} passHref>
                 <a>
                   {githubDetails?.owner}/{githubDetails?.repo}
