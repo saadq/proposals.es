@@ -49,7 +49,7 @@ const darkThemeVars = css`
   --foreground: var(--white);
   --header-color: #0d0d10;
   --heading-color: #fff;
-  --heading-banner-color: #272930;
+  --heading-banner-color: #1d1f24;
   --heading-banner-text-color: var(--white);
   --card-color: var(--dark-gray);
   --stage-card-color: var(--black);

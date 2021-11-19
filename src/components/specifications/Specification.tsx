@@ -80,7 +80,7 @@ export function Specification({ specification }: Props) {
   return (
     <Wrapper key={specification.name}>
       <Header>
-        <SpecHeading level={2} fontSize="1.5rem" fontWeight="800" margin="1rem 0">
+        <SpecHeading>
           {specification.name} <Alias>({specification.alias})</Alias>
         </SpecHeading>
         <Links>
