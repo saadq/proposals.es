@@ -101,7 +101,7 @@ interface Props {
 
 export function StageWithProposals({ stage, proposals, searchQuery, layout }: Props) {
   const { expandedStages, setExpandedStages } = useExpandedStages()
-  const isExpanded = expandedStages.includes(stage)
+  const isExpanded = expandedStages.includes(stage) || !!searchQuery?.trim()
   const isMobile = !!useMediaQuery('(max-width: 768px)')
   const isDesktop = !isMobile
 
