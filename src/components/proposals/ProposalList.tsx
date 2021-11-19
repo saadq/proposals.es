@@ -51,7 +51,7 @@ const ProposalLink = styled.a<{ cardWidth?: string }>`
   align-items: center;
   padding: 2rem;
   margin: 2rem auto;
-  background: var(--stage-card-color);
+  background: var(--card-color);
   border: var(--card-color);
   box-shadow: var(--card-shadow);
   color: var(--foreground);

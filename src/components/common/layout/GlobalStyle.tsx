@@ -118,7 +118,7 @@ export const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
-  *:focus, a:focus {
+  a:focus, button:focus {
     outline: none;
     box-shadow: 0 0 0 3px var(--primary);
   }
