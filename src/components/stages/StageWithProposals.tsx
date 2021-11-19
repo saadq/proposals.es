@@ -27,7 +27,7 @@ const StickyContainer = styled.div`
     align-items: center;
     position: sticky;
     top: 0;
-    z-index: 99;
+    z-index: 5;
     background: var(--stage-card-color);
     text-align: center;
     gap: 3rem;
