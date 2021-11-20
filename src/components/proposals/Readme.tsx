@@ -5,10 +5,15 @@ import { SanitizedHtml } from '../common'
 import { useMount } from '../../hooks/useMount'
 
 const Article = styled.article`
+  display: flex;
   flex: 1;
   max-width: 80%;
   box-shadow: var(--card-shadow);
   border: var(--card-border);
+
+  .markdown-body {
+    flex: 1;
+  }
 
   @media (max-width: 768px) {
     max-width: 100%;
