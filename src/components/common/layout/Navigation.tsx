@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import styled from 'styled-components'
 import { FaSun, FaMoon } from 'react-icons/fa'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import styled from 'styled-components'
 import { useTheme } from '../../../hooks/useTheme'
 
 const Nav = styled.nav`

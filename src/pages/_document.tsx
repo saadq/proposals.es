@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-page-custom-font */
+
 import NextDocument, {
   Html,
   Head,

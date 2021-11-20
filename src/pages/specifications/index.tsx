@@ -1,8 +1,8 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import { Specification } from '../../components/specifications'
-import { Breadcrumbs, Col, PageContainer, Heading } from '../../components/common'
 import { getSpecifications } from '../../api/getSpecifications'
+import { Breadcrumbs, Col, PageContainer, Heading } from '../../components/common'
+import { Specification } from '../../components/specifications'
 import { Specification as SpecificationType } from '../../types'
 
 interface Props {

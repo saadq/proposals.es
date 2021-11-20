@@ -2,11 +2,11 @@ import { useCallback } from 'react'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { ProposalCard } from '../proposals/ProposalCard'
+import { useExpandedStages } from '../../hooks/useExpandedStages'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { Proposal, Stage } from '../../types'
 import { formatStageName } from '../../utils/formatStageName'
-import { useMediaQuery } from '../../hooks/useMediaQuery'
-import { useExpandedStages } from '../../hooks/useExpandedStages'
+import { ProposalCard } from '../proposals/ProposalCard'
 
 const Card = styled.div<{ isExpanded: boolean }>`
   display: flex;

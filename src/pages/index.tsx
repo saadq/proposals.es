@@ -1,10 +1,10 @@
 import { Fragment, useState } from 'react'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import { PageContainer, Col, SearchBar } from '../components/common'
 import { getProposalsForStages } from '../api/getProposalsForStages'
-import { ProposalsByStage, allStages } from '../types'
+import { PageContainer, Col, SearchBar } from '../components/common'
 import { StageWithProposals } from '../components/proposals'
+import { ProposalsByStage, allStages } from '../types'
 
 interface Props {
   proposals: ProposalsByStage

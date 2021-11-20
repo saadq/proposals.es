@@ -1,11 +1,11 @@
+import { FiEdit2 as PenIcon } from 'react-icons/fi'
+import { IoRibbonSharp as AwardIcon } from 'react-icons/io5'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { SanitizedHtml } from '../common/SanitizedHtml'
-import { IoRibbonSharp as AwardIcon } from 'react-icons/io5'
-import { FiEdit2 as PenIcon } from 'react-icons/fi'
-import { StarIcon } from '../common/StarIcon'
 import { ChampionedProposal } from '../../api/getAllChampions'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { SanitizedHtml } from '../common/SanitizedHtml'
+import { StarIcon } from '../common/StarIcon'
 
 const Badges = styled.div`
   display: flex;

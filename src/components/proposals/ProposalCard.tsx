@@ -1,9 +1,9 @@
+import { FC, memo } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { SanitizedHtml } from '../common/SanitizedHtml'
 import { Proposal, Stage } from '../../types'
+import { SanitizedHtml } from '../common/SanitizedHtml'
 import { StarIcon } from '../common/StarIcon'
-import { FC, memo } from 'react'
 
 const CardLink = styled.a`
   color: var(--foreground);

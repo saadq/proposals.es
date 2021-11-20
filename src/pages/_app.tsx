@@ -1,5 +1,5 @@
-import type { AppProps } from 'next/app'
 import { useState } from 'react'
+import type { AppProps } from 'next/app'
 import styled from 'styled-components'
 import { Header, Footer, GlobalStyle } from '../components/common'
 import { ExpandedStagesProvider } from '../hooks/useExpandedStages'

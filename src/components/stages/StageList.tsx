@@ -1,13 +1,13 @@
+import { GiScarecrow, GiTeamUpgrade } from 'react-icons/gi'
+import { HiOutlineLightBulb } from 'react-icons/hi'
+import { RiDraftLine, RiCheckLine, RiCloseLine } from 'react-icons/ri'
+import type { IconType } from 'react-icons'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { Stage } from '../../types'
 import { formatStageName } from '../../utils/formatStageName'
 import { Heading } from '../common'
-import type { IconType } from 'react-icons'
-import { GiScarecrow, GiTeamUpgrade } from 'react-icons/gi'
-import { RiDraftLine, RiCheckLine, RiCloseLine } from 'react-icons/ri'
-import { HiOutlineLightBulb } from 'react-icons/hi'
-import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 export const List = styled.ul`
   display: flex;

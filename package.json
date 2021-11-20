@@ -10,10 +10,11 @@
     "build": "cross-env IS_BUILD=true next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "npm run lint -- --fix",
     "format": "prettier \"src/**/*.{ts,tsx}\" --write",
-    "typecheck": "tsc",
-    "pretest": "npm run format",
-    "test": "npm run lint && npm run typecheck"
+    "format:check": "npm run format -- --check",
+    "typescript": "tsc",
+    "test": "npm run format:check && npm run lint:fix && npm run typescript"
   },
   "dependencies": {
     "@octokit/graphql": "^4.6.4",
@@ -39,6 +40,7 @@
     "cross-env": "^7.0.3",
     "eslint": "7.31.0",
     "eslint-config-next": "11.0.1",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-react": "^7.27.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^2.3.2",

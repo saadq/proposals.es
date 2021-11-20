@@ -2,11 +2,11 @@ import { Fragment } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import type { ParsedUrlQuery } from 'querystring'
-import { Champion } from '../../types'
 import { getAllChampions } from '../../api/getAllChampions'
-import { ProposalList } from '../../components/proposals'
 import { Breadcrumbs, PageContainer } from '../../components/common'
 import { Heading } from '../../components/common/Heading'
+import { ProposalList } from '../../components/proposals'
+import { Champion } from '../../types'
 
 interface Props {
   champion: Champion

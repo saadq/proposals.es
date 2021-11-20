@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, KeyboardEventHandler, memo, useCallback, useRef } from 'react'
-import styled from 'styled-components'
 import { FiSearch as SearchIcon, FiX as ClearSearchIcon } from 'react-icons/fi'
+import styled from 'styled-components'
 import { debounce } from '../../utils/debounce'
 
 const Container = styled.div<{ width: string }>`

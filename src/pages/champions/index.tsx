@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import { PageContainer, Breadcrumbs, SearchBar, Heading } from '../../components/common'
 import { getAllChampions } from '../../api/getAllChampions'
 import { ChampionList } from '../../components/champions'
+import { PageContainer, Breadcrumbs, SearchBar, Heading } from '../../components/common'
 import { SimplifiedChampion } from '../../types'
 
 interface Props {

@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import { SanitizedHtml, Heading } from '../common'
-import { StarIcon } from '../common/StarIcon'
-import { GitHubIcon } from '../common/GitHubIcon'
-import { formatStageName } from '../../utils/formatStageName'
 import { Proposal } from '../../types'
+import { formatStageName } from '../../utils/formatStageName'
 import { getGitHubDetails, isGithubProposal } from '../../utils/github'
+import { SanitizedHtml, Heading } from '../common'
 import { Expander } from '../common/Expander'
+import { GitHubIcon } from '../common/GitHubIcon'
+import { StarIcon } from '../common/StarIcon'
 
 const DetailCard = styled.div`
   display: flex;

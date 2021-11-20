@@ -1,5 +1,5 @@
-import { ChampionCard } from '.'
 import { SimplifiedChampion } from '../../types'
+import { ChampionCard } from '.'
 
 interface Props {
   champions: SimplifiedChampion[]

@@ -1,11 +1,11 @@
-import Link from 'next/link'
-import styled from 'styled-components'
-import { GoThreeBars as MenuIcon, GoX as CloseIcon } from 'react-icons/go'
-import { Logo } from '../Logo'
-import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { useCallback, useEffect, useState } from 'react'
-import { Navigation } from './Navigation'
+import { GoThreeBars as MenuIcon, GoX as CloseIcon } from 'react-icons/go'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import styled from 'styled-components'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { Logo } from '../Logo'
+import { Navigation } from './Navigation'
 
 const StyledHeader = styled.header`
   background: var(--header-color);

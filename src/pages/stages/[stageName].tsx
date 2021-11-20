@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import type { ParsedUrlQuery } from 'querystring'
+import { getProposalsForStages } from '../../api/getProposalsForStages'
+import { getStageDetails } from '../../api/getStageDetails'
 import {
   PageContainer,
   Breadcrumbs,
@@ -9,12 +11,10 @@ import {
   Heading,
   SanitizedHtml
 } from '../../components/common'
-import { ProposalList } from '../../components/proposals'
-import { getProposalsForStages } from '../../api/getProposalsForStages'
-import { formatStageName } from '../../utils/formatStageName'
-import { Proposal, Stage, allStages, ActiveStage } from '../../types'
-import { getStageDetails } from '../../api/getStageDetails'
 import { Disclaimer } from '../../components/common/Disclaimer'
+import { ProposalList } from '../../components/proposals'
+import { Proposal, Stage, allStages, ActiveStage } from '../../types'
+import { formatStageName } from '../../utils/formatStageName'
 
 interface Props {
   stageName: Stage
