@@ -7,6 +7,8 @@ import { useMount } from '../../hooks/useMount'
 const Article = styled.article`
   flex: 1;
   max-width: 80%;
+  box-shadow: var(--card-shadow);
+  border: var(--card-border);
 
   @media (max-width: 768px) {
     max-width: 100%;
