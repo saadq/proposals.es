@@ -45,6 +45,15 @@ export const getStaticProps: GetStaticProps<Partial<Props>, Params> = async ({
     }
   }
 
+  if (!isGithubProposal(proposal)) {
+    return {
+      props: {
+        proposal,
+        readmeHtml: ''
+      }
+    }
+  }
+
   const baseUrl = getReadmeBaseUrl(proposal)
   const readmeMarkdown = await getReadmeForProposal(proposal)
   const readmeHtml = marked(readmeMarkdown, { baseUrl })
