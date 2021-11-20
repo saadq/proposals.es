@@ -1,8 +1,6 @@
-import { useMemo } from 'react'
-import marked from 'marked'
 import styled from 'styled-components'
-import { SanitizedHtml } from '../common'
 import { useMount } from '../../hooks/useMount'
+import { SanitizedHtml } from '../common'
 
 const Article = styled.article`
   display: flex;
@@ -22,22 +20,19 @@ const Article = styled.article`
 `
 
 interface Props {
-  readme: string
-  baseUrl: string
+  readmeHtml: string
 }
 
-export function Readme({ readme, baseUrl }: Props) {
+export function Readme({ readmeHtml }: Props) {
   useMount(() => {
     import('highlight.js').then((hljs) => {
       hljs.default.highlightAll()
     })
   })
 
-  const html = useMemo(() => marked(readme, { baseUrl }), [readme, baseUrl])
-
   return (
     <Article>
-      <SanitizedHtml className="markdown-body" html={html} />
+      <SanitizedHtml className="markdown-body" html={readmeHtml} />
     </Article>
   )
 }

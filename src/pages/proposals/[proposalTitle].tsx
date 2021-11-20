@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
+import marked from 'marked'
 import type { ParsedUrlQuery } from 'querystring'
 import { getReadmeBaseUrl, isGithubProposal } from '../../utils/github'
 import { Proposal, allStages } from '../../types'
@@ -16,7 +17,7 @@ import { GlobalMarkdownStyles } from '../../utils/markdownStyles'
 
 interface Props {
   proposal: Proposal
-  readme: string
+  readmeHtml: string
 }
 
 interface Params extends ParsedUrlQuery {
@@ -44,7 +45,9 @@ export const getStaticProps: GetStaticProps<Partial<Props>, Params> = async ({
     }
   }
 
-  const readme = await getReadmeForProposal(proposal)
+  const baseUrl = getReadmeBaseUrl(proposal)
+  const readmeMarkdown = await getReadmeForProposal(proposal)
+  const readmeHtml = marked(readmeMarkdown, { baseUrl })
 
   const proposalWithRepoDetails = isGithubProposal(proposal)
     ? { ...proposal, ...(await getRepoDetailsForProposal(proposal)) }
@@ -53,7 +56,7 @@ export const getStaticProps: GetStaticProps<Partial<Props>, Params> = async ({
   return {
     props: {
       proposal: proposalWithRepoDetails,
-      readme
+      readmeHtml
     }
   }
 }
@@ -79,7 +82,7 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
 }
 
-export default function ProposalDetailsPage({ proposal, readme }: Props) {
+export default function ProposalDetailsPage({ proposal, readmeHtml }: Props) {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const isDesktop = !isMobile && isMobile != null
 
@@ -109,8 +112,8 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
           {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
           <Flex layout={isDesktop ? 'row' : 'column'} gap="2rem">
             {isMobile ? <DetailsExpander proposal={proposal} /> : null}
-            {readme ? (
-              <Readme readme={readme} baseUrl={getReadmeBaseUrl(proposal)} />
+            {readmeHtml ? (
+              <Readme readmeHtml={readmeHtml} />
             ) : proposal.link ? (
               <iframe
                 src={proposal.link}
