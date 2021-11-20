@@ -8,9 +8,9 @@
  * The hljs styles were from the higlight.js package: https://highlightjs.org/
  */
 
-import { css } from 'styled-components'
+import { createGlobalStyle, css } from 'styled-components'
 
-export const markdownDarkTheme = css`
+const markdownDarkTheme = css`
   .markdown-body {
     color-scheme: dark;
     -ms-text-size-adjust: 100%;
@@ -860,7 +860,7 @@ export const markdownDarkTheme = css`
   }
 `
 
-export const markdownLightTheme = css`
+const markdownLightTheme = css`
   .markdown-body {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -1858,5 +1858,15 @@ export const markdownLightTheme = css`
   .hljs-deletion {
     color: #b31d28;
     background-color: #ffeef0;
+  }
+`
+
+export const GlobalMarkdownStyles = createGlobalStyle`
+  body.light {
+    ${markdownLightTheme}
+  }
+
+  body.dark {
+    ${markdownDarkTheme}
   }
 `

@@ -1,5 +1,4 @@
 import { createGlobalStyle, css } from 'styled-components'
-import { markdownLightTheme, markdownDarkTheme } from '../../../utils/markdownStyles'
 
 const baseThemeVars = css`
   --gutter-width: 2%;
@@ -96,12 +95,10 @@ export const GlobalStyle = createGlobalStyle`
   
   body.light {
     ${lightThemeVars}
-    ${markdownLightTheme}
   }
 
   body.dark {
     ${darkThemeVars}
-    ${markdownDarkTheme}
   }
 
   .scroll-disabled {

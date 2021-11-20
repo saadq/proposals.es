@@ -12,6 +12,7 @@ import { FallbackDetails } from '../../components/proposals/FallbackDetails'
 import { Readme } from '../../components/proposals/Readme'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { DetailsExpander } from '../../components/proposals/DetailsExpander'
+import { GlobalMarkdownStyles } from '../../utils/markdownStyles'
 
 interface Props {
   proposal: Proposal
@@ -101,26 +102,29 @@ export default function ProposalDetailsPage({ proposal, readme }: Props) {
         <meta name="description" content={`Proposal details for ${proposal.title}`} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageContainer width="95%" mobileWidth="95%" maxWidth="100%" margin="0 auto">
-        <Breadcrumbs crumbs={breadcrumbs} />
-        {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
-        <Flex layout={isDesktop ? 'row' : 'column'} gap="2rem">
-          {isMobile ? <DetailsExpander proposal={proposal} /> : null}
-          {readme ? (
-            <Readme readme={readme} baseUrl={getReadmeBaseUrl(proposal)} />
-          ) : proposal.link ? (
-            <iframe
-              src={proposal.link}
-              style={{
-                border: 'none',
-                width: '100%',
-                height: '100vh'
-              }}
-            />
-          ) : null}
-          {isDesktop ? <DetailsSidebar proposal={proposal} /> : null}
-        </Flex>
-      </PageContainer>
+      <>
+        <GlobalMarkdownStyles />
+        <PageContainer width="95%" mobileWidth="95%" maxWidth="100%" margin="0 auto">
+          <Breadcrumbs crumbs={breadcrumbs} />
+          {!isGithubProposal(proposal) && <FallbackDetails proposal={proposal} />}
+          <Flex layout={isDesktop ? 'row' : 'column'} gap="2rem">
+            {isMobile ? <DetailsExpander proposal={proposal} /> : null}
+            {readme ? (
+              <Readme readme={readme} baseUrl={getReadmeBaseUrl(proposal)} />
+            ) : proposal.link ? (
+              <iframe
+                src={proposal.link}
+                style={{
+                  border: 'none',
+                  width: '100%',
+                  height: '100vh'
+                }}
+              />
+            ) : null}
+            {isDesktop ? <DetailsSidebar proposal={proposal} /> : null}
+          </Flex>
+        </PageContainer>
+      </>
     </>
   )
 }
