@@ -1,5 +1,5 @@
-import marked from 'marked'
 import { CheerioAPI, load } from 'cheerio'
+import marked from 'marked'
 import { ActiveStage, Proposal, ProposalsByStage, Stage } from '../types'
 import { ReadmesByStage, ResponseKey } from '../types/response'
 

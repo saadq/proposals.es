@@ -1,10 +1,10 @@
-import { getRepoDetailsForAllProposals } from './getRepoDetailsForAllProposals'
 import { ProposalsByStage, Stage } from '../types'
-import { buildGetReadmesForStagesQuery } from './queries'
-import { parseProposalsFromReadmes } from '../utils/parseProposalsFromReadme'
-import { getGithubProposalKey, isGithubProposal, request } from '../utils/github'
 import { GitHubResponse, ReadmeResponse, ReadmesByStage } from '../types/response'
 import { avoidRateLimit } from '../utils/avoidRateLimit'
+import { getGithubProposalKey, isGithubProposal, request } from '../utils/github'
+import { parseProposalsFromReadmes } from '../utils/parseProposalsFromReadme'
+import { getRepoDetailsForAllProposals } from './getRepoDetailsForAllProposals'
+import { buildGetReadmesForStagesQuery } from './queries'
 
 interface GetProposalsForStageParams {
   stages: readonly Stage[]

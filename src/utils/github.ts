@@ -1,5 +1,5 @@
-import { Proposal } from '../types'
 import { graphql } from '@octokit/graphql'
+import { Proposal } from '../types'
 
 // This type should be `${string}__${string}` but Next.js's TS check seems to have issues.
 export type GithubProposalKey = string

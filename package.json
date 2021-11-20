@@ -9,7 +9,7 @@
     "prebuild": "npm test",
     "build": "cross-env IS_BUILD=true next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier \"src/**/*.{ts,tsx}\" --write",
     "format:check": "npm run format -- --check",
