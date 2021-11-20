@@ -54,7 +54,7 @@ export function Header() {
     isMenuOpen
       ? document.body.classList.add(scrollDisabledClass)
       : document.body.classList.remove(scrollDisabledClass)
-  }, [isMobile, isMenuOpen])
+  }, [isMenuOpen, isMobile])
 
   return (
     <StyledHeader>
