@@ -48,12 +48,11 @@ export function Header() {
   }, [route])
 
   useEffect(() => {
-    if (!isMobile) {
-      return
+    if (isMobile && isMenuOpen) {
+      document.body.classList.add(scrollDisabledClass)
+    } else {
+      document.body.classList.remove(scrollDisabledClass)
     }
-    isMenuOpen
-      ? document.body.classList.add(scrollDisabledClass)
-      : document.body.classList.remove(scrollDisabledClass)
   }, [isMenuOpen, isMobile])
 
   return (
