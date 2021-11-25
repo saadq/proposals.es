@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "@proposals.es/ui",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "peerDependencies": {
+    "react": "*"
+  }
+}
