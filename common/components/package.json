@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "@common/components",
+  "version": "1.0.0",
+  "main": "./index.ts",
+  "peerDependencies": {
+    "react": "^17.0.0"
+  }
+}

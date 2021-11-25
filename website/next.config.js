@@ -1,4 +1,8 @@
-module.exports = {
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const withTM = require('next-transpile-modules')(['@common/components'])
+
+module.exports = withTM({
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
@@ -31,4 +35,4 @@ module.exports = {
       ]
     }
   }
-}
+})
