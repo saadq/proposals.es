@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "@proposals.es/utils",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "author": "Saad Quadri <saadq.com>",
+  "license": "MIT"
+}
