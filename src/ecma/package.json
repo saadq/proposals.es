@@ -17,6 +17,8 @@
     "test": "npm run format:check && npm run lint:fix && npm run typescript"
   },
   "dependencies": {
+    "@proposals.es/ui": "*",
+    "@proposals.es/utils": "*",
     "@octokit/graphql": "^4.6.4",
     "@octokit/rest": "^18.9.1",
     "cheerio": "^1.0.0-rc.10",
